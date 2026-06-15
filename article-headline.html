@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[YOUR HEADLINE] — News Online</title>
+<style>
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+</style>
+<style>
+/* ==============================
+   RESET & TOKENS
+   ============================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+ul, ol { list-style: none; }
+input, textarea { font: inherit; }
+
+:root {
+  --c-red:        #B80000;
+  --c-red-dark:   #8B0000;
+  --c-red-light:  rgba(184,0,0,0.08);
+  --c-text:       #141414;
+  --c-text-soft:  #545658;
+  --c-text-light: #8A8C8E;
+  --c-bg:         #fafaf7;
+  --c-surface:    #ffffff;
+  --c-bg-grey:    #f3f3ef;
+  --c-bg-dark:    #1a1a1a;
+  --c-border:     #e0dcd4;
+  --c-border-dark:#343434;
+  --font-display: Georgia, 'Times New Roman', Times, serif;
+  --font-body:    'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'Geist', 'SF Mono', 'Consolas', monospace;
+  --max-w:        1280px;
+  --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--c-text);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==============================
+   UTILITY
+   ============================== */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1024px) { .wrap { padding: 0 24px; } }
+.icon-sprite { display: none; }
+
+/* ==============================
+   TOP BAR
+   ============================== */
+.top-bar { background: var(--c-red); color: #fff; font-size: 13px; font-weight: 500; }
+.top-bar__inner { display: flex; align-items: center; justify-content: space-between; height: 32px; gap: 16px; }
+.top-bar__left { display: flex; align-items: center; gap: 12px; }
+.top-bar__logo { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+.top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
+.top-bar__actions { display: flex; align-items: center; gap: 8px; }
+.top-bar__btn { color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 3px; transition: background .15s; display: flex; align-items: center; gap: 4px; }
+.top-bar__btn:hover { background: rgba(255,255,255,0.15); }
+.top-bar__btn svg { width: 14px; height: 14px; }
+
+/* ==============================
+   HEADER / NAV
+   ============================== */
+.site-header { background: var(--c-bg); border-bottom: 1px solid var(--c-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+.site-nav { display: flex; align-items: center; }
+.site-nav__list { display: none; gap: 4px; }
+.site-nav__link { display: block; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--c-text); border-radius: 4px; transition: background .15s, color .15s; white-space: nowrap; }
+.site-nav__link:hover, .site-nav__link.active { background: var(--c-red-light); color: var(--c-red); }
+.hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--c-text); border-radius: 1px; transition: all .25s var(--ease); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav--open { display: flex; flex-direction: column; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; background: #fff; padding: 24px; gap: 4px; z-index: 105; overflow-y: auto; }
+.nav--open .site-nav__link { font-size: 18px; padding: 12px; }
+
+/* ==============================
+   ARTICLE — MASTHEAD
+   ============================== */
+.article-masthead {
+  padding: 48px 0 32px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.article-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-red);
+  margin-bottom: 16px;
+  display: inline-block;
+}
+.article-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--c-text);
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+.article-headline--placeholder { opacity: 0.5; font-style: italic; text-wrap: balance; }
+.article-byline-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.article-byline-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--c-bg-grey);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.article-byline-avatar svg { width: 18px; height: 18px; opacity: 0.18; color: var(--c-text-light); }
+.article-byline-text { font-size: 14px; color: var(--c-text-soft); }
+.article-byline-text strong { color: var(--c-text); font-weight: 600; }
+.article-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--c-text-light);
+  letter-spacing: 0.02em;
+  display: flex; gap: 16px; flex-wrap: wrap;
+  align-items: center;
+}
+.article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--c-text-light); }
+
+/* ==============================
+   ARTICLE — HERO IMAGE
+   ============================== */
+.article-hero-img {
+  max-width: 1100px;
+  margin: 0 auto 16px;
+  aspect-ratio: 16/9;
+  background: var(--c-bg-grey);
+  display: flex; align-items: center; justify-content: center;
+  border: 2px dashed var(--c-border);
+}
+.article-hero-img svg { width: 56px; height: 56px; opacity: 0.2; color: var(--c-text-light); }
+.article-hero-caption {
+  max-width: 720px;
+  margin: 0 auto 48px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--c-text-light);
+  letter-spacing: 0.02em;
+}
+.article-hero-caption--placeholder { opacity: 0.5; font-style: italic; }
+
+/* ==============================
+   ARTICLE — BODY
+   ============================== */
+.article-body-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+.article-body {
+  max-width: 640px;
+  margin: 0 auto;
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--c-text);
+}
+.article-body p { margin-bottom: 24px; text-wrap: pretty; }
+
+/* Drop cap */
+.article-body p:first-child::first-letter {
+  float: left;
+  font-size: 4.8em;
+  line-height: 0.8;
+  padding-right: 12px;
+  padding-top: 4px;
+  color: var(--c-red);
+  font-weight: 700;
+}
+
+.article-body p.placeholder { color: var(--c-text-light); font-style: italic; border-left: 3px solid var(--c-border); padding-left: 16px; }
+
+/* ==============================
+   ARTICLE — PULL QUOTE
+   ============================== */
+.pull-quote {
+  max-width: 640px;
+  margin: 24px auto;
+  padding: 40px 0;
+  border-top: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
+  text-align: center;
+}
+.pull-quote__mark {
+  font-family: var(--font-display);
+  font-size: 96px;
+  line-height: 0.6;
+  color: var(--c-red);
+  opacity: 0.2;
+  margin-bottom: -8px;
+}
+.pull-quote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: 12px;
+  text-wrap: balance;
+  font-style: italic;
+}
+.pull-quote blockquote.placeholder { color: var(--c-text-light); font-style: italic; }
+.pull-quote__attr {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--c-text-light);
+  letter-spacing: 0.03em;
+}
+
+.author-bio {
+  max-width: 640px;
+  margin: 48px auto;
+  padding: 28px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.author-bio__avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--c-bg-grey);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.author-bio__avatar svg { width: 22px; height: 22px; opacity: 0.3; color: var(--c-text-soft); }
+.author-bio__name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.author-bio__desc { font-size: 13px; color: var(--c-text-soft); line-height: 1.55; }
+.author-bio__desc.placeholder { color: var(--c-text-light); font-style: italic; }
+
+.article-share {
+  max-width: 640px;
+  margin: 0 auto 48px;
+  display: flex; gap: 10px; align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
+}
+.article-share__label { font-size: 12px; font-weight: 600; color: var(--c-text-soft); margin-right: 2px; }
+.article-share button {
+  padding: 6px 14px; border: 1px solid var(--c-border);
+  border-radius: 20px; font-size: 12px; font-weight: 500;
+  transition: all .15s; display: flex; align-items: center; gap: 4px;
+  background: var(--c-surface);
+}
+.article-share button:hover { border-color: var(--c-red); color: var(--c-red); }
+.article-share button svg { width: 14px; height: 14px; }
+
+.related-posts {
+  padding-top: 32px;
+  border-top: 2px solid var(--c-border);
+}
+.related-posts__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.related-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--c-border);
+  transition: background .15s;
+}
+.related-item:hover { background: var(--c-surface); margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+.related-item__img {
+  aspect-ratio: 16/9;
+  background: var(--c-bg-grey);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.related-item__img svg { width:28px;height:28px;opacity:0.25;color:var(--c-text-light) }
+.related-item__img img { width:100%;height:100%;object-fit:cover }
+.related-item__kicker {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--c-red); margin-bottom: 4px;
+}
+.related-item__title {
+  font-family: var(--font-display);
+  font-size: 1rem; font-weight: 700;
+  line-height: 1.25;
+  transition: color .15s;
+}
+.related-item:hover .related-item__title { color: var(--c-red); }
+.related-item__meta { font-size: 11px; color: var(--c-text-light); display: flex; gap: 8px; }
+
+.comments-section {
+  max-width: 640px;
+  margin: 48px auto 0;
+  padding-top: 32px;
+  border-top: 2px solid var(--c-border);
+}
+.comments-title {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700; margin-bottom: 24px;
+}
+.comment {
+  display: flex; gap: 14px; padding: 16px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.comment:first-of-type { border-top: 1px solid var(--c-border); }
+.comment__avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--c-bg-grey); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.comment__avatar svg { width: 20px; height: 20px; opacity: .3; }
+.comment__body { flex: 1; min-width: 0; }
+.comment__name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.comment__time { font-size: 11px; color: var(--c-text-light); margin-bottom: 6px; }
+.comment__text { font-size: 14px; line-height: 1.6; }
+.comment--new { animation: slideIn .3s var(--ease) forwards; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.comments-form { margin-top: 20px; }
+.comments-form textarea {
+  width: 100%; padding: 14px;
+  border: 1px solid var(--c-border); border-radius: 6px;
+  font-size: 14px; line-height: 1.6; min-height: 90px;
+  resize: vertical; transition: border-color .15s;
+  background: var(--c-surface);
+}
+.comments-form textarea:focus { outline: none; border-color: var(--c-red); }
+.comments-form textarea::placeholder { color: var(--c-text-light); }
+.comments-form textarea:user-invalid { border-color: #d00; }
+.comments-error { display: none; font-size: 12px; color: #d00; margin-top: 6px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 9px 20px; font-size: 13px; font-weight: 600; border-radius: 6px; transition: all .15s; min-height: 40px; margin-top: 10px; }
+.btn--primary { background: var(--c-red); color: #fff; }
+.btn--primary:hover { background: var(--c-red-dark); }
+.btn--primary:active { transform: scale(.98); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.site-footer { background: var(--c-bg-dark); color: #ccc; padding: 32px 0 16px; margin-top: 48px; }
+.site-footer__inner { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
+.site-footer__logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.site-footer__brand p { font-size: 12px; color: #999; }
+.site-footer__nav { display: flex; flex-direction: column; gap: 8px; }
+.site-footer__nav a { font-size: 13px; color: #ccc; transition: color .15s; }
+.site-footer__nav a:hover { color: #fff; }
+.site-footer__share { display: flex; gap: 10px; }
+.share-btn { width: 38px; height: 38px; border: 1px solid var(--c-border-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ccc; transition: all .15s; }
+.share-btn:hover { border-color: var(--c-red); color: #fff; background: var(--c-red); }
+.share-btn svg { width: 16px; height: 16px; }
+.site-footer__copy { font-size: 11px; color: #666; text-align: center; border-top: 1px solid var(--c-border-dark); padding-top: 16px; }
+
+@media (min-width:480px) { .top-bar__tagline { display: inline; } }
+@media (min-width:768px) {
+  .hamburger { display: none; } .site-nav__list { display: flex; }
+  .related-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .related-item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+  .article-masthead { padding: 64px 0 40px; }
+}
+@media (min-width:1024px) {
+  .related-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .related-item:last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="ic-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ic-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="ic-weibo" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zm-4.598-4.507c-.493 1.295.921 2.875 2.279 3.078 1.173.178 2.327-.641 2.618-1.8.286-1.144-.394-2.422-1.702-2.824-1.356-.416-2.695.293-3.195 1.546zm4.851 2.901c-.352.899-1.323 1.391-2.168.968-.847-.425-.875-1.434-.531-2.278.351-.855 1.188-1.296 1.973-.96.828.369.965 1.324.726 2.27z"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+</svg>
+
+<div class="top-bar">
+  <div class="top-bar__inner wrap">
+    <div class="top-bar__left">
+      <a href="index.html" class="top-bar__logo">NEWS<span style="font-weight:300">ONLINE</span></a>
+      <span class="top-bar__tagline">Trusted Reporting. Independent Journalism.</span>
+    </div>
+    <div class="top-bar__actions">
+      <button class="top-bar__btn"><svg><use href="#ic-search"/></svg> Search</button>
+      <button class="top-bar__btn"><svg><use href="#ic-user"/></svg> Sign In</button>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <nav class="site-nav">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="site-nav__list" id="nav-list">
+        <li><a href="index.html" class="site-nav__link">Home</a></li>
+        <li><a href="index.html#sec-world" class="site-nav__link">World</a></li>
+        <li><a href="index.html#sec-politics" class="site-nav__link">Politics</a></li>
+        <li><a href="index.html#sec-business" class="site-nav__link">Business</a></li>
+        <li><a href="index.html#sec-tech" class="site-nav__link">Tech</a></li>
+        <li><a href="index.html#sec-health" class="site-nav__link">Health</a></li>
+        <li><a href="index.html#sec-sports" class="site-nav__link">Sports</a></li>
+        <li><a href="index.html#sec-culture" class="site-nav__link">Culture</a></li>
+        <li><a href="index.html#sec-culture" class="site-nav__link">Arts</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <!--
+      ==========================================
+      TEMPLATE: Long-form article / blog post
+      Replace all [PLACEHOLDER] strings below
+      with your live reporting story content.
+      ==========================================
+    -->
+    <header class="article-masthead" data-od-id="masthead">
+      <span class="article-kicker">[SECTION · SUBTOPIC]</span>
+      <h1 class="article-headline article-headline--placeholder">[YOUR HEADLINE — Replace with your live reporting story title]</h1>
+      <div class="article-byline-row">
+        <div class="article-byline-avatar"><svg><use href="#ic-user"/></svg></div>
+        <div class="article-byline-text">
+          <strong>By [Author Name]</strong> · [Role], News Online
+        </div>
+      </div>
+      <div class="article-meta">
+        <span>[Date]</span><span class="dot"></span><span>[Time]</span><span class="dot"></span><span>[X] min read</span>
+      </div>
+    </header>
+  </div>
+
+  <figure class="article-hero-img" data-od-id="hero-image">
+    <svg><use href="#ic-cam"/></svg>
+  </figure>
+  <figcaption class="article-hero-caption article-hero-caption--placeholder">
+    [Describe the scene in a single line — no full stop. Credit photographer or agency.]
+  </figcaption>
+
+  <div class="wrap">
+    <div class="article-body">
+      <p class="placeholder">[Lead paragraph — Introduce the who, what, when, where, and why. Strong, concise opening that grabs attention and summarises the key news points from your on-location reporting. Aim for 50–80 words.]</p>
+      <p class="placeholder">[Second paragraph — Develop the story further. Include key facts, figures, and context. Quote relevant sources. Explain why this story matters. Follow the inverted pyramid: most important info first, then supporting details, then background.]</p>
+      <p class="placeholder">[Third paragraph — Continue building the narrative. Incorporate observations from your on-location reporting. Describe the scene you witnessed. Include interview excerpts or vox pop quotes gathered during field reporting.]</p>
+    </div>
+
+    <aside class="pull-quote" data-od-id="pull-quote">
+      <div class="pull-quote__mark">"</div>
+      <blockquote class="placeholder">[Insert a powerful quote from a key source — a direct statement that captures the stakes or emotion of the story.]</blockquote>
+      <p class="pull-quote__attr">— [Source name, title/affiliation]</p>
+    </aside>
+
+    <div class="article-body">
+      <p class="placeholder">[Fourth paragraph — Provide additional context, expert analysis, or stakeholder perspectives. Explore broader implications and connect to wider trends or issues. 60–100 words.]</p>
+      <p class="placeholder">[Fifth paragraph — Add depth with data, historical context, or comparative analysis. This is where you can step back and explain the "so what" of the story to your readers.]</p>
+    </div>
+
+    <aside class="pull-quote" data-od-id="pull-quote">
+      <div class="pull-quote__mark">"</div>
+      <blockquote class="placeholder">[Insert a second quote — ideally from a contrasting perspective or a source with a different stake in the outcome.]</blockquote>
+      <p class="pull-quote__attr">— [Source name, title/affiliation]</p>
+    </aside>
+
+    <div class="article-body">
+      <p class="placeholder">[Sixth paragraph — Look ahead: what happens next, what developments to watch for, how the situation is evolving. If applicable, mention upcoming deadlines, decisions, or milestones.]</p>
+      <p class="placeholder">[Closing paragraph — Wrap up the story. Summarise key takeaways. End with a strong closing line that leaves an impression. Avoid simply repeating the lead — offer a final insight or forward-looking reflection.]</p>
+    </div>
+
+    <div class="author-bio" data-od-id="author-bio">
+      <div class="author-bio__avatar"><svg><use href="#ic-user"/></svg></div>
+      <div>
+        <p class="author-bio__name">[Author Name]</p>
+        <p class="author-bio__desc placeholder">[Role] at News Online. Covers [beat]. Previously at [publication]. Based in [city].</p>
+      </div>
+    </div>
+
+    <div class="article-share">
+      <span class="article-share__label">Share:</span>
+      <button data-share="weibo"><svg><use href="#ic-weibo"/></svg> Weibo</button>
+      <button data-share="twitter"><svg><use href="#ic-x"/></svg> X</button>
+      <button data-share="copy"><svg><use href="#ic-link"/></svg> Copy Link</button>
+    </div>
+
+    <section class="related-posts" data-od-id="related-posts">
+      <h2 class="related-posts__title">More in [Section]</h2>
+      <div class="related-grid">
+        <a href="#" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1434030216411-0b793f4b4173.jpg" alt="Newsroom" loading="lazy"></div>
+          <span class="related-item__kicker">[Subtopic]</span>
+          <h3 class="related-item__title">[Related story headline 1]</h3>
+          <div class="related-item__meta"><span>[Date]</span> · <span>[X] min read</span></div>
+        </a>
+        <a href="#" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1495020689067-958852a7765e.jpg" alt="Newspapers" loading="lazy"></div>
+          <span class="related-item__kicker">[Subtopic]</span>
+          <h3 class="related-item__title">[Related story headline 2]</h3>
+          <div class="related-item__meta"><span>[Date]</span> · <span>[X] min read</span></div>
+        </a>
+        <a href="#" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1588681664899-f142ff2dc9b1.jpg" alt="Broadcast" loading="lazy"></div>
+          <span class="related-item__kicker">[Subtopic]</span>
+          <h3 class="related-item__title">[Related story headline 3]</h3>
+          <div class="related-item__meta"><span>[Date]</span> · <span>[X] min read</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="comments-section" id="comments" data-od-id="comments">
+      <h2 class="comments-title">Comments</h2>
+      <div id="comments-list">
+        <article class="comment">
+          <div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>
+          <div class="comment__body">
+            <p class="comment__name">Michael Thompson</p>
+            <time class="comment__time">3 hours ago</time>
+            <p class="comment__text">Looking forward to reading the full story. This is an important topic that deserves thorough coverage.</p>
+          </div>
+        </article>
+        <article class="comment">
+          <div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>
+          <div class="comment__body">
+            <p class="comment__name">Rebecca Walsh</p>
+            <time class="comment__time">5 hours ago</time>
+            <p class="comment__text">The on-location reporting adds real credibility. Would be great to see follow-up coverage as this develops.</p>
+          </div>
+        </article>
+      </div>
+
+      <form class="comments-form" id="comment-form">
+        <label for="comment-text" class="sr-only">Add a comment</label>
+        <textarea id="comment-text" placeholder="Share your thoughts on this story..." required maxlength="500"></textarea>
+        <div class="comments-error" id="comment-error">Comment cannot be empty.</div>
+        <button type="submit" class="btn btn--primary">Post Comment</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner wrap">
+    <div class="site-footer__brand"><div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div><p>University Journalism Course Project · JRN209<br>Trusted Reporting. Independent Journalism.</p></div>
+    <nav class="site-footer__nav"><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="accessibility.html">Accessibility</a></nav>
+    <div class="site-footer__share">
+      <button class="share-btn" data-share="weibo"><svg><use href="#ic-weibo"/></svg></button>
+      <button class="share-btn" data-share="twitter"><svg><use href="#ic-x"/></svg></button>
+      <button class="share-btn" data-share="copy"><svg><use href="#ic-link"/></svg></button>
+    </div>
+  </div>
+  <p class="site-footer__copy">&copy; 2026 News Online. All rights reserved. XMUM JRN209.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var hamburger = document.getElementById('hamburger');
+  var navList = document.getElementById('nav-list');
+  hamburger.addEventListener('click', function(){
+    var open = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !open);
+    navList.classList.toggle('nav--open');
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  navList.querySelectorAll('a').forEach(function(l){
+    l.addEventListener('click', function(){
+      hamburger.setAttribute('aria-expanded', 'false');
+      navList.classList.remove('nav--open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  function escapeHTML(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  var commentForm = document.getElementById('comment-form');
+  var commentTextarea = document.getElementById('comment-text');
+  var commentsList = document.getElementById('comments-list');
+  var commentError = document.getElementById('comment-error');
+
+  commentForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    commentError.style.display = 'none';
+    var text = commentTextarea.value.trim();
+    if (!text) { commentError.style.display = 'block'; commentTextarea.focus(); return; }
+    var now = new Date();
+    var ts = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0') + ' Just now';
+    var art = document.createElement('article');
+    art.className = 'comment comment--new';
+    art.innerHTML = '<div class="comment__avatar"><svg><use href="#ic-user"/></svg></div><div class="comment__body"><p class="comment__name">Reader</p><time class="comment__time">' + ts + '</time><p class="comment__text">' + escapeHTML(text) + '</p></div>';
+    commentsList.insertBefore(art, commentsList.firstChild);
+    commentTextarea.value = '';
+    setTimeout(function(){ art.classList.remove('comment--new'); }, 350);
+  });
+  commentTextarea.addEventListener('input', function(){ if (commentTextarea.value.trim()) commentError.style.display = 'none'; });
+
+  document.querySelectorAll('[data-share]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var p = btn.getAttribute('data-share');
+      var url = encodeURIComponent(location.href);
+      var title = encodeURIComponent(document.title);
+      if (p === 'copy') {
+        if (navigator.clipboard) { navigator.clipboard.writeText(location.href).then(function(){ }).catch(function(){}); }
+        else { var ta = document.createElement('textarea'); ta.value = location.href; ta.style.cssText = 'position:fixed;left:-9999px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){} document.body.removeChild(ta); }
+      } else if (p === 'weibo') {
+        window.open('https://service.weibo.com/share/share.php?url='+url+'&title='+title, '_blank', 'width=600,height=450');
+      } else if (p === 'twitter') {
+        window.open('https://twitter.com/intent/tweet?url='+url+'&text='+title, '_blank', 'width=600,height=450');
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

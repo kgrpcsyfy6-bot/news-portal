@@ -1,0 +1,649 @@
+- generic [ref=e2]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - button "导视" [ref=e9] [cursor=pointer]:
+          - generic [ref=e12]:
+            - img
+        - generic [ref=e13]:
+          - link "YouTube 首页" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e19]:
+              - img
+          - generic [ref=e20]: MY
+        - button "跳过导航" [ref=e24] [cursor=pointer]:
+          - generic [ref=e25]: 跳过导航
+      - generic [ref=e29]:
+        - search [ref=e30]:
+          - generic [ref=e31]:
+            - combobox "搜索" [expanded] [ref=e34]
+            - button "Search" [ref=e35] [cursor=pointer]:
+              - generic [ref=e38]:
+                - img
+        - generic [ref=e40]:
+          - button "通过语音搜索内容" [ref=e42] [cursor=pointer]:
+            - generic [ref=e46]:
+              - img
+          - tooltip "tooltip"
+      - generic [ref=e51]:
+        - button "设置" [ref=e56] [cursor=pointer]:
+          - generic [ref=e59]:
+            - img
+        - link "登录" [ref=e62] [cursor=pointer]:
+          - /url: https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Dzh-CN%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F%2540BBCNews%252Fvideos&hl=zh-CN&ec=65620
+          - generic [ref=e66]:
+            - img
+          - generic [ref=e67]: 登录
+  - navigation [ref=e71]:
+    - generic [ref=e72]:
+      - link "首页" [ref=e74] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e77]:
+          - img
+        - generic [ref=e78]: 首页
+      - link "Shorts" [ref=e80] [cursor=pointer]:
+        - /url: /shorts/
+        - generic [ref=e83]:
+          - img
+        - generic [ref=e84]: Shorts
+      - link "订阅" [ref=e86] [cursor=pointer]:
+        - /url: /feed/subscriptions
+        - generic [ref=e89]:
+          - img
+        - generic [ref=e90]: 订阅
+      - link "我" [ref=e92] [cursor=pointer]:
+        - /url: /feed/you
+        - generic [ref=e95]:
+          - img
+        - generic [ref=e96]: 我
+  - generic [ref=e97]:
+    - main [ref=e98]:
+      - generic [ref=e105]:
+        - generic [ref=e121]:
+          - heading "BBC News，已验证" [level=1] [ref=e123]:
+            - generic [ref=e124]:
+              - text: BBC News
+              - img [ref=e127]:
+                - generic [ref=e129]:
+                  - img
+          - generic [ref=e130]:
+            - group [ref=e131]:
+              - generic [ref=e132]: "@BBCNews"
+            - generic [ref=e133]: •
+            - group [ref=e134]:
+              - generic "1980万位订阅者" [ref=e135]
+              - generic [ref=e136]: •
+              - generic [ref=e137]: 3.1万 个视频
+          - generic [ref=e139] [cursor=pointer]:
+            - generic [ref=e140]: Breaking news, live updates and in-depth analysis from BBC News journalists around the world.
+            - button "说明。Breaking news, live updates and in-depth analysis from BBC N…点按即可了解详情。" [ref=e141]:
+              - generic [ref=e142]: …更多
+          - generic [ref=e144]:
+            - link "bbc.com/news" [ref=e147] [cursor=pointer]:
+              - /url: https://www.youtube.com/redirect?event=channel_header&redir_token=QUFFLUhqbm90ODF3c3hXYzZTZ1JWbFFVbGpBVUZManFyUXxBQ3Jtc0trdG9jeGY3T0VDSHlONmVoNEliWGRqWXV1U0x1T0hZQjdKdzU5a0lac3NQSTlhclRFdzVqdENRQTBzVEFqajFmMDh3bHpOOUdJbmRWQWRLbmJ0X2Facm9vZWF6cmc0cWUyNnpFc2xiNjZyNk12NDhLSQ&q=http%3A%2F%2Fwww.bbc.com%2Fnews
+              - img [ref=e149]:
+                - generic [ref=e151]:
+                  - img
+              - text: bbc.com/news
+            - button "和另外 4 个链接" [ref=e154] [cursor=pointer]
+          - button "订阅" [ref=e158] [cursor=pointer]:
+            - generic [ref=e159]: 订阅
+        - tablist [ref=e166]:
+          - tablist [ref=e170]:
+            - tab "首页" [ref=e171] [cursor=pointer]:
+              - generic [ref=e172]: 首页
+            - tab "视频" [selected] [ref=e173] [cursor=pointer]:
+              - generic [ref=e174]: 视频
+            - tab "Shorts" [ref=e175] [cursor=pointer]:
+              - generic [ref=e176]: Shorts
+            - tab "直播" [ref=e177] [cursor=pointer]:
+              - generic [ref=e178]: 直播
+            - tab "播客" [ref=e179] [cursor=pointer]:
+              - generic [ref=e180]: 播客
+            - tab "播放列表" [ref=e181] [cursor=pointer]:
+              - generic [ref=e182]: 播放列表
+            - tab "帖子" [ref=e183] [cursor=pointer]:
+              - generic [ref=e184]: 帖子
+            - button "搜索" [ref=e188] [cursor=pointer]:
+              - generic [ref=e191]:
+                - img
+      - generic [ref=e197]:
+        - tablist [ref=e200]:
+          - tab "最新" [selected] [ref=e204] [cursor=pointer]:
+            - generic [ref=e206]: 最新
+          - tab "最热门" [ref=e213] [cursor=pointer]:
+            - generic [ref=e215]: 最热门
+          - tab "最早" [ref=e222] [cursor=pointer]:
+            - generic [ref=e224]: 最早
+        - generic [ref=e228]:
+          - generic [ref=e232] [cursor=pointer]:
+            - link [ref=e233]:
+              - /url: /watch?v=dIc_rUkrP6c&pp=0gcJCUELAYcqIYzv
+              - generic [ref=e240]: 37:29
+            - generic [ref=e242]:
+              - generic [ref=e243]:
+                - heading "Iran and US agree deal to end war | BBC News" [level=3] [ref=e244]:
+                  - link "Iran and US agree deal to end war | BBC News 37分钟" [ref=e245]:
+                    - /url: /watch?v=dIc_rUkrP6c&pp=0gcJCUELAYcqIYzv
+                    - text: Iran and US agree deal to end war | BBC News
+                - group [ref=e248]:
+                  - generic [ref=e249]: 22万次观看
+                  - generic [ref=e250]: •
+                  - generic "11小时前" [ref=e251]
+              - button "其他操作" [ref=e254]:
+                - generic [ref=e258]:
+                  - img
+          - generic [ref=e265] [cursor=pointer]:
+            - link [ref=e266]:
+              - /url: /watch?v=EHoGQIW5ypU
+              - generic [ref=e273]: 5:57
+            - generic [ref=e296]:
+              - generic [ref=e297]:
+                - heading "Iran and US announce peace deal - Trump lifts blockade of strait of Hormuz | BBC News" [level=3] [ref=e298]:
+                  - link "Iran and US announce peace deal - Trump lifts blockade of strait of Hormuz | BBC News 5分钟57秒钟" [ref=e299]:
+                    - /url: /watch?v=EHoGQIW5ypU
+                    - text: Iran and US announce peace deal - Trump lifts blockade of strait of Hormuz | BBC News
+                - group [ref=e302]:
+                  - generic [ref=e303]: 9万次观看
+                  - generic [ref=e304]: •
+                  - generic "12小时前" [ref=e305]
+              - button "其他操作" [ref=e308]:
+                - generic [ref=e312]:
+                  - img
+          - generic [ref=e319] [cursor=pointer]:
+            - link [ref=e320]:
+              - /url: /watch?v=shn42vhtnkg
+              - generic [ref=e327]: 32:55
+            - generic [ref=e329]:
+              - generic [ref=e330]:
+                - heading "Royal Marines Take Control Of Russian Shadow Fleet Tanker | BBC Newscast" [level=3] [ref=e331]:
+                  - link "Royal Marines Take Control Of Russian Shadow Fleet Tanker | BBC Newscast 32分钟" [ref=e332]:
+                    - /url: /watch?v=shn42vhtnkg
+                    - text: Royal Marines Take Control Of Russian Shadow Fleet Tanker | BBC Newscast
+                - group [ref=e335]:
+                  - generic [ref=e336]: 1.6万次观看
+                  - generic [ref=e337]: •
+                  - generic "15小时前" [ref=e338]
+              - button "其他操作" [ref=e341]:
+                - generic [ref=e345]:
+                  - img
+          - generic [ref=e352] [cursor=pointer]:
+            - link [ref=e353]:
+              - /url: /watch?v=GdFwGT9v4cs
+              - generic [ref=e360]: 18:16
+            - generic [ref=e362]:
+              - generic [ref=e363]:
+                - heading "'Let's not blow it!' Trump says after Israel strikes Beirut | BBC News" [level=3] [ref=e364]:
+                  - link "'Let's not blow it!' Trump says after Israel strikes Beirut | BBC News 18分钟" [ref=e365]:
+                    - /url: /watch?v=GdFwGT9v4cs
+                    - text: "'Let's not blow it!' Trump says after Israel strikes Beirut | BBC News"
+                - group [ref=e368]:
+                  - generic [ref=e369]: 20万次观看
+                  - generic [ref=e370]: •
+                  - generic "15小时前" [ref=e371]
+              - button "其他操作" [ref=e374]:
+                - generic [ref=e378]:
+                  - img
+          - generic [ref=e385] [cursor=pointer]:
+            - link [ref=e386]:
+              - /url: /watch?v=lqELDv1giQ0
+              - generic [ref=e393]: 37:05
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - 'heading "By-Electioncast: Could Restore Britain Help Andy Burnham Win? | BBC Newscast" [level=3] [ref=e397]':
+                  - 'link "By-Electioncast: Could Restore Britain Help Andy Burnham Win? | BBC Newscast 37分钟" [ref=e398]':
+                    - /url: /watch?v=lqELDv1giQ0
+                    - text: "By-Electioncast: Could Restore Britain Help Andy Burnham Win? | BBC Newscast"
+                - group [ref=e401]:
+                  - generic [ref=e402]: 1.7万次观看
+                  - generic [ref=e403]: •
+                  - generic "17小时前" [ref=e404]
+              - button "其他操作" [ref=e407]:
+                - generic [ref=e411]:
+                  - img
+          - generic [ref=e418] [cursor=pointer]:
+            - link [ref=e419]:
+              - /url: /watch?v=KqJ7URLJe_Y
+              - generic [ref=e426]: 8:33
+            - generic [ref=e428]:
+              - generic [ref=e429]:
+                - heading "UK intercepts Russian shadow fleet oil tanker in English Channel, PM says | BBC News" [level=3] [ref=e430]:
+                  - link "UK intercepts Russian shadow fleet oil tanker in English Channel, PM says | BBC News 8分钟33秒钟" [ref=e431]:
+                    - /url: /watch?v=KqJ7URLJe_Y
+                    - text: UK intercepts Russian shadow fleet oil tanker in English Channel, PM says | BBC News
+                - group [ref=e434]:
+                  - generic [ref=e435]: 15万次观看
+                  - generic [ref=e436]: •
+                  - generic "1天前" [ref=e437]
+              - button "其他操作" [ref=e440]:
+                - generic [ref=e444]:
+                  - img
+          - generic [ref=e451] [cursor=pointer]:
+            - link [ref=e452]:
+              - /url: /watch?v=Dkoilz2HiqQ
+              - generic [ref=e459]: 16:22
+            - generic [ref=e461]:
+              - generic [ref=e462]:
+                - heading "Trump says Iran deal is scheduled to be signed on Sunday | BBC News" [level=3] [ref=e463]:
+                  - link "Trump says Iran deal is scheduled to be signed on Sunday | BBC News 16分钟" [ref=e464]:
+                    - /url: /watch?v=Dkoilz2HiqQ
+                    - text: Trump says Iran deal is scheduled to be signed on Sunday | BBC News
+                - group [ref=e467]:
+                  - generic [ref=e468]: 21万次观看
+                  - generic [ref=e469]: •
+                  - generic "1天前" [ref=e470]
+              - button "其他操作" [ref=e473]:
+                - generic [ref=e477]:
+                  - img
+          - generic [ref=e484] [cursor=pointer]:
+            - link [ref=e485]:
+              - /url: /watch?v=dWO4YUo_8dA
+              - generic [ref=e492]: 4:35
+            - generic [ref=e494]:
+              - generic [ref=e495]:
+                - heading "King and Queen cheered by crowds at Trooping the Colour | BBC News" [level=3] [ref=e496]:
+                  - link "King and Queen cheered by crowds at Trooping the Colour | BBC News 4分钟35秒钟" [ref=e497]:
+                    - /url: /watch?v=dWO4YUo_8dA
+                    - text: King and Queen cheered by crowds at Trooping the Colour | BBC News
+                - group [ref=e500]:
+                  - generic [ref=e501]: 10万次观看
+                  - generic [ref=e502]: •
+                  - generic "1天前" [ref=e503]
+              - button "其他操作" [ref=e506]:
+                - generic [ref=e510]:
+                  - img
+          - generic [ref=e517] [cursor=pointer]:
+            - link [ref=e518]:
+              - /url: /watch?v=q1ajWdgSj8s
+              - generic [ref=e525]: 5:06
+            - generic [ref=e527]:
+              - generic [ref=e528]:
+                - heading "Why the Makerfield by-election could bring down Starmer | BBC News" [level=3] [ref=e529]:
+                  - link "Why the Makerfield by-election could bring down Starmer | BBC News 5分钟6秒钟" [ref=e530]:
+                    - /url: /watch?v=q1ajWdgSj8s
+                    - text: Why the Makerfield by-election could bring down Starmer | BBC News
+                - group [ref=e533]:
+                  - generic [ref=e534]: 3.9万次观看
+                  - generic [ref=e535]: •
+                  - generic "1天前" [ref=e536]
+              - button "其他操作" [ref=e539]:
+                - generic [ref=e543]:
+                  - img
+          - generic [ref=e550] [cursor=pointer]:
+            - link [ref=e551]:
+              - /url: /watch?v=sQq07QVTOk0
+              - generic [ref=e558]: 26:11
+            - generic [ref=e560]:
+              - generic [ref=e561]:
+                - heading "Is this AI's moment of truth? | BBC News" [level=3] [ref=e562]:
+                  - link "Is this AI's moment of truth? | BBC News 26分钟" [ref=e563]:
+                    - /url: /watch?v=sQq07QVTOk0
+                    - text: Is this AI's moment of truth? | BBC News
+                - group [ref=e566]:
+                  - generic [ref=e567]: 5.8万次观看
+                  - generic [ref=e568]: •
+                  - generic "2天前" [ref=e569]
+              - button "其他操作" [ref=e572]:
+                - generic [ref=e576]:
+                  - img
+          - generic [ref=e583] [cursor=pointer]:
+            - link [ref=e584]:
+              - /url: /watch?v=d_vfKDpH_0Y
+              - generic [ref=e591]: 8:00
+            - generic [ref=e593]:
+              - generic [ref=e594]:
+                - heading "A year after Air India crash, families still wait for answers | BBC News" [level=3] [ref=e595]:
+                  - link "A year after Air India crash, families still wait for answers | BBC News 8分钟" [ref=e596]:
+                    - /url: /watch?v=d_vfKDpH_0Y
+                    - text: A year after Air India crash, families still wait for answers | BBC News
+                - group [ref=e599]:
+                  - generic [ref=e600]: 2.7万次观看
+                  - generic [ref=e601]: •
+                  - generic "2天前" [ref=e602]
+              - button "其他操作" [ref=e605]:
+                - generic [ref=e609]:
+                  - img
+          - generic [ref=e616] [cursor=pointer]:
+            - link [ref=e617]:
+              - /url: /watch?v=qtrUg-QPC-8
+              - generic [ref=e624]: 1:04
+            - generic [ref=e626]:
+              - generic [ref=e627]:
+                - heading "Iran-US peace deal has been agreed says Pakistan’s Prime Minister | BBC News" [level=3] [ref=e628]:
+                  - link "Iran-US peace deal has been agreed says Pakistan’s Prime Minister | BBC News 1分钟4秒钟" [ref=e629]:
+                    - /url: /watch?v=qtrUg-QPC-8
+                    - text: Iran-US peace deal has been agreed says Pakistan’s Prime Minister | BBC News
+                - group [ref=e632]:
+                  - generic [ref=e633]: 19万次观看
+                  - generic [ref=e634]: •
+                  - generic "2天前" [ref=e635]
+              - button "其他操作" [ref=e638]:
+                - generic [ref=e642]:
+                  - img
+          - generic [ref=e649] [cursor=pointer]:
+            - link [ref=e650]:
+              - /url: /watch?v=mmHij2a151M
+              - generic [ref=e657]: 4:08
+            - generic [ref=e659]:
+              - generic [ref=e660]:
+                - heading "What are the costs and challenges facing World Cup 2026? | BBC News" [level=3] [ref=e661]:
+                  - link "What are the costs and challenges facing World Cup 2026? | BBC News 4分钟8秒钟" [ref=e662]:
+                    - /url: /watch?v=mmHij2a151M
+                    - text: What are the costs and challenges facing World Cup 2026? | BBC News
+                - group [ref=e665]:
+                  - generic [ref=e666]: 1.9万次观看
+                  - generic [ref=e667]: •
+                  - generic "2天前" [ref=e668]
+              - button "其他操作" [ref=e671]:
+                - generic [ref=e675]:
+                  - img
+          - generic [ref=e682] [cursor=pointer]:
+            - link [ref=e683]:
+              - /url: /watch?v=Itrm-FoXqNo
+              - generic [ref=e690]: 12:53
+            - generic [ref=e692]:
+              - generic [ref=e693]:
+                - heading "Air India crash victims demand answers | Global News Podcast" [level=3] [ref=e694]:
+                  - link "Air India crash victims demand answers | Global News Podcast 12分钟53秒钟" [ref=e695]:
+                    - /url: /watch?v=Itrm-FoXqNo
+                    - text: Air India crash victims demand answers | Global News Podcast
+                - group [ref=e698]:
+                  - generic [ref=e699]: 2.8万次观看
+                  - generic [ref=e700]: •
+                  - generic "2天前" [ref=e701]
+              - button "其他操作" [ref=e704]:
+                - generic [ref=e708]:
+                  - img
+          - generic [ref=e715] [cursor=pointer]:
+            - link [ref=e716]:
+              - /url: /watch?v=70pOP3oDv9o
+              - generic [ref=e723]: 35:04
+            - generic [ref=e725]:
+              - generic [ref=e726]:
+                - heading "The battle in rural America against AI data centres | BBC Americast" [level=3] [ref=e727]:
+                  - link "The battle in rural America against AI data centres | BBC Americast 35分钟" [ref=e728]:
+                    - /url: /watch?v=70pOP3oDv9o
+                    - text: The battle in rural America against AI data centres | BBC Americast
+                - group [ref=e731]:
+                  - generic [ref=e732]: 9546次观看
+                  - generic [ref=e733]: •
+                  - generic "2天前" [ref=e734]
+              - button "其他操作" [ref=e737]:
+                - generic [ref=e741]:
+                  - img
+          - generic [ref=e748] [cursor=pointer]:
+            - link [ref=e749]:
+              - /url: /watch?v=C1wyc9eUfyI
+              - generic [ref=e756]: 30:14
+            - generic [ref=e758]:
+              - generic [ref=e759]:
+                - 'heading "The Keir Starmer Interview: The analysis | BBC Newscast" [level=3] [ref=e760]':
+                  - 'link "The Keir Starmer Interview: The analysis | BBC Newscast 30分钟" [ref=e761]':
+                    - /url: /watch?v=C1wyc9eUfyI
+                    - text: "The Keir Starmer Interview: The analysis | BBC Newscast"
+                - group [ref=e764]:
+                  - generic [ref=e765]: 1.5万次观看
+                  - generic [ref=e766]: •
+                  - generic "2天前" [ref=e767]
+              - button "其他操作" [ref=e770]:
+                - generic [ref=e774]:
+                  - img
+          - generic [ref=e781] [cursor=pointer]:
+            - link [ref=e782]:
+              - /url: /watch?v=S98-haP0UXg
+              - generic [ref=e789]: 5:15
+            - generic [ref=e791]:
+              - generic [ref=e792]:
+                - heading "Trump claims deal to end Iran war near, but Tehran says 'nothing' finalised | BBC News" [level=3] [ref=e793]:
+                  - link "Trump claims deal to end Iran war near, but Tehran says 'nothing' finalised | BBC News 5分钟15秒钟" [ref=e794]:
+                    - /url: /watch?v=S98-haP0UXg
+                    - text: Trump claims deal to end Iran war near, but Tehran says 'nothing' finalised | BBC News
+                - group [ref=e797]:
+                  - generic [ref=e798]: 12万次观看
+                  - generic [ref=e799]: •
+                  - generic "2天前" [ref=e800]
+              - button "其他操作" [ref=e803]:
+                - generic [ref=e807]:
+                  - img
+          - generic [ref=e814] [cursor=pointer]:
+            - link [ref=e815]:
+              - /url: /watch?v=lRiEpR3pjA0
+              - generic [ref=e822]: 26:35
+            - generic [ref=e824]:
+              - generic [ref=e825]:
+                - heading "Why a Somali World Cup referee was barred from the United States | The Global Story" [level=3] [ref=e826]:
+                  - link "Why a Somali World Cup referee was barred from the United States | The Global Story 26分钟" [ref=e827]:
+                    - /url: /watch?v=lRiEpR3pjA0
+                    - text: Why a Somali World Cup referee was barred from the United States | The Global Story
+                - group [ref=e830]:
+                  - generic [ref=e831]: 8.5万次观看
+                  - generic [ref=e832]: •
+                  - generic "2天前" [ref=e833]
+              - button "其他操作" [ref=e836]:
+                - generic [ref=e840]:
+                  - img
+          - generic [ref=e847] [cursor=pointer]:
+            - link [ref=e848]:
+              - /url: /watch?v=iju4_vcyd7Q
+              - generic [ref=e855]: 8:36
+            - generic [ref=e857]:
+              - generic [ref=e858]:
+                - heading "Police vow 'robust' response to Northern Ireland riots | BBC News" [level=3] [ref=e859]:
+                  - link "Police vow 'robust' response to Northern Ireland riots | BBC News 8分钟36秒钟" [ref=e860]:
+                    - /url: /watch?v=iju4_vcyd7Q
+                    - text: Police vow 'robust' response to Northern Ireland riots | BBC News
+                - group [ref=e863]:
+                  - generic [ref=e864]: 15万次观看
+                  - generic [ref=e865]: •
+                  - generic "2天前" [ref=e866]
+              - button "其他操作" [ref=e869]:
+                - generic [ref=e873]:
+                  - img
+          - generic [ref=e880] [cursor=pointer]:
+            - link [ref=e881]:
+              - /url: /watch?v=hCMMmaMK0a0
+              - generic [ref=e888]: 18:04
+            - generic [ref=e890]:
+              - generic [ref=e891]:
+                - heading "Artist David Hockney dies aged 88 | BBC News" [level=3] [ref=e892]:
+                  - link "Artist David Hockney dies aged 88 | BBC News 18分钟" [ref=e893]:
+                    - /url: /watch?v=hCMMmaMK0a0
+                    - text: Artist David Hockney dies aged 88 | BBC News
+                - group [ref=e896]:
+                  - generic [ref=e897]: 13万次观看
+                  - generic [ref=e898]: •
+                  - generic "2天前" [ref=e899]
+              - button "其他操作" [ref=e902]:
+                - generic [ref=e906]:
+                  - img
+          - generic [ref=e913] [cursor=pointer]:
+            - link [ref=e914]:
+              - /url: /watch?v=RJWVHMrv9GI
+              - generic [ref=e921]: 3:20
+            - generic [ref=e923]:
+              - generic [ref=e924]:
+                - heading "Israel bulldozes Palestinian homes in East Jerusalem | BBC News" [level=3] [ref=e925]:
+                  - link "Israel bulldozes Palestinian homes in East Jerusalem | BBC News 3分钟20秒钟" [ref=e926]:
+                    - /url: /watch?v=RJWVHMrv9GI
+                    - text: Israel bulldozes Palestinian homes in East Jerusalem | BBC News
+                - group [ref=e929]:
+                  - generic [ref=e930]: 1.3万次观看
+                  - generic [ref=e931]: •
+                  - generic "3天前" [ref=e932]
+              - button "其他操作" [ref=e935]:
+                - generic [ref=e939]:
+                  - img
+          - generic [ref=e946] [cursor=pointer]:
+            - link [ref=e947]:
+              - /url: /watch?v=3Hi_0Sxt3Bc
+              - generic [ref=e954]: 14:43
+            - generic [ref=e956]:
+              - generic [ref=e957]:
+                - heading "Was Scotland built to go viral? | In Case You Missed It" [level=3] [ref=e958]:
+                  - link "Was Scotland built to go viral? | In Case You Missed It 14分钟43秒钟" [ref=e959]:
+                    - /url: /watch?v=3Hi_0Sxt3Bc
+                    - text: Was Scotland built to go viral? | In Case You Missed It
+                - generic [ref=e961]:
+                  - group [ref=e962]:
+                    - generic [ref=e964]:
+                      - text: BBC News
+                      - generic [ref=e965]:
+                        - img [ref=e967]:
+                          - generic [ref=e969]:
+                            - img
+                        - text: 和
+                      - text: BBC Scotland
+                  - group [ref=e970]:
+                    - generic [ref=e971]: 1万次观看
+                    - generic [ref=e972]: •
+                    - generic "3天前" [ref=e973]
+              - button "其他操作" [ref=e976]:
+                - generic [ref=e980]:
+                  - img
+          - generic [ref=e987] [cursor=pointer]:
+            - link [ref=e988]:
+              - /url: /watch?v=iN6_CNfoZT0
+              - generic [ref=e995]: 29:02
+            - generic [ref=e997]:
+              - generic [ref=e998]:
+                - heading "Why has Defence Secretary John Healey quit in shock resignation? | BBC Newscast" [level=3] [ref=e999]:
+                  - link "Why has Defence Secretary John Healey quit in shock resignation? | BBC Newscast 29分钟" [ref=e1000]:
+                    - /url: /watch?v=iN6_CNfoZT0
+                    - text: Why has Defence Secretary John Healey quit in shock resignation? | BBC Newscast
+                - group [ref=e1003]:
+                  - generic [ref=e1004]: 2.2万次观看
+                  - generic [ref=e1005]: •
+                  - generic "3天前" [ref=e1006]
+              - button "其他操作" [ref=e1009]:
+                - generic [ref=e1013]:
+                  - img
+          - generic [ref=e1020] [cursor=pointer]:
+            - link [ref=e1021]:
+              - /url: /watch?v=jheI3JVF8dw
+              - generic [ref=e1028]: 10:49
+            - generic [ref=e1030]:
+              - generic [ref=e1031]:
+                - heading "What we know about the Belfast knife attack and disorder | BBC News" [level=3] [ref=e1032]:
+                  - link "What we know about the Belfast knife attack and disorder | BBC News 10分钟49秒钟" [ref=e1033]:
+                    - /url: /watch?v=jheI3JVF8dw
+                    - text: What we know about the Belfast knife attack and disorder | BBC News
+                - generic [ref=e1035]:
+                  - group [ref=e1036]:
+                    - generic [ref=e1038]:
+                      - text: BBC News
+                      - generic [ref=e1039]:
+                        - img [ref=e1041]:
+                          - generic [ref=e1043]:
+                            - img
+                        - text: 和
+                      - text: BBC News NI
+                  - group [ref=e1044]:
+                    - generic [ref=e1045]: 20万次观看
+                    - generic [ref=e1046]: •
+                    - generic "3天前" [ref=e1047]
+              - button "其他操作" [ref=e1050]:
+                - generic [ref=e1054]:
+                  - img
+          - generic [ref=e1061] [cursor=pointer]:
+            - link [ref=e1062]:
+              - /url: /watch?v=xdGQjvXHDG8
+              - generic [ref=e1069]: 14:28
+            - generic [ref=e1071]:
+              - generic [ref=e1072]:
+                - heading "US President Donald Trump says he has 'cancelled' strikes against Iran | BBC News" [level=3] [ref=e1073]:
+                  - link "US President Donald Trump says he has 'cancelled' strikes against Iran | BBC News 14分钟28秒钟" [ref=e1074]:
+                    - /url: /watch?v=xdGQjvXHDG8
+                    - text: US President Donald Trump says he has 'cancelled' strikes against Iran | BBC News
+                - group [ref=e1077]:
+                  - generic [ref=e1078]: 28万次观看
+                  - generic [ref=e1079]: •
+                  - generic "3天前" [ref=e1080]
+              - button "其他操作" [ref=e1083]:
+                - generic [ref=e1087]:
+                  - img
+          - generic [ref=e1094] [cursor=pointer]:
+            - link [ref=e1095]:
+              - /url: /watch?v=py200AgY8r0
+              - generic [ref=e1102]: 10:20
+            - generic [ref=e1104]:
+              - generic [ref=e1105]:
+                - heading "Protests, ticket prices and visas - problems of the World Cup | Global News Podcast" [level=3] [ref=e1106]:
+                  - link "Protests, ticket prices and visas - problems of the World Cup | Global News Podcast 10分钟20秒钟" [ref=e1107]:
+                    - /url: /watch?v=py200AgY8r0
+                    - text: Protests, ticket prices and visas - problems of the World Cup | Global News Podcast
+                - group [ref=e1110]:
+                  - generic [ref=e1111]: 3.6万次观看
+                  - generic [ref=e1112]: •
+                  - generic "3天前" [ref=e1113]
+              - button "其他操作" [ref=e1116]:
+                - generic [ref=e1120]:
+                  - img
+          - generic [ref=e1127] [cursor=pointer]:
+            - link [ref=e1128]:
+              - /url: /watch?v=w4PzzCnQ-O4
+              - generic [ref=e1135]: 13:06
+            - generic [ref=e1137]:
+              - generic [ref=e1138]:
+                - heading "Are social media bans a threat to democracy? | Top Comment Podcast" [level=3] [ref=e1139]:
+                  - link "Are social media bans a threat to democracy? | Top Comment Podcast 13分钟6秒钟" [ref=e1140]:
+                    - /url: /watch?v=w4PzzCnQ-O4
+                    - text: Are social media bans a threat to democracy? | Top Comment Podcast
+                - group [ref=e1143]:
+                  - generic [ref=e1144]: 1.2万次观看
+                  - generic [ref=e1145]: •
+                  - generic "3天前" [ref=e1146]
+              - button "其他操作" [ref=e1149]:
+                - generic [ref=e1153]:
+                  - img
+          - generic [ref=e1160] [cursor=pointer]:
+            - link [ref=e1161]:
+              - /url: /watch?v=V2GOGaZJ6Kc&pp=0gcJCUELAYcqIYzv
+              - generic [ref=e1168]: 24:20
+            - generic [ref=e1170]:
+              - generic [ref=e1171]:
+                - heading "What does US Secretary of State Marco Rubio want? | The Global Story" [level=3] [ref=e1172]:
+                  - link "What does US Secretary of State Marco Rubio want? | The Global Story 24分钟" [ref=e1173]:
+                    - /url: /watch?v=V2GOGaZJ6Kc&pp=0gcJCUELAYcqIYzv
+                    - text: What does US Secretary of State Marco Rubio want? | The Global Story
+                - group [ref=e1176]:
+                  - generic [ref=e1177]: 1.7万次观看
+                  - generic [ref=e1178]: •
+                  - generic "3天前" [ref=e1179]
+              - button "其他操作" [ref=e1182]:
+                - generic [ref=e1186]:
+                  - img
+          - generic [ref=e1193] [cursor=pointer]:
+            - link [ref=e1194]:
+              - /url: /watch?v=GfN_5AN9_5o
+              - generic [ref=e1201]: 4:04
+            - generic [ref=e1203]:
+              - generic [ref=e1204]:
+                - heading "US and Iran exchange strikes across Middle East for second day in a row | BBC News" [level=3] [ref=e1205]:
+                  - link "US and Iran exchange strikes across Middle East for second day in a row | BBC News 4分钟4秒钟" [ref=e1206]:
+                    - /url: /watch?v=GfN_5AN9_5o
+                    - text: US and Iran exchange strikes across Middle East for second day in a row | BBC News
+                - group [ref=e1209]:
+                  - generic [ref=e1210]: 4.3万次观看
+                  - generic [ref=e1211]: •
+                  - generic "3天前" [ref=e1212]
+              - button "其他操作" [ref=e1215]:
+                - generic [ref=e1219]:
+                  - img
+          - generic [ref=e1226] [cursor=pointer]:
+            - link [ref=e1227]:
+              - /url: /watch?v=x0IhZLGn4rU
+              - generic [ref=e1234]: 4:44
+            - generic [ref=e1236]:
+              - generic [ref=e1237]:
+                - heading "The furious dispute over what caused Air India flight 171 to crash | BBC News" [level=3] [ref=e1238]:
+                  - link "The furious dispute over what caused Air India flight 171 to crash | BBC News 4分钟44秒钟" [ref=e1239]:
+                    - /url: /watch?v=x0IhZLGn4rU
+                    - text: The furious dispute over what caused Air India flight 171 to crash | BBC News
+                - group [ref=e1242]:
+                  - generic [ref=e1243]: 7.5万次观看
+                  - generic [ref=e1244]: •
+                  - generic "3天前" [ref=e1245]
+              - button "其他操作" [ref=e1248]:
+                - generic [ref=e1252]:
+                  - img
+    - text: •

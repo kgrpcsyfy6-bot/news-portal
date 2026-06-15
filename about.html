@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — News Online</title>
+<style>
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+</style>
+<style>
+/* ==============================
+   RESET & BASE
+   ============================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--c-text);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+ul, ol { list-style: none; }
+
+/* ==============================
+   DESIGN TOKENS
+   ============================== */
+:root {
+  --c-red:        #B80000;
+  --c-red-dark:   #8B0000;
+  --c-red-light:  rgba(184,0,0,0.08);
+  --c-text:       #141414;
+  --c-text-soft:  #545658;
+  --c-text-light: #8A8C8E;
+  --c-bg:         #ffffff;
+  --c-bg-grey:    #f6f6f6;
+  --c-bg-dark:    #1a1a1a;
+  --c-border:     #e0e0e0;
+  --c-border-dark:#343434;
+  --font-display: Georgia, 'Times New Roman', Times, serif;
+  --font-body:    'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'Geist', 'SF Mono', 'Consolas', monospace;
+  --max-w:        1280px;
+  --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==============================
+   UTILITY
+   ============================== */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1024px) { .wrap { padding: 0 24px; } }
+
+/* ==============================
+   TOP BAR
+   ============================== */
+.top-bar { background: var(--c-red); color: #fff; font-size: 13px; font-weight: 500; }
+.top-bar__inner { display: flex; align-items: center; justify-content: space-between; height: 32px; gap: 16px; }
+.top-bar__left { display: flex; align-items: center; gap: 12px; }
+.top-bar__logo { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+.top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
+.top-bar__actions { display: flex; align-items: center; gap: 8px; }
+.top-bar__btn { color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 3px; transition: background .15s; display: flex; align-items: center; gap: 4px; }
+.top-bar__btn:hover { background: rgba(255,255,255,0.15); }
+.top-bar__btn svg { width: 14px; height: 14px; }
+
+/* ==============================
+   HEADER / NAV
+   ============================== */
+.site-header { background: var(--c-bg); border-bottom: 1px solid var(--c-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+.site-nav { display: flex; align-items: center; }
+.site-nav__list { display: none; gap: 4px; }
+.site-nav__link { display: block; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--c-text); border-radius: 4px; transition: background .15s, color .15s; white-space: nowrap; }
+.site-nav__link:hover, .site-nav__link.active { background: var(--c-red-light); color: var(--c-red); }
+.hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--c-text); border-radius: 1px; transition: all .25s var(--ease); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav--open { display: flex; flex-direction: column; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; background: #fff; padding: 24px; gap: 4px; z-index: 105; overflow-y: auto; }
+.nav--open .site-nav__link { font-size: 18px; padding: 12px; }
+
+/* ==============================
+   PAGE HEADER
+   ============================== */
+.page-header { padding: 48px 0 32px; border-bottom: 3px solid var(--c-red); margin-bottom: 40px; }
+.page-header__title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; color: var(--c-text); line-height: 1.15; }
+.page-header__subtitle { font-size: 15px; color: var(--c-text-soft); margin-top: 8px; max-width: 60ch; }
+
+/* ==============================
+   PAGE CONTENT
+   ============================== */
+.page-content { max-width: 720px; margin: 0 auto 64px; }
+.page-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  font-weight: 700;
+  color: var(--c-text);
+  margin: 40px 0 12px;
+  padding-top: 8px;
+}
+.page-content h2:first-child { margin-top: 0; }
+.page-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin: 28px 0 8px;
+}
+.page-content p {
+  font-size: 16px;
+  color: var(--c-text-soft);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.page-content p.lead {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--c-text);
+  line-height: 1.55;
+}
+.page-content a { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
+.page-content a:hover { color: var(--c-red-dark); }
+
+/* Team grid */
+.team-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 28px; }
+.team-card { display: flex; gap: 16px; align-items: flex-start; padding: 20px; background: var(--c-bg-grey); border-radius: 6px; }
+.team-card__avatar { width: 64px; height: 64px; border-radius: 50%; background: #ddd; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 24px; color: var(--c-text-light); overflow: hidden; }
+.team-card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.team-card__info h4 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--c-text); }
+.team-card__info .role { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-red); margin-bottom: 6px; }
+.team-card__info p { font-size: 14px; color: var(--c-text-soft); line-height: 1.6; margin: 0; }
+
+/* Mission stat row */
+.mission-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 28px 0; }
+.mission-stat { text-align: center; padding: 24px 16px; background: var(--c-bg-grey); border-radius: 6px; }
+.mission-stat__num { font-family: var(--font-display); font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 700; color: var(--c-red); }
+.mission-stat__label { font-size: 12px; color: var(--c-text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+/* ==============================
+   FOOTER
+   ============================== */
+.site-footer { background: var(--c-bg-dark); color: #ccc; margin-top: 64px; padding: 40px 0 24px; font-size: 13px; }
+.site-footer__inner { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
+.site-footer__brand .site-footer__logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.site-footer__brand p { font-size: 12px; color: #999; }
+.site-footer__nav { display: flex; flex-direction: column; gap: 8px; }
+.site-footer__nav a { font-size: 13px; color: #ccc; transition: color .15s; }
+.site-footer__nav a:hover { color: #fff; }
+.site-footer__share { display: flex; gap: 10px; }
+.site-footer__share .share-btn { width: 38px; height: 38px; border: 1px solid var(--c-border-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ccc; transition: all .15s; }
+.site-footer__share .share-btn:hover { border-color: var(--c-red); color: #fff; background: var(--c-red); }
+.site-footer__share .share-btn svg { width: 16px; height: 16px; }
+.site-footer__copy { font-size: 11px; color: #666; text-align: center; border-top: 1px solid var(--c-border-dark); padding-top: 16px; }
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media (min-width: 480px) {
+  .top-bar__tagline { display: inline; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  .mission-stats { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 768px) {
+  .hamburger { display: none; }
+  .site-nav__list { display: flex; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .page-header { padding: 64px 0 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG Sprite -->
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ic-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="ic-weibo" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zm-4.598-4.507c-.493 1.295.921 2.875 2.279 3.078 1.173.178 2.327-.641 2.618-1.8.286-1.144-.394-2.422-1.702-2.824-1.356-.416-2.695.293-3.195 1.546zm4.851 2.901c-.352.899-1.323 1.391-2.168.968-.847-.425-.875-1.434-.531-2.278.351-.855 1.188-1.296 1.973-.96.828.369.965 1.324.726 2.27zm8.762-9.406c-.645-2.975-3.993-5.001-7.195-4.347-.356.072-.517.479-.363.793l.721 1.468c.144.294.493.43.789.349 1.308-.331 2.733.2 3.398 1.406.554 1.006.539 2.187.074 3.064-.143.272-.013.604.269.714l1.573.581c.294.108.622-.056.734-.374l.104-.29c.6-1.754.359-3.563-.104-5.364z"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+  <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3"/></symbol>
+  <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  <symbol id="ic-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07c0-6.63-5.37-12-12-12s-12 5.37-12 12c0 5.99 4.39 10.95 10.13 11.85v-8.38H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.23 2.69.23v2.95h-1.52c-1.49 0-1.95.93-1.95 1.88v2.25h3.33l-.53 3.47h-2.8v8.38C19.61 23.03 24 18.06 24 12.07z"/></symbol>
+  <symbol id="ic-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5a3.02 3.02 0 0 0-2.12 2.14C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></symbol>
+</svg>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar__inner wrap">
+    <div class="top-bar__left">
+      <a href="index.html" class="top-bar__logo">NEWS<span style="font-weight:300">ONLINE</span></a>
+      <span class="top-bar__tagline">Trusted Reporting. Independent Journalism.</span>
+    </div>
+    <div class="top-bar__actions">
+      <button class="top-bar__btn"><svg><use href="#ic-search"/></svg> Search</button>
+      <button class="top-bar__btn"><svg><use href="#ic-user"/></svg> Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+  <div class="site-header__inner wrap">
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="site-nav__list" id="nav-list">
+        <li><a href="index.html" class="site-nav__link">Home</a></li>
+        <li><a href="#" class="site-nav__link">World</a></li>
+        <li><a href="#" class="site-nav__link">Politics</a></li>
+        <li><a href="#" class="site-nav__link">Business</a></li>
+        <li><a href="#" class="site-nav__link">Tech</a></li>
+        <li><a href="#" class="site-nav__link">Arts</a></li>
+        <li><a href="#" class="site-nav__link">Health</a></li>
+        <li><a href="#" class="site-nav__link">Sports</a></li>
+        <li><a href="#" class="site-nav__link">Culture</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="wrap">
+      <h1 class="page-header__title">About Us</h1>
+      <p class="page-header__subtitle">News Online is an independent digital newsroom produced by the School of Journalism and Communication at Xiamen University Malaysia. We report, write, and edit every story with the conviction that fact-based journalism strengthens the communities it serves.</p>
+    </div>
+  </section>
+
+  <!-- Page Content -->
+  <div class="page-content wrap">
+    <p class="lead">Founded in 2020 as part of the JRN209 Advanced Reporting module, News Online has grown from a classroom exercise into a fully-fledged digital publication covering politics, business, technology, health, climate, sports, culture, and the arts. Our reporters are final-year journalism students working under faculty editorial supervision; every byline you see represents months of fieldwork, source development, and rigorous fact-checking.</p>
+
+    <div class="mission-stats">
+      <div class="mission-stat">
+        <div class="mission-stat__num">1,240+</div>
+        <div class="mission-stat__label">Stories Published</div>
+      </div>
+      <div class="mission-stat">
+        <div class="mission-stat__num">47</div>
+        <div class="mission-stat__label">Student Reporters</div>
+      </div>
+      <div class="mission-stat">
+        <div class="mission-stat__num">14</div>
+        <div class="mission-stat__label">Faculty Editors</div>
+      </div>
+      <div class="mission-stat">
+        <div class="mission-stat__num">6</div>
+        <div class="mission-stat__label">Years Running</div>
+      </div>
+    </div>
+
+    <h2>Our Mission</h2>
+    <p>We believe public-interest journalism is a civic good, not a commodity. Every article we publish is free to read, free of paywalls, and funded by the university as an educational and public-service commitment. We do not carry advertising, sponsored content, or native marketing — our only obligation is to the reader and the facts.</p>
+    <p>Our editorial independence is guaranteed by the XMUM Journalism Charter, which ensures that no university administrator, donor, or external party can review or suppress content before publication. Faculty editors hold final editorial authority; student reporters own their bylines.</p>
+
+    <h2>Editorial Standards</h2>
+    <p>Every story published on News Online must clear a five-step verification desk before it goes live:</p>
+    <p>1. <strong>Source check</strong> — At least two named, on-record sources per factual claim; anonymous sourcing requires faculty editor sign-off.<br>
+    2. <strong>Document review</strong> — Primary documents (legislation text, scientific papers, financial filings, court records) are read in full, not summarised from press releases.<br>
+    3. <strong>Data audit</strong> — Any statistic or percentage cited is traced to its original dataset; we publish the source URL in the article footer.<br>
+    4. <strong>Legal read</strong> — Stories involving active litigation, national security, or personal privacy are reviewed by the university's legal advisory panel.<br>
+    5. <strong>Style copy-edit</strong> — Final pass for grammar, house style, and accessibility compliance before CMS publication.</p>
+    <p>Corrections are published prominently at the top of any article found to contain factual error, with a dated note explaining what was changed and why. Readers can submit correction requests to <a href="mailto:corrections@newsonline.jrn209.xmum">corrections@newsonline.jrn209.xmum</a>.</p>
+
+    <h2>Editorial Leadership</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card__avatar"><img src="images/team/xiao-ziyue.jpg" alt="Xiao Ziyue"></div>
+        <div class="team-card__info">
+          <div class="role">Editor-in-Chief</div>
+          <h4>Xiao Ziyue</h4>
+          <p>Final-year Journalism student at Xiamen University Malaysia. Leads the newsroom's editorial strategy and final copy review. Background in science communication — committed to making complex research accessible to general readers while steering investigative coverage across all desks.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card__avatar"><img src="images/team/wang-haoxin.jpg" alt="Wang Haoxin"></div>
+        <div class="team-card__info">
+          <div class="role">Managing Editor</div>
+          <h4>Wang Haoxin</h4>
+          <p>Final-year Journalism student. Coordinates the daily news diary, assigns stories, and manages the editorial calendar. Interested in data journalism, visual storytelling, and audience engagement.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card__avatar"><img src="images/team/wu-qixiang.jpg" alt="Wu Qixiang"></div>
+        <div class="team-card__info">
+          <div class="role">Politics &amp; World Editor</div>
+          <h4>Wu Qixiang</h4>
+          <p>Final-year Journalism student. Oversees political coverage, election reporting, and diplomatic affairs. Focuses on ASEAN regional politics and comparative governance.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card__avatar"><img src="images/team/lin-xiang.jpg" alt="Lin Xiang"></div>
+        <div class="team-card__info">
+          <div class="role">Science &amp; Health Editor</div>
+          <h4>Lin Xiang</h4>
+          <p>Final-year Journalism student. Oversees climate, health, and technology reporting. Passionate about narrative longform journalism and investigative reporting on Southeast Asian affairs.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Contact the Newsroom</h2>
+    <p>General enquiries: <a href="mailto:newsroom@newsonline.jrn209.xmum">newsroom@newsonline.jrn209.xmum</a><br>
+    Story tips (confidential): <a href="mailto:tips@newsonline.jrn209.xmum">tips@newsonline.jrn209.xmum</a><br>
+    Corrections: <a href="mailto:corrections@newsonline.jrn209.xmum">corrections@newsonline.jrn209.xmum</a></p>
+    <p>Visit our <a href="contact.html">Contact page</a> for individual editor emails and office address.</p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer__inner wrap">
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div>
+      <p>University Journalism Course Project &middot; JRN209<br>Trusted Reporting. Independent Journalism.</p>
+    </div>
+    <nav class="site-footer__nav">
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="accessibility.html">Accessibility</a>
+    </nav>
+    <div class="site-footer__share">
+      <button class="share-btn" data-share="facebook" title="Share on Facebook"><svg><use href="#ic-facebook"/></svg></button>
+      <button class="share-btn" data-share="twitter" title="Share on X"><svg><use href="#ic-x"/></svg></button>
+      <button class="share-btn" data-share="instagram" title="Follow on Instagram"><svg><use href="#ic-instagram"/></svg></button>
+      <button class="share-btn" data-share="tiktok" title="Follow on TikTok"><svg><use href="#ic-tiktok"/></svg></button>
+      <button class="share-btn" data-share="youtube" title="Subscribe on YouTube"><svg><use href="#ic-youtube"/></svg></button>
+      <button class="share-btn" data-share="weibo" title="Share on Weibo"><svg><use href="#ic-weibo"/></svg></button>
+      <button class="share-btn" data-share="copy" title="Copy link"><svg><use href="#ic-link"/></svg></button>
+    </div>
+  </div>
+  <p class="site-footer__copy">&copy; 2026 News Online. All rights reserved. XMUM JRN209.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var h = document.getElementById('hamburger');
+  var n = document.getElementById('nav-list');
+  h.addEventListener('click', function(){
+    var open = h.getAttribute('aria-expanded') === 'true';
+    h.setAttribute('aria-expanded', !open);
+    n.classList.toggle('nav--open');
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  n.querySelectorAll('a').forEach(function(l){
+    l.addEventListener('click', function(){
+      h.setAttribute('aria-expanded', 'false');
+      n.classList.remove('nav--open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

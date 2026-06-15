@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — News Online</title>
+<style>
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+</style>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--c-text); background: #fff; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+ul, ol { list-style: none; }
+:root {
+  --c-red: #B80000; --c-red-dark: #8B0000; --c-red-light: rgba(184,0,0,0.08);
+  --c-text: #141414; --c-text-soft: #545658; --c-text-light: #8A8C8E;
+  --c-bg: #ffffff; --c-bg-grey: #f6f6f6; --c-bg-dark: #1a1a1a;
+  --c-border: #e0e0e0; --c-border-dark: #343434;
+  --font-display: Georgia, 'Times New Roman', Times, serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist', 'SF Mono', 'Consolas', monospace;
+  --max-w: 1280px; --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1024px) { .wrap { padding: 0 24px; } }
+
+.top-bar { background: var(--c-red); color: #fff; font-size: 13px; font-weight: 500; }
+.top-bar__inner { display: flex; align-items: center; justify-content: space-between; height: 32px; gap: 16px; }
+.top-bar__left { display: flex; align-items: center; gap: 12px; }
+.top-bar__logo { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+.top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
+.top-bar__actions { display: flex; align-items: center; gap: 8px; }
+.top-bar__btn { color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 3px; transition: background .15s; display: flex; align-items: center; gap: 4px; }
+.top-bar__btn:hover { background: rgba(255,255,255,0.15); }
+.top-bar__btn svg { width: 14px; height: 14px; }
+
+.site-header { background: var(--c-bg); border-bottom: 1px solid var(--c-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+.site-nav { display: flex; align-items: center; }
+.site-nav__list { display: none; gap: 4px; }
+.site-nav__link { display: block; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--c-text); border-radius: 4px; transition: background .15s, color .15s; white-space: nowrap; }
+.site-nav__link:hover { background: var(--c-red-light); color: var(--c-red); }
+.hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--c-text); border-radius: 1px; transition: all .25s var(--ease); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav--open { display: flex; flex-direction: column; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; background: #fff; padding: 24px; gap: 4px; z-index: 105; overflow-y: auto; }
+.nav--open .site-nav__link { font-size: 18px; padding: 12px; }
+
+.page-header { padding: 48px 0 32px; border-bottom: 3px solid var(--c-red); margin-bottom: 40px; }
+.page-header__title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; color: var(--c-text); line-height: 1.15; }
+.page-header__subtitle { font-size: 15px; color: var(--c-text-soft); margin-top: 8px; max-width: 60ch; }
+
+.page-content { max-width: 720px; margin: 0 auto 64px; }
+.page-content section { margin-bottom: 40px; }
+.page-content h2 { font-family: var(--font-display); font-size: clamp(1.15rem, 1.6vw, 1.45rem); font-weight: 700; color: var(--c-text); margin: 0 0 12px; padding-top: 8px; }
+.page-content h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--c-text); margin: 24px 0 8px; }
+.page-content p { font-size: 15px; color: var(--c-text-soft); line-height: 1.75; margin-bottom: 14px; }
+.page-content a { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
+.page-content a:hover { color: var(--c-red-dark); }
+.page-content ul { margin: 0 0 14px 20px; }
+.page-content li { font-size: 15px; color: var(--c-text-soft); line-height: 1.7; margin-bottom: 6px; list-style-type: disc; }
+.page-content .effective-date { font-size: 13px; color: var(--c-text-light); font-style: italic; margin-bottom: 32px; }
+
+.site-footer { background: var(--c-bg-dark); color: #ccc; margin-top: 64px; padding: 40px 0 24px; font-size: 13px; }
+.site-footer__inner { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
+.site-footer__brand .site-footer__logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.site-footer__brand p { font-size: 12px; color: #999; }
+.site-footer__nav { display: flex; flex-direction: column; gap: 8px; }
+.site-footer__nav a { font-size: 13px; color: #ccc; transition: color .15s; }
+.site-footer__nav a:hover { color: #fff; }
+.site-footer__share { display: flex; gap: 10px; }
+.site-footer__share .share-btn { width: 38px; height: 38px; border: 1px solid var(--c-border-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ccc; transition: all .15s; }
+.site-footer__share .share-btn:hover { border-color: var(--c-red); color: #fff; background: var(--c-red); }
+.site-footer__share .share-btn svg { width: 16px; height: 16px; }
+.site-footer__copy { font-size: 11px; color: #666; text-align: center; border-top: 1px solid var(--c-border-dark); padding-top: 16px; }
+
+@media (min-width: 480px) { .top-bar__tagline { display: inline; } }
+@media (min-width: 768px) {
+  .hamburger { display: none; } .site-nav__list { display: flex; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 1024px) { .page-header { padding: 64px 0 40px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="ic-weibo" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zm-4.598-4.507c-.493 1.295.921 2.875 2.279 3.078 1.173.178 2.327-.641 2.618-1.8.286-1.144-.394-2.422-1.702-2.824-1.356-.416-2.695.293-3.195 1.546zm4.851 2.901c-.352.899-1.323 1.391-2.168.968-.847-.425-.875-1.434-.531-2.278.351-.855 1.188-1.296 1.973-.96.828.369.965 1.324.726 2.27zm8.762-9.406c-.645-2.975-3.993-5.001-7.195-4.347-.356.072-.517.479-.363.793l.721 1.468c.144.294.493.43.789.349 1.308-.331 2.733.2 3.398 1.406.554 1.006.539 2.187.074 3.064-.143.272-.013.604.269.714l1.573.581c.294.108.622-.056.734-.374l.104-.29c.6-1.754.359-3.563-.104-5.364z"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+  <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3"/></symbol>
+  <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  <symbol id="ic-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07c0-6.63-5.37-12-12-12s-12 5.37-12 12c0 5.99 4.39 10.95 10.13 11.85v-8.38H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.23 2.69.23v2.95h-1.52c-1.49 0-1.95.93-1.95 1.88v2.25h3.33l-.53 3.47h-2.8v8.38C19.61 23.03 24 18.06 24 12.07z"/></symbol>
+  <symbol id="ic-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5a3.02 3.02 0 0 0-2.12 2.14C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+</svg>
+
+<div class="top-bar">
+  <div class="top-bar__inner wrap">
+    <div class="top-bar__left">
+      <a href="index.html" class="top-bar__logo">NEWS<span style="font-weight:300">ONLINE</span></a>
+      <span class="top-bar__tagline">Trusted Reporting. Independent Journalism.</span>
+    </div>
+    <div class="top-bar__actions">
+      <button class="top-bar__btn"><svg><use href="#ic-search"/></svg> Search</button>
+      <button class="top-bar__btn"><svg><use href="#ic-user"/></svg> Sign In</button>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="site-nav__list" id="nav-list">
+        <li><a href="index.html" class="site-nav__link">Home</a></li>
+        <li><a href="#" class="site-nav__link">World</a></li>
+        <li><a href="#" class="site-nav__link">Politics</a></li>
+        <li><a href="#" class="site-nav__link">Business</a></li>
+        <li><a href="#" class="site-nav__link">Tech</a></li>
+        <li><a href="#" class="site-nav__link">Arts</a></li>
+        <li><a href="#" class="site-nav__link">Health</a></li>
+        <li><a href="#" class="site-nav__link">Sports</a></li>
+        <li><a href="#" class="site-nav__link">Culture</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-header">
+    <div class="wrap">
+      <h1 class="page-header__title">Privacy Policy</h1>
+      <p class="page-header__subtitle">How News Online collects, uses, and protects your personal information. We take privacy seriously — especially because we are an educational institution handling real readers.</p>
+    </div>
+  </section>
+
+  <div class="page-content wrap">
+    <p class="effective-date"><strong>Effective date:</strong> 1 January 2026 &middot; Last updated 1 June 2026</p>
+
+    <section>
+      <h2>1. Who We Are</h2>
+      <p>News Online ("we", "us", "our") is a digital news publication operated by the School of Journalism and Communication at Xiamen University Malaysia (XMUM). Our website is <a href="index.html">newsonline.jrn209.xmum</a>. For the purposes of Malaysia's Personal Data Protection Act 2010 (PDPA) and the EU General Data Protection Regulation (GDPR) where applicable, the data controller is Xiamen University Malaysia, Jalan Sunsuria, Bandar Sunsuria, 43900 Sepang, Selangor, Malaysia.</p>
+      <p>We are a non-commercial educational project. We do not sell advertising, sponsored content, or reader data. Our funding comes entirely from the university's academic budget.</p>
+    </section>
+
+    <section>
+      <h2>2. What Data We Collect</h2>
+      <h3>2.1 Automatically (When You Visit)</h3>
+      <p>Like virtually every website on the internet, our server logs record the following for each page request:</p>
+      <ul>
+        <li>Your IP address (anonymised by zeroing the last octet before storage)</li>
+        <li>Date and time of request</li>
+        <li>Page URL requested</li>
+        <li>User-agent string (browser type and version)</li>
+        <li>Referring URL (if you arrived via a link or search engine)</li>
+      </ul>
+      <p>These logs are kept for 30 days, then permanently deleted. We use them solely to diagnose technical issues and to compile aggregate readership statistics (e.g. "2,400 readers visited the Politics section this week"). We never attempt to identify individual visitors from log data.</p>
+
+      <h3>2.2 Voluntarily (When You Contact Us)</h3>
+      <p>When you submit our <a href="contact.html">contact form</a>, send us an email, or submit a comment on an article, we collect:</p>
+      <ul>
+        <li>Your name (as provided)</li>
+        <li>Your email address</li>
+        <li>The content of your message or comment</li>
+        <li>Timestamp of submission</li>
+      </ul>
+
+      <h3>2.3 Comments and Polls</h3>
+      <p>Our comment system stores your submitted display name, comment text, and timestamp. Comments are publicly visible. We do not require account registration to comment. Our "Have Your Say" poll records only your vote choice — we do not associate votes with IP addresses, cookies, or any identifier. Poll results are aggregated and anonymised.</p>
+
+      <h3>2.4 What We Do NOT Collect</h3>
+      <p>We do not use tracking cookies, advertising cookies, analytics cookies, fingerprinting scripts, or any third-party tracking technology. There is no Facebook Pixel, Google Analytics, or similar tracker on this site. We do not display advertisements and therefore do not run any ad-tech infrastructure.</p>
+    </section>
+
+    <section>
+      <h2>3. How We Use Your Data</h2>
+      <p>We use personal data only for the specific purpose for which you provided it:</p>
+      <ul>
+        <li><strong>Contact form / email:</strong> To respond to your enquiry, tip, or correction request.</li>
+        <li><strong>Comments:</strong> To display your comment alongside the relevant article.</li>
+        <li><strong>Polls:</strong> To tally and display aggregate voting results.</li>
+        <li><strong>Server logs:</strong> For technical diagnostics and aggregate traffic measurement.</li>
+      </ul>
+      <p>We never use your data for marketing, profiling, automated decision-making, or any purpose beyond what you explicitly provided it for.</p>
+    </section>
+
+    <section>
+      <h2>4. Legal Basis</h2>
+      <p>We process personal data on the following legal grounds:</p>
+      <ul>
+        <li><strong>Consent</strong> — When you voluntarily submit a contact form, comment, or vote in a poll, you consent to our processing of that data for the stated purpose.</li>
+        <li><strong>Legitimate interest</strong> — Server logs are processed under legitimate interest (site security and operations). We have assessed that this does not override your rights given the minimal and anonymised nature of the data.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Data Sharing and Storage</h2>
+      <p>We do not share, sell, or rent personal data to any third party. The limited exceptions are:</p>
+      <ul>
+        <li><strong>University IT services</strong> — Our web server is hosted on XMUM infrastructure; system administrators may access server logs for maintenance.</li>
+        <li><strong>Legal obligation</strong> — If required by Malaysian law or a valid court order, we may disclose data to the relevant authority. We will notify affected users where legally permitted.</li>
+      </ul>
+      <p>All data is stored on servers located in Malaysia. If you are accessing this site from outside Malaysia, please be aware that your data will be transferred to and stored in Malaysia, whose data protection laws may differ from your jurisdiction.</p>
+    </section>
+
+    <section>
+      <h2>6. Data Retention</h2>
+      <ul>
+        <li><strong>Server logs:</strong> 30 days, then permanently deleted.</li>
+        <li><strong>Contact form submissions:</strong> Retained for 12 months after the enquiry is resolved, then deleted.</li>
+        <li><strong>Comments:</strong> Retained indefinitely (as part of the published article record) unless you request removal.</li>
+        <li><strong>Poll votes:</strong> Aggregated totals retained indefinitely; individual vote records are not stored.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Your Rights</h2>
+      <p>Depending on your jurisdiction, you may have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> — Request a copy of any personal data we hold about you.</li>
+        <li><strong>Rectification</strong> — Correct inaccurate or incomplete data.</li>
+        <li><strong>Erasure</strong> — Request deletion of your data ("right to be forgotten").</li>
+        <li><strong>Objection</strong> — Object to processing based on legitimate interest.</li>
+        <li><strong>Withdrawal of consent</strong> — Withdraw consent at any time without affecting the lawfulness of prior processing.</li>
+      </ul>
+      <p>To exercise any of these rights, contact our Data Protection Officer at <a href="mailto:dpo@newsonline.jrn209.xmum">dpo@newsonline.jrn209.xmum</a>. We will respond within 30 days. If you believe we have not adequately addressed your concern, you have the right to lodge a complaint with the <a href="#">Personal Data Protection Commissioner of Malaysia</a>.</p>
+    </section>
+
+    <section>
+      <h2>8. Children's Privacy</h2>
+      <p>News Online is a general-audience news publication. We do not knowingly collect personal data from children under 13. If you believe a child has submitted personal data to us, please contact <a href="mailto:dpo@newsonline.jrn209.xmum">dpo@newsonline.jrn209.xmum</a> and we will promptly delete it.</p>
+    </section>
+
+    <section>
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this privacy policy from time to time. Material changes will be noted on our homepage for 30 days. The "Effective date" at the top of this page reflects the most recent revision. Continued use of the site after changes constitutes acceptance of the revised policy.</p>
+    </section>
+
+    <section>
+      <h2>10. Contact</h2>
+      <p>Questions about this privacy policy? Write to:<br>
+      Data Protection Officer<br>
+      News Online, School of Journalism and Communication<br>
+      Xiamen University Malaysia<br>
+      <a href="mailto:dpo@newsonline.jrn209.xmum">dpo@newsonline.jrn209.xmum</a></p>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner wrap">
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div>
+      <p>University Journalism Course Project &middot; JRN209<br>Trusted Reporting. Independent Journalism.</p>
+    </div>
+    <nav class="site-footer__nav">
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="accessibility.html">Accessibility</a>
+    </nav>
+    <div class="site-footer__share">
+      <button class="share-btn" data-share="facebook" title="Share on Facebook"><svg><use href="#ic-facebook"/></svg></button>
+      <button class="share-btn" data-share="twitter" title="Share on X"><svg><use href="#ic-x"/></svg></button>
+      <button class="share-btn" data-share="instagram" title="Follow on Instagram"><svg><use href="#ic-instagram"/></svg></button>
+      <button class="share-btn" data-share="tiktok" title="Follow on TikTok"><svg><use href="#ic-tiktok"/></svg></button>
+      <button class="share-btn" data-share="youtube" title="Subscribe on YouTube"><svg><use href="#ic-youtube"/></svg></button>
+      <button class="share-btn" data-share="weibo" title="Share on Weibo"><svg><use href="#ic-weibo"/></svg></button>
+      <button class="share-btn" data-share="copy" title="Copy link"><svg><use href="#ic-link"/></svg></button>
+    </div>
+  </div>
+  <p class="site-footer__copy">&copy; 2026 News Online. All rights reserved. XMUM JRN209.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var h = document.getElementById('hamburger');
+  var n = document.getElementById('nav-list');
+  h.addEventListener('click', function(){
+    var open = h.getAttribute('aria-expanded') === 'true';
+    h.setAttribute('aria-expanded', !open);
+    n.classList.toggle('nav--open');
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  n.querySelectorAll('a').forEach(function(l){
+    l.addEventListener('click', function(){
+      h.setAttribute('aria-expanded', 'false');
+      n.classList.remove('nav--open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

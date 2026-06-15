@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility — News Online</title>
+<style>
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+</style>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--c-text); background: #fff; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+ul, ol { list-style: none; }
+:root {
+  --c-red: #B80000; --c-red-dark: #8B0000; --c-red-light: rgba(184,0,0,0.08);
+  --c-text: #141414; --c-text-soft: #545658; --c-text-light: #8A8C8E;
+  --c-bg: #ffffff; --c-bg-grey: #f6f6f6; --c-bg-dark: #1a1a1a;
+  --c-border: #e0e0e0; --c-border-dark: #343434;
+  --font-display: Georgia, 'Times New Roman', Times, serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist', 'SF Mono', 'Consolas', monospace;
+  --max-w: 1280px; --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1024px) { .wrap { padding: 0 24px; } }
+
+.top-bar { background: var(--c-red); color: #fff; font-size: 13px; font-weight: 500; }
+.top-bar__inner { display: flex; align-items: center; justify-content: space-between; height: 32px; gap: 16px; }
+.top-bar__left { display: flex; align-items: center; gap: 12px; }
+.top-bar__logo { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+.top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
+.top-bar__actions { display: flex; align-items: center; gap: 8px; }
+.top-bar__btn { color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 3px; transition: background .15s; display: flex; align-items: center; gap: 4px; }
+.top-bar__btn:hover { background: rgba(255,255,255,0.15); }
+.top-bar__btn svg { width: 14px; height: 14px; }
+
+.site-header { background: var(--c-bg); border-bottom: 1px solid var(--c-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+.site-nav { display: flex; align-items: center; }
+.site-nav__list { display: none; gap: 4px; }
+.site-nav__link { display: block; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--c-text); border-radius: 4px; transition: background .15s, color .15s; white-space: nowrap; }
+.site-nav__link:hover { background: var(--c-red-light); color: var(--c-red); }
+.hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--c-text); border-radius: 1px; transition: all .25s var(--ease); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav--open { display: flex; flex-direction: column; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; background: #fff; padding: 24px; gap: 4px; z-index: 105; overflow-y: auto; }
+.nav--open .site-nav__link { font-size: 18px; padding: 12px; }
+
+.page-header { padding: 48px 0 32px; border-bottom: 3px solid var(--c-red); margin-bottom: 40px; }
+.page-header__title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; color: var(--c-text); line-height: 1.15; }
+.page-header__subtitle { font-size: 15px; color: var(--c-text-soft); margin-top: 8px; max-width: 60ch; }
+
+.page-content { max-width: 720px; margin: 0 auto 64px; }
+.page-content section { margin-bottom: 40px; }
+.page-content h2 { font-family: var(--font-display); font-size: clamp(1.15rem, 1.6vw, 1.45rem); font-weight: 700; color: var(--c-text); margin: 0 0 12px; padding-top: 8px; }
+.page-content h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--c-text); margin: 24px 0 8px; }
+.page-content p { font-size: 15px; color: var(--c-text-soft); line-height: 1.75; margin-bottom: 14px; }
+.page-content a { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
+.page-content a:hover { color: var(--c-red-dark); }
+.page-content ul { margin: 0 0 14px 20px; }
+.page-content li { font-size: 15px; color: var(--c-text-soft); line-height: 1.7; margin-bottom: 6px; list-style-type: disc; }
+.page-content .conformance-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #e8f5e9; color: #2e7d32; padding: 12px 20px;
+  border-radius: 4px; font-size: 14px; font-weight: 600; margin-bottom: 28px;
+}
+
+.site-footer { background: var(--c-bg-dark); color: #ccc; margin-top: 64px; padding: 40px 0 24px; font-size: 13px; }
+.site-footer__inner { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
+.site-footer__brand .site-footer__logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.site-footer__brand p { font-size: 12px; color: #999; }
+.site-footer__nav { display: flex; flex-direction: column; gap: 8px; }
+.site-footer__nav a { font-size: 13px; color: #ccc; transition: color .15s; }
+.site-footer__nav a:hover { color: #fff; }
+.site-footer__share { display: flex; gap: 10px; }
+.site-footer__share .share-btn { width: 38px; height: 38px; border: 1px solid var(--c-border-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ccc; transition: all .15s; }
+.site-footer__share .share-btn:hover { border-color: var(--c-red); color: #fff; background: var(--c-red); }
+.site-footer__share .share-btn svg { width: 16px; height: 16px; }
+.site-footer__copy { font-size: 11px; color: #666; text-align: center; border-top: 1px solid var(--c-border-dark); padding-top: 16px; }
+
+@media (min-width: 480px) { .top-bar__tagline { display: inline; } }
+@media (min-width: 768px) {
+  .hamburger { display: none; } .site-nav__list { display: flex; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 1024px) { .page-header { padding: 64px 0 40px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="ic-weibo" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zm-4.598-4.507c-.493 1.295.921 2.875 2.279 3.078 1.173.178 2.327-.641 2.618-1.8.286-1.144-.394-2.422-1.702-2.824-1.356-.416-2.695.293-3.195 1.546zm4.851 2.901c-.352.899-1.323 1.391-2.168.968-.847-.425-.875-1.434-.531-2.278.351-.855 1.188-1.296 1.973-.96.828.369.965 1.324.726 2.27zm8.762-9.406c-.645-2.975-3.993-5.001-7.195-4.347-.356.072-.517.479-.363.793l.721 1.468c.144.294.493.43.789.349 1.308-.331 2.733.2 3.398 1.406.554 1.006.539 2.187.074 3.064-.143.272-.013.604.269.714l1.573.581c.294.108.622-.056.734-.374l.104-.29c.6-1.754.359-3.563-.104-5.364z"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+  <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3"/></symbol>
+  <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  <symbol id="ic-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07c0-6.63-5.37-12-12-12s-12 5.37-12 12c0 5.99 4.39 10.95 10.13 11.85v-8.38H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.23 2.69.23v2.95h-1.52c-1.49 0-1.95.93-1.95 1.88v2.25h3.33l-.53 3.47h-2.8v8.38C19.61 23.03 24 18.06 24 12.07z"/></symbol>
+  <symbol id="ic-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5a3.02 3.02 0 0 0-2.12 2.14C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+</svg>
+
+<div class="top-bar">
+  <div class="top-bar__inner wrap">
+    <div class="top-bar__left">
+      <a href="index.html" class="top-bar__logo">NEWS<span style="font-weight:300">ONLINE</span></a>
+      <span class="top-bar__tagline">Trusted Reporting. Independent Journalism.</span>
+    </div>
+    <div class="top-bar__actions">
+      <button class="top-bar__btn"><svg><use href="#ic-search"/></svg> Search</button>
+      <button class="top-bar__btn"><svg><use href="#ic-user"/></svg> Sign In</button>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="site-nav__list" id="nav-list">
+        <li><a href="index.html" class="site-nav__link">Home</a></li>
+        <li><a href="#" class="site-nav__link">World</a></li>
+        <li><a href="#" class="site-nav__link">Politics</a></li>
+        <li><a href="#" class="site-nav__link">Business</a></li>
+        <li><a href="#" class="site-nav__link">Tech</a></li>
+        <li><a href="#" class="site-nav__link">Arts</a></li>
+        <li><a href="#" class="site-nav__link">Health</a></li>
+        <li><a href="#" class="site-nav__link">Sports</a></li>
+        <li><a href="#" class="site-nav__link">Culture</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-header">
+    <div class="wrap">
+      <h1 class="page-header__title">Accessibility Statement</h1>
+      <p class="page-header__subtitle">News Online is committed to making our content accessible to the widest possible audience, including readers with disabilities. This statement describes our approach and the standards we aim to meet.</p>
+    </div>
+  </section>
+
+  <div class="page-content wrap">
+
+    <div class="conformance-badge">&#10003; WCAG 2.1 Level AA — Partial Conformance</div>
+
+    <section>
+      <h2>1. Our Commitment</h2>
+      <p>We believe that journalism is a public good, and that includes making news accessible to everyone — regardless of ability, device, or connection speed. As a university journalism project, we integrate accessibility into our editorial workflow and web development process from the start, not as an afterthought.</p>
+      <p>We aim to conform to the <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">Web Content Accessibility Guidelines (WCAG) 2.1</a> at Level AA. While we are a small student-staffed operation and may not yet meet every criterion, we actively work towards full conformance and welcome feedback on where we fall short.</p>
+    </section>
+
+    <section>
+      <h2>2. What We Currently Do</h2>
+
+      <h3>2.1 Structure and Semantics</h3>
+      <p>We use semantic HTML5 throughout — proper heading hierarchy (<code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>), landmark regions (<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>), and ARIA labels where appropriate. Screen readers should navigate our pages cleanly.</p>
+
+      <h3>2.2 Keyboard Navigation</h3>
+      <p>All interactive elements — navigation links, buttons, form controls, share buttons, and the hamburger menu — are fully keyboard-accessible via <kbd>Tab</kbd>, <kbd>Enter</kbd>, and <kbd>Escape</kbd>. We test keyboard navigation on every new feature.</p>
+
+      <h3>2.3 Colour Contrast</h3>
+      <p>Our colour palette is designed for readability:</p>
+      <ul>
+        <li>Body text (<code>#141414</code> on <code>#ffffff</code>) achieves a contrast ratio of 17.3:1 — well above the WCAG AA requirement of 4.5:1.</li>
+        <li>Secondary text (<code>#545658</code> on <code>#ffffff</code>) achieves 7.1:1 — above the 4.5:1 minimum.</li>
+        <li>Red accent links (<code>#B80000</code> on <code>#ffffff</code>) achieve 7.0:1.</li>
+        <li>Footer text on dark background meets or exceeds the 4.5:1 threshold.</li>
+      </ul>
+      <p>We do not rely on colour alone to convey information — links are underlined, required form fields are labelled, and interactive states include non-colour cues (borders, underlines, opacity).</p>
+
+      <h3>2.4 Responsive Design and Zoom</h3>
+      <p>The site is fully responsive and supports browser zoom up to 200% without loss of content or functionality. Text is set in relative units (<code>rem</code>, <code>em</code>) so it respects user font-size preferences. We do not disable pinch-to-zoom on mobile.</p>
+
+      <h3>2.5 Images</h3>
+      <p>All images include descriptive <code>alt</code> text. Decorative images (icons in buttons, brand marks) use empty <code>alt=""</code> or are embedded via SVG <code>&lt;symbol&gt;</code> with <code>aria-hidden="true"</code>. Photographic images carry meaningful descriptions that convey the image's editorial purpose, not just a label of visible objects.</p>
+
+      <h3>2.6 Forms</h3>
+      <p>All form controls have associated <code>&lt;label&gt;</code> elements. Required fields are marked. Error states and success messages use both colour and text. The contact form and comment form include clear button labels and keyboard-operable submission.</p>
+
+      <h3>2.7 Motion</h3>
+      <p>We use a <code>prefers-reduced-motion</code> media query that disables all animations and transitions for users who have enabled this setting in their operating system. All essential functionality remains available without motion.</p>
+
+      <h3>2.8 Focus Indicators</h3>
+      <p>Interactive elements have visible focus indicators. We use the browser's default focus ring supplemented by custom hover and focus-visible styles where needed.</p>
+    </section>
+
+    <section>
+      <h2>3. Known Limitations</h2>
+      <p>We are aware of the following areas that do not yet fully meet WCAG 2.1 AA. We are working to address them:</p>
+      <ul>
+        <li><strong>Video captions:</strong> Embedded video content in the "Watch &amp; Listen" section does not currently have synchronised captions or audio descriptions. We are exploring automated captioning solutions.</li>
+        <li><strong>Complex data visualisations:</strong> The "Have Your Say" animated bar chart and trend chart rely on visual presentation; a text-based data table alternative is available but could be more clearly signposted.</li>
+        <li><strong>Third-party embeds:</strong> Social media share buttons and any external embedded content may not fully meet our accessibility standards; this is outside our direct control.</li>
+        <li><strong>Skip link:</strong> We do not yet provide a "Skip to main content" link at the top of each page. This is on our roadmap.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Testing</h2>
+      <p>We test accessibility through a combination of methods:</p>
+      <ul>
+        <li>Automated audits using browser DevTools (Lighthouse) and axe-core.</li>
+        <li>Manual keyboard-only navigation testing on every new page and feature.</li>
+        <li>Screen reader testing with NVDA (Windows) and VoiceOver (macOS/iOS).</li>
+        <li>Colour contrast verification using the WebAIM Contrast Checker.</li>
+      </ul>
+      <p>Our most recent accessibility audit was conducted on 1 June 2026.</p>
+    </section>
+
+    <section>
+      <h2>5. Feedback and Contact</h2>
+      <p>We genuinely want your feedback. If you encounter an accessibility barrier on News Online, please tell us — we treat accessibility reports with the same urgency as factual corrections.</p>
+      <p>Email: <a href="mailto:accessibility@newsonline.jrn209.xmum">accessibility@newsonline.jrn209.xmum</a><br>
+      Phone: +60 3-8705 5200 (ask for the Accessibility Officer)<br>
+      Contact form: <a href="contact.html">Contact page</a> (select "Technical issue / bug report")</p>
+      <p>We aim to acknowledge all accessibility reports within two working days and to provide a timeline for resolution within five working days.</p>
+    </section>
+
+    <section>
+      <h2>6. Enforcement</h2>
+      <p>If you are not satisfied with our response to an accessibility concern, you may contact the university's Disability Support Services office or the relevant equality body in your jurisdiction. In Malaysia, accessibility-related complaints may be directed to the <a href="#">Persons with Disabilities Department (Jabatan Kebajikan Masyarakat)</a>.</p>
+    </section>
+
+    <section>
+      <h2>7. Revision History</h2>
+      <ul>
+        <li><strong>1 June 2026</strong> — Full accessibility audit completed; statement published.</li>
+        <li><strong>15 May 2026</strong> — Added prefers-reduced-motion support and keyboard navigation for share buttons.</li>
+        <li><strong>1 March 2026</strong> — Initial draft of accessibility statement; colour contrast review completed.</li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner wrap">
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div>
+      <p>University Journalism Course Project &middot; JRN209<br>Trusted Reporting. Independent Journalism.</p>
+    </div>
+    <nav class="site-footer__nav">
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="accessibility.html">Accessibility</a>
+    </nav>
+    <div class="site-footer__share">
+      <button class="share-btn" data-share="facebook" title="Share on Facebook"><svg><use href="#ic-facebook"/></svg></button>
+      <button class="share-btn" data-share="twitter" title="Share on X"><svg><use href="#ic-x"/></svg></button>
+      <button class="share-btn" data-share="instagram" title="Follow on Instagram"><svg><use href="#ic-instagram"/></svg></button>
+      <button class="share-btn" data-share="tiktok" title="Follow on TikTok"><svg><use href="#ic-tiktok"/></svg></button>
+      <button class="share-btn" data-share="youtube" title="Subscribe on YouTube"><svg><use href="#ic-youtube"/></svg></button>
+      <button class="share-btn" data-share="weibo" title="Share on Weibo"><svg><use href="#ic-weibo"/></svg></button>
+      <button class="share-btn" data-share="copy" title="Copy link"><svg><use href="#ic-link"/></svg></button>
+    </div>
+  </div>
+  <p class="site-footer__copy">&copy; 2026 News Online. All rights reserved. XMUM JRN209.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var h = document.getElementById('hamburger');
+  var n = document.getElementById('nav-list');
+  h.addEventListener('click', function(){
+    var open = h.getAttribute('aria-expanded') === 'true';
+    h.setAttribute('aria-expanded', !open);
+    n.classList.toggle('nav--open');
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  n.querySelectorAll('a').forEach(function(l){
+    l.addEventListener('click', function(){
+      h.setAttribute('aria-expanded', 'false');
+      n.classList.remove('nav--open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

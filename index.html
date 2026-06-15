@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News Online — Home</title>
+<style>
+/* Self-hosted Geist — no external CDN, works offline + in China */
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('fonts/Geist-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+</style>
+<style>
+/* ==============================
+   RESET & BASE
+   ============================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--c-text);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+ul, ol { list-style: none; }
+input, textarea { font: inherit; }
+
+/* ==============================
+   DESIGN TOKENS
+   ============================== */
+:root {
+  --c-red:        #B80000;
+  --c-red-dark:   #8B0000;
+  --c-red-light:  rgba(184,0,0,0.08);
+  --c-text:       #141414;
+  --c-text-soft:  #545658;
+  --c-text-light: #8A8C8E;
+  --c-bg:         #ffffff;
+  --c-bg-grey:    #f6f6f6;
+  --c-bg-dark:    #1a1a1a;
+  --c-border:     #e0e0e0;
+  --c-border-dark:#343434;
+  --font-display: Georgia, 'Times New Roman', Times, serif;
+  --font-body:    'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'Geist', 'SF Mono', 'Consolas', monospace;
+  --max-w:        1280px;
+  --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==============================
+   UTILITY
+   ============================== */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1024px) { .wrap { padding: 0 24px; } }
+
+/* ==============================
+   SVG SPRITE
+   ============================== */
+.icon-sprite { display: none; }
+
+/* ==============================
+   TOP BAR (BBC-style red banner)
+   ============================== */
+.top-bar {
+  position: relative;
+  z-index: 250;
+  background: var(--c-red);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+}
+.top-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  gap: 16px;
+}
+.top-bar__left { display: flex; align-items: center; gap: 12px; }
+.top-bar__logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+.top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
+.top-bar__actions { display: flex; align-items: center; gap: 8px; }
+.top-bar__btn {
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  transition: background .15s;
+  display: flex; align-items: center; gap: 4px;
+}
+.top-bar__btn:hover { background: rgba(255,255,255,0.15); }
+.top-bar__btn svg { width: 14px; height: 14px; }
+.top-bar__btn--active { background: rgba(255,255,255,0.2); }
+
+/* ==============================
+   SEARCH PANEL — compact dropdown
+   ============================== */
+.top-bar__actions { position: relative; }
+.search-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  z-index: 200;
+  animation: searchSlideIn .2s var(--ease);
+}
+/* Arrow pointing up at search button */
+.search-panel::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  right: 80px;
+  width: 12px;
+  height: 12px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-right: none;
+  border-bottom: none;
+  transform: rotate(45deg);
+}
+.search-panel--open { display: block; }
+@keyframes searchSlideIn { from { opacity: 0; transform: translateY(-6px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.search-panel__inner {
+  padding: 16px;
+}
+.search-panel__form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--c-border);
+  border-radius: 8px;
+  padding: 9px 14px;
+  transition: border-color .2s;
+  background: var(--c-bg-grey);
+}
+.search-panel__form:focus-within { border-color: var(--c-red); background: var(--c-bg); }
+.search-panel__form svg { width: 18px; height: 18px; color: var(--c-text-light); flex-shrink: 0; }
+.search-panel__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--c-text);
+  background: transparent;
+}
+.search-panel__input::placeholder { color: var(--c-text-light); }
+.search-panel__close {
+  padding: 6px;
+  color: var(--c-text-light);
+  border-radius: 6px;
+  transition: all .15s;
+  font-size: 18px;
+  line-height: 1;
+}
+.search-panel__close:hover { background: var(--c-bg-grey); color: var(--c-text); }
+.search-panel__trending {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.search-panel__trending-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-text-soft);
+}
+.search-panel__trending a {
+  font-size: 12px;
+  padding: 4px 10px;
+  color: var(--c-text);
+  background: var(--c-bg-grey);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  transition: all .15s;
+}
+.search-panel__trending a:hover { background: var(--c-red-light); color: var(--c-red); }
+.search-panel__backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+}
+.search-panel__backdrop--open { display: block; }
+
+/* Mobile: search panel full-width below top bar */
+@media (max-width: 480px) {
+  .search-panel {
+    position: fixed;
+    top: 32px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    border-radius: 0 0 12px 12px;
+  }
+  .search-panel::before { display: none; }
+}
+
+/* ==============================
+   SIGN-IN MODAL
+   ============================== */
+.signin-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  animation: signinFadeIn .2s ease;
+}
+.signin-overlay--open { display: flex; }
+@keyframes signinFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.signin-modal {
+  background: var(--c-bg);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: signinSlideUp .3s var(--ease);
+  padding: 32px 28px 28px;
+  position: relative;
+}
+@keyframes signinSlideUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.signin-modal__close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 20px;
+  color: var(--c-text-light);
+  transition: all .15s;
+}
+.signin-modal__close:hover { background: var(--c-bg-grey); color: var(--c-text); }
+.signin-modal__brand {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.signin-modal__logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-red);
+  letter-spacing: -0.5px;
+}
+.signin-modal__title { font-size: 20px; font-weight: 700; color: var(--c-text); margin: 12px 0 4px; }
+.signin-modal__subtitle { font-size: 13px; color: var(--c-text-soft); }
+
+.signin-modal__field { margin-bottom: 16px; }
+.signin-modal__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: 6px;
+}
+.signin-modal__input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  border: 1.5px solid var(--c-border);
+  border-radius: 8px;
+  transition: border-color .2s;
+  outline: none;
+  background: var(--c-bg);
+}
+.signin-modal__input:focus { border-color: var(--c-red); box-shadow: 0 0 0 3px var(--c-red-light); }
+.signin-modal__forgot {
+  display: block;
+  text-align: right;
+  font-size: 13px;
+  color: var(--c-red);
+  margin-top: -8px;
+  margin-bottom: 20px;
+}
+.signin-modal__forgot:hover { text-decoration: underline; }
+.signin-modal__submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--c-red);
+  border-radius: 8px;
+  transition: background .15s;
+}
+.signin-modal__submit:hover { background: var(--c-red-dark); }
+.signin-modal__divider {
+  display: flex; align-items: center;
+  margin: 20px 0;
+  font-size: 12px;
+  color: var(--c-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.signin-modal__divider::before, .signin-modal__divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--c-border);
+}
+.signin-modal__divider::before { margin-right: 14px; }
+.signin-modal__divider::after { margin-left: 14px; }
+
+.signin-modal__social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.signin-modal__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1.5px solid var(--c-border);
+  border-radius: 8px;
+  transition: all .15s;
+  background: var(--c-bg);
+}
+.signin-modal__social-btn:hover { background: var(--c-bg-grey); border-color: #ccc; }
+.signin-modal__social-btn svg { width: 20px; height: 20px; }
+.signin-modal__footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--c-text-soft);
+}
+.signin-modal__footer a { color: var(--c-red); font-weight: 600; }
+.signin-modal__footer a:hover { text-decoration: underline; }
+
+/* ==============================
+   HEADER / NAV
+   ============================== */
+.site-header {
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+}
+.site-nav { display: flex; align-items: center; }
+.site-nav__list { display: none; gap: 4px; }
+.site-nav__link {
+  display: block;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-text);
+  border-radius: 4px;
+  transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.site-nav__link:hover, .site-nav__link.active { background: var(--c-red-light); color: var(--c-red); }
+
+/* Hamburger */
+.hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--c-text); border-radius: 1px; transition: all .25s var(--ease); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav overlay */
+.nav--open {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: var(--nav-top, 80px); left: 0; right: 0; bottom: 0;
+  background: #fff;
+  padding: 24px;
+  gap: 4px;
+  z-index: 105;
+  overflow-y: auto;
+}
+.nav--open .site-nav__link { font-size: 18px; padding: 12px; }
+	/* ==============================
+	   LEADERBOARD AD (IAB 970×90)
+	   ============================== */
+	.ad-leaderboard {
+	  background: #f2f2f2;
+	  border-bottom: 1px solid var(--c-border);
+	}
+	.ad-leaderboard__inner {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  padding: 8px 0 10px;
+	}
+	.ad-leaderboard__label {
+	  font-family: var(--font-body);
+	  font-size: 10px;
+	  font-weight: 500;
+	  text-transform: uppercase;
+	  letter-spacing: 0.12em;
+	  color: var(--c-text-light);
+	  margin-bottom: 6px;
+	  display: flex;
+	  align-items: center;
+	  gap: 4px;
+	  user-select: none;
+	}
+	.ad-leaderboard__label::after {
+	  content: "";
+	  display: inline-block;
+	  width: 12px; height: 12px;
+	  background: var(--c-text-light);
+	  -webkit-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 2.3l5.3 3.1c.8.4 1.2 1.2 1.2 2.1v6.2c0 .9-.5 1.7-1.2 2.1l-5.3 3.1c-.8.4-1.7.4-2.5 0l-5.3-3.1c-.8-.4-1.2-1.2-1.2-2.1V7.5c0-.9.5-1.7 1.2-2.1L11 2.3c.8-.4 1.7-.4 2.5 0z"/><path fill="white" d="M11.5 7.5h1v5h-1zM11.5 13.5h1v1h-1z"/></svg>') no-repeat center;
+	  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 2.3l5.3 3.1c.8.4 1.2 1.2 1.2 2.1v6.2c0 .9-.5 1.7-1.2 2.1l-5.3 3.1c-.8.4-1.7.4-2.5 0l-5.3-3.1c-.8-.4-1.2-1.2-1.2-2.1V7.5c0-.9.5-1.7 1.2-2.1L11 2.3c.8-.4 1.7-.4 2.5 0z"/><path fill="white" d="M11.5 7.5h1v5h-1zM11.5 13.5h1v1h-1z"/></svg>') no-repeat center;
+	  -webkit-mask-size: contain; mask-size: contain;
+	}
+	.ad-leaderboard__slot {
+	  position: relative;
+	  width: 100%;
+	  max-width: 970px;
+	  height: 90px;
+	  background: #fff;
+	  border: 1px dashed var(--c-border);
+	  border-radius: 4px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  overflow: hidden;
+	  transition: border-color .2s, box-shadow .2s;
+	}
+	.ad-leaderboard__slot:hover {
+	  border-color: var(--c-text-light);
+	  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+	}
+	/* Mock ad creative */
+	.ad-leaderboard__creative {
+	  display: flex;
+	  align-items: center;
+	  width: 100%;
+	  height: 100%;
+	  padding: 0 24px;
+	  gap: 20px;
+	}
+	.ad-leaderboard__creative-logo {
+	  flex-shrink: 0;
+	  width: 56px; height: 56px;
+	  border-radius: 12px;
+	  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+	  display: flex; align-items: center; justify-content: center;
+	  color: #fff;
+	  font-family: var(--font-display);
+	  font-size: 22px;
+	  font-weight: 700;
+	}
+	.ad-leaderboard__creative-body {
+	  flex: 1;
+	  min-width: 0;
+	}
+	.ad-leaderboard__creative-headline {
+	  font-family: var(--font-display);
+	  font-size: 20px;
+	  font-weight: 700;
+	  color: var(--c-text);
+	  line-height: 1.2;
+	  margin-bottom: 2px;
+	}
+	.ad-leaderboard__creative-desc {
+	  font-size: 13px;
+	  color: var(--c-text-soft);
+	  line-height: 1.4;
+	}
+	.ad-leaderboard__creative-cta {
+	  flex-shrink: 0;
+	  display: inline-block;
+	  padding: 10px 22px;
+	  background: var(--c-red);
+	  color: #fff;
+	  font-size: 13px;
+	  font-weight: 600;
+	  border-radius: 4px;
+	  transition: background .15s;
+	  white-space: nowrap;
+	}
+	.ad-leaderboard__creative-cta:hover { background: var(--c-red-dark); }
+	/* close button */
+	.ad-leaderboard__close {
+	  position: absolute;
+	  top: 4px; right: 8px;
+	  width: 20px; height: 20px;
+	  display: flex; align-items: center; justify-content: center;
+	  font-size: 14px;
+	  color: var(--c-text-light);
+	  border-radius: 2px;
+	  transition: color .15s, background .15s;
+	  z-index: 2;
+	}
+	.ad-leaderboard__close:hover { color: var(--c-text); background: rgba(0,0,0,0.06); }
+	/* mobile */
+	@media (max-width: 767px) {
+	  .ad-leaderboard__slot { height: 50px; }
+	  .ad-leaderboard__creative { padding: 0 12px; gap: 10px; }
+	  .ad-leaderboard__creative-logo { width: 36px; height: 36px; border-radius: 8px; font-size: 15px; }
+	  .ad-leaderboard__creative-headline { font-size: 14px; }
+	  .ad-leaderboard__creative-desc { display: none; }
+	  .ad-leaderboard__creative-cta { padding: 6px 14px; font-size: 12px; }
+	}
+
+/* ==============================
+   HERO SECTION
+   ============================== */
+.hero { padding: 24px 0; border-bottom: 1px solid var(--c-border); }
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.hero__primary {
+  position: relative;
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: 16px;
+}
+.hero__img {
+  aspect-ratio: 16/9;
+  background: var(--c-bg-grey);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.hero__img img { width: 100%; height: 100%; object-fit: cover; }
+.hero__img svg { width: 40px; height: 40px; opacity: 0.3; color: var(--c-text-light); }
+.hero__img--placeholder { border: none; background: #e8e8e8; }
+.hero__img--placeholder:hover { background: #d0d0d0; }
+.hero__kicker {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-red);
+  margin-bottom: 6px;
+}
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--c-text);
+  margin-bottom: 8px;
+  transition: color .15s;
+}
+a:hover .hero__headline { color: var(--c-red); }
+.hero__headline--placeholder { color: var(--c-text-light); font-style: italic; }
+.hero__summary {
+  font-size: 14px;
+  color: var(--c-text-soft);
+  line-height: 1.6;
+  margin-bottom: 8px;
+  max-width: 65ch;
+}
+.hero__summary--placeholder { color: var(--c-text-light); font-style: italic; }
+.hero__meta {
+  font-size: 12px;
+  color: var(--c-text-light);
+  display: flex; gap: 12px; align-items: center;
+}
+.hero__meta span { color: var(--c-text-soft); font-weight: 500; }
+
+/* Secondary hero */
+.hero__side { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hero__side .hero__img { aspect-ratio: 16/9; }
+.hero__side .hero__img svg { width: 24px; height: 24px; }
+.hero__subheadline {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.25;
+  transition: color .15s;
+}
+a:hover .hero__subheadline { color: var(--c-red); }
+
+/* ==============================
+   MAIN LAYOUT (2-col with sidebar)
+   ============================== */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+/* ==============================
+   TOP STORIES GRID
+   ============================== */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--c-red);
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.section-title a { font-size: 12px; font-weight: 500; color: var(--c-red); font-family: var(--font-body); }
+.stories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.story-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--c-border);
+  transition: background .15s;
+}
+.story-item:hover { background: var(--c-bg-grey); margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 4px; }
+.story-item__img {
+  aspect-ratio: 16/9;
+  background: var(--c-bg-grey);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.story-item__img img { width: 100%; height: 100%; object-fit: cover; }
+.story-item__img svg { width: 28px; height: 28px; opacity: 0.25; color: var(--c-text-light); }
+.story-item__kicker {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-red);
+  margin-bottom: 4px;
+  display: block;
+  font-family: var(--font-body);
+}
+.story-item__title {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 4px;
+  transition: color .15s;
+}
+.story-item:hover .story-item__title { color: var(--c-red); }
+.story-item__meta {
+  font-size: 11px;
+  color: var(--c-text-light);
+  display: flex; gap: 8px;
+}
+.story-item__meta span { color: var(--c-text-soft); font-weight: 500; }
+
+/* ==============================
+   SIDEBAR
+   ============================== */
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+/* Most Read */
+.most-read { background: var(--c-bg-grey); padding: 16px; border-radius: 4px; }
+.most-read__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.most-read__list { counter-reset: mr; }
+.most-read__item {
+  counter-increment: mr;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--c-border);
+  display: flex; gap: 12px; align-items: flex-start;
+  transition: background .15s;
+}
+.most-read__item:last-child { border-bottom: none; }
+.most-read__item::before {
+  content: counter(mr);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--c-red);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+.most-read__item:hover .most-read__text { color: var(--c-red); }
+.most-read__text {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  transition: color .15s;
+}
+
+/* Have Your Say (poll) */
+.poll-widget {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  padding: 16px;
+}
+.poll-widget__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.poll-widget__subtitle {
+  font-size: 12px;
+  color: var(--c-text-soft);
+  margin-bottom: 12px;
+}
+.poll-options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.poll-opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .15s;
+  min-height: 44px;
+}
+.poll-opt:hover { background: var(--c-bg-grey); }
+.poll-opt:has(input:checked) {
+  border-color: var(--c-red);
+  background: var(--c-red-light);
+  border-left: 3px solid var(--c-red);
+}
+.poll-opt input[type="radio"] { appearance: none; width: 16px; height: 16px; border: 2px solid var(--c-border); border-radius: 50%; flex-shrink: 0; transition: border-color .15s; }
+.poll-opt input[type="radio"]:checked { border-color: var(--c-red); border-width: 5px; }
+.poll-opt__label { font-size: 13px; font-weight: 500; }
+
+.poll-results { display: none; overflow: hidden; }
+.poll-res-chart { margin-bottom: 10px; }
+.poll-chart-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.poll-chart-label {
+  width: 60px; flex-shrink: 0; font-size: 11px; font-weight: 500; text-align: right;
+}
+.poll-chart-bar-wrap {
+  flex: 1; height: 22px; background: var(--c-bg-grey); border-radius: 3px; overflow: hidden; position: relative;
+}
+.poll-chart-bar {
+  height: 100%; border-radius: 3px; width: 0; display: flex; align-items: center; padding-left: 8px;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.poll-chart-bar--a { background: var(--c-red); }
+.poll-chart-bar--b { background: #d4a017; }
+.poll-chart-bar--c { background: #2e7d32; }
+.poll-chart-bar--d { background: #1565c0; }
+.poll-chart-pct {
+  font-size: 12px; font-weight: 600; flex-shrink: 0; width: 42px; text-align: right;
+}
+.poll-chart-row:nth-child(1) .poll-chart-pct { color: var(--c-red); }
+.poll-chart-row:nth-child(2) .poll-chart-pct { color: #b8890a; }
+.poll-chart-row:nth-child(3) .poll-chart-pct { color: #1b5e20; }
+.poll-chart-row:nth-child(4) .poll-chart-pct { color: #0d47a1; }
+.poll-chart-count {
+  font-size: 10px; color: var(--c-text-soft); flex-shrink: 0; width: 48px; text-align: right;
+}
+	.poll-voted-tag {
+	  font-size: 10px; font-weight: 600; color: var(--c-red);
+	  background: var(--c-red-light); padding: 2px 6px; border-radius: 2px;
+	  white-space: nowrap; flex-shrink: 0; margin-left: 6px;
+	  display: none;
+	}
+	.poll-voted-tag--visible { display: inline-block !important; }
+.poll-res-meta {
+  font-size: 11px; color: var(--c-text-soft); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.poll-live-dot {
+  width: 7px; height: 7px; background: #4caf50; border-radius: 50%;
+  animation: poll-pulse 1.8s ease-in-out infinite;
+}
+@keyframes poll-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* Animated trend chart */
+.poll-trend {
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--c-border);
+  overflow: hidden; /* prevent bars from spilling out */
+}
+.poll-trend__title {
+  font-size: 11px; font-weight: 600; color: var(--c-text-soft);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.poll-trend__chart {
+  display: flex; align-items: flex-end; gap: 3px; height: 60px;
+  overflow: hidden; /* keep stacked bars inside */
+}
+.poll-trend__bar {
+  width: 100%; border-radius: 2px; min-height: 0;
+  transition: height .8s var(--ease);
+}
+.poll-trend__bar--a { background: var(--c-red); }
+.poll-trend__bar--b { background: #d4a017; }
+.poll-trend__bar--c { background: #2e7d32; }
+.poll-trend__bar--d { background: #1565c0; }
+.poll-trend__labels {
+  display: flex; justify-content: space-between; margin-top: 4px;
+}
+.poll-trend__label {
+  font-size: 8px; color: var(--c-text-soft); text-align: center;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
+}
+.poll-error { display: none; font-size: 12px; color: #d00; margin-bottom: 8px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 20px; font-size: 13px; font-weight: 600;
+  border-radius: 4px; transition: all .15s; min-height: 40px;
+}
+.btn--primary { background: var(--c-red); color: #fff; }
+.btn--primary:hover { background: var(--c-red-dark); }
+.btn--primary:active { transform: scale(.98); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* ==============================
+   Multimedia hub — cover cards + click-to-load
+   ============================== */
+.multimedia {
+  background: var(--c-bg-grey);
+  padding: 16px;
+  border-radius: 4px;
+}
+.multimedia__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.multimedia__subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-red);
+  margin: 14px 0 8px;
+}
+.multimedia__subtitle:first-of-type { margin-top: 0; }
+
+.media-card {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #000;
+  margin-bottom: 10px;
+  position: relative;
+}
+.media-card:last-child { margin-bottom: 0; }
+
+/* Cover image (clickable) */
+.media-card__cover {
+  position: relative;
+  cursor: pointer;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #1a1a2e;
+}
+.media-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.media-card__cover:hover img {
+  transform: scale(1.03);
+  opacity: 0.85;
+}
+
+/* Play button overlay */
+.media-card__play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.media-card__play-btn::after {
+  content: '';
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.7);
+  border: 2px solid rgba(255,255,255,0.85);
+  position: relative;
+}
+.media-card__play-btn::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent rgba(255,255,255,0.9);
+  margin-left: 4px;
+}
+/* Card label (below cover — video cards only) */
+.media-card__info {
+  background: #111;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.media-card__label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #eee;
+  flex: 1;
+}
+.media-card__badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.media-card__badge--video { background: var(--c-red); color: #fff; }
+
+/* Duration / source line */
+.media-card__meta {
+  font-size: 10px;
+  color: #999;
+  padding: 0 10px 8px;
+  background: #111;
+}
+
+/* Active player state (video cards) */
+.media-card__player {
+  display: none;
+  position: relative;
+}
+.media-card--active .media-card__cover { display: none; }
+.media-card--active .media-card__info { display: none; }
+.media-card--active .media-card__meta { display: none; }
+.media-card--active .media-card__player { display: block; }
+
+.media-card__video-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: #000;
+}
+.media-card__video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Stop button */
+.media-card__stop {
+  display: none;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 2;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+}
+.media-card--active .media-card__stop { display: block; }
+.media-card__stop:hover { background: var(--c-red); border-color: var(--c-red); }
+
+/* ==============================
+   LIVE AUDIO — radio-style module
+   ============================== */
+.live-audio {
+  background: linear-gradient(160deg, #0d1117 0%, #161b22 40%, #1a1a2e 100%);
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 14px 14px 12px;
+  margin-top: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.live-audio::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c-red), #1DB954, var(--c-red));
+  opacity: 0.7;
+}
+.live-audio__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.live-audio__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ff3b3b;
+  box-shadow: 0 0 6px #ff3b3b;
+  animation: live-pulse 1.5s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.live-audio__title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8b949e;
+}
+
+/* Waveform equalizer — CSS-only animated bars */
+.live-audio__waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 36px;
+  margin-bottom: 12px;
+}
+.live-audio__waves span {
+  flex: 1;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--c-red) 0%, #1DB954 100%);
+  animation: wave-jump 0.9s ease-in-out infinite alternate;
+}
+.live-audio__waves span:nth-child(1) { height: 14px; animation-delay: 0s; }
+.live-audio__waves span:nth-child(2) { height: 26px; animation-delay: 0.12s; }
+.live-audio__waves span:nth-child(3) { height: 18px; animation-delay: 0.24s; }
+.live-audio__waves span:nth-child(4) { height: 34px; animation-delay: 0.36s; }
+.live-audio__waves span:nth-child(5) { height: 22px; animation-delay: 0.48s; }
+.live-audio__waves span:nth-child(6) { height: 30px; animation-delay: 0.60s; }
+.live-audio__waves span:nth-child(7) { height: 10px; animation-delay: 0.72s; }
+.live-audio__waves span:nth-child(8) { height: 28px; animation-delay: 0.84s; }
+.live-audio__waves span:nth-child(9) { height: 16px; animation-delay: 0.06s; }
+.live-audio__waves span:nth-child(10){ height: 32px; animation-delay: 0.18s; }
+@keyframes wave-jump {
+  0% { transform: scaleY(0.4); opacity: 0.5; }
+  100% { transform: scaleY(1.0); opacity: 1; }
+}
+
+/* Channel tabs */
+.live-audio__channels {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.live-audio__ch {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 20px;
+  border: 1px solid #30363d;
+  background: transparent;
+  color: #8b949e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.live-audio__ch:hover {
+  border-color: #58a6ff;
+  color: #c9d1d9;
+}
+.live-audio__ch--active {
+  background: #1f6feb22;
+  border-color: #58a6ff;
+  color: #58a6ff;
+}
+
+/* Now-playing info */
+.live-audio__now {
+  margin-bottom: 8px;
+}
+.live-audio__episode {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6edf3;
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+.live-audio__source {
+  font-size: 10px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Audio player */
+.live-audio__player {
+  display: none;
+}
+.live-audio__player audio {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+  outline: none;
+  height: 32px;
+}
+.live-audio__player audio::-webkit-media-controls-panel {
+  background: #f5f5f5;
+}
+.live-audio--playing .live-audio__player { display: block; }
+.live-audio--playing .live-audio__waves,
+.live-audio--playing .live-audio__channels,
+.live-audio--playing .live-audio__now { display: none; }
+
+/* Stop button */
+.live-audio__stop {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #8b949e;
+  font-size: 13px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+}
+.live-audio--playing .live-audio__stop { display: block; }
+.live-audio__stop:hover { background: var(--c-red); border-color: var(--c-red); color: #fff; }
+
+/* Play button on waveforms */
+.live-audio__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 0;
+  cursor: pointer;
+  z-index: 1;
+  transition: background 0.2s;
+}
+.live-audio__play::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-40%, -50%);
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 14px;
+  border-color: transparent transparent transparent #fff;
+}
+.live-audio__play:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.4);
+}
+.live-audio--playing .live-audio__play { display: none; }
+
+/* ==============================
+   FOOTER
+   ============================== */
+.site-footer {
+  background: var(--c-bg-dark);
+  color: #ccc;
+  padding: 32px 0 16px;
+  margin-top: 32px;
+}
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.site-footer__brand .site-footer__logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.site-footer__brand p { font-size: 12px; color: #999; }
+.site-footer__nav { display: flex; flex-direction: column; gap: 8px; }
+.site-footer__nav a { font-size: 13px; color: #ccc; transition: color .15s; }
+.site-footer__nav a:hover { color: #fff; }
+.site-footer__share { display: flex; gap: 10px; }
+.site-footer__share .share-btn {
+  width: 38px; height: 38px; border: 1px solid var(--c-border-dark);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #ccc; transition: all .15s;
+}
+.site-footer__share .share-btn:hover { border-color: var(--c-red); color: #fff; background: var(--c-red); }
+.site-footer__share .share-btn[data-share="facebook"]:hover { background: #1877F2; border-color: #1877F2; }
+.site-footer__share .share-btn[data-share="instagram"]:hover { background: #E4405F; border-color: #E4405F; }
+.site-footer__share .share-btn[data-share="tiktok"]:hover { background: #000; border-color: #fff; }
+.site-footer__share .share-btn[data-share="youtube"]:hover { background: #FF0000; border-color: #FF0000; }
+.site-footer__share .share-btn[data-share="weibo"]:hover { background: #E6162D; border-color: #E6162D; }
+.site-footer__share .share-btn svg { width: 16px; height: 16px; }
+.site-footer__copy {
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+  border-top: 1px solid var(--c-border-dark);
+  padding-top: 16px;
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #141414; color: #fff;
+  padding: 12px 24px; border-radius: 20px;
+  font-size: 13px; z-index: 999;
+  animation: toastIn .3s var(--ease) forwards;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { from { opacity: 1; transform: translateX(-50%) translateY(0); } to { opacity: 0; transform: translateX(-50%) translateY(-10px); } }
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media (min-width: 480px) {
+  .top-bar__tagline { display: inline; }
+  .stories-grid { grid-template-columns: 1fr 1fr; gap: 0 16px; }
+}
+@media (min-width: 768px) {
+  .hamburger { display: none; }
+  .site-nav__list { display: flex; }
+  .hero__grid { grid-template-columns: 2fr 1fr; }
+  .hero__primary { border-bottom: none; padding-bottom: 0; }
+  .hero__side { grid-template-columns: 1fr; }
+  .main-layout { grid-template-columns: 1fr 320px; }
+  .stories-grid { grid-template-columns: 1fr 1fr; }
+  .story-item { grid-template-columns: 1fr; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .hero { padding: 32px 0; }
+  .main-layout { padding: 32px 0; gap: 32px; }
+  .stories-grid { gap: 0 20px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+/* ==============================
+   CATEGORY SECTIONS (below Top Stories)
+   ============================== */
+.cat-section {
+  padding: 32px 0;
+  border-top: 1px solid var(--c-border);
+}
+.cat-section:first-of-type { border-top: 2px solid var(--c-border); }
+.cat-section__header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.cat-section__bar {
+  width: 4px; height: 22px;
+  background: var(--c-red);
+  border-radius: 2px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.cat-section__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-text);
+  flex: 1;
+}
+.cat-section__more {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-red);
+  font-family: var(--font-body);
+  white-space: nowrap;
+  transition: color .15s;
+}
+.cat-section__more:hover { text-decoration: underline; }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* Feature article */
+.cat-feature {
+  display: block;
+  transition: opacity .15s;
+  border-radius: 4px;
+}
+.cat-feature:hover { opacity: 0.92; }
+.cat-feature__img {
+  aspect-ratio: 16 / 9;
+  background: var(--c-bg-grey);
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.cat-feature__img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+.cat-feature:hover .cat-feature__img img { transform: scale(1.02); }
+.cat-feature__kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--c-red);
+  margin-bottom: 4px;
+}
+.cat-feature__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--c-text);
+  margin-bottom: 6px;
+  transition: color .15s;
+}
+.cat-feature:hover .cat-feature__headline { color: var(--c-red); }
+.cat-feature__summary {
+  font-size: 13px;
+  color: var(--c-text-soft);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  max-width: 72ch;
+}
+.cat-feature__meta {
+  font-size: 11px;
+  color: var(--c-text-light);
+}
+
+/* Headline list */
+.cat-headlines {
+  display: flex;
+  flex-direction: column;
+}
+.cat-headlines::before {
+  content: '';
+  display: block;
+  height: 10px;
+}
+.cat-headline {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-border);
+  transition: all .15s;
+  border-radius: 3px;
+}
+.cat-headline:first-child { padding-top: 0; }
+.cat-headline:last-child { border-bottom: none; padding-bottom: 0; }
+.cat-headline:hover { padding-left: 8px; background: var(--c-bg-grey); margin: 0 -4px; padding-right: 4px; }
+.cat-headline__title {
+  font-family: var(--font-display);
+  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--c-text);
+  margin-bottom: 3px;
+  transition: color .15s;
+}
+.cat-headline:hover .cat-headline__title { color: var(--c-red); }
+.cat-headline__meta {
+  font-size: 11px;
+  color: var(--c-text-light);
+}
+
+@media (min-width: 768px) {
+  .cat-grid {
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+  .cat-headlines::before { display: none; }
+}
+
+@media (min-width: 1024px) {
+  .cat-section { padding: 40px 0; }
+  .cat-grid { gap: 32px; }
+}
+
+/* Alternate category layout — 3-column card grid (for Tech & Sports variety) */
+.cat-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.cat-card {
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: background .15s;
+  border: 1px solid transparent;
+  padding: 0;
+}
+.cat-card:hover { background: var(--c-bg-grey); border-color: var(--c-border); }
+.cat-card__img {
+  aspect-ratio: 16 / 10;
+  background: var(--c-bg-grey);
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.cat-card__img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+.cat-card:hover .cat-card__img img { transform: scale(1.03); }
+.cat-card__kicker {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--c-red);
+  margin-bottom: 4px;
+}
+.cat-card__headline {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--c-text);
+  margin-bottom: 4px;
+  transition: color .15s;
+}
+.cat-card:hover .cat-card__headline { color: var(--c-red); }
+.cat-card__meta {
+  font-size: 11px;
+  color: var(--c-text-light);
+}
+@media (min-width: 480px) {
+  .cat-cards { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 768px) {
+  .cat-cards { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Alternate category layout — split hero + side cards */
+.cat-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) {
+  .cat-split { grid-template-columns: 2fr 1fr; gap: 24px; }
+}
+.cat-split__side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .cat-split__side { grid-template-columns: 1fr; }
+}
+.cat-split__side .cat-card__img { aspect-ratio: 3 / 2; }
+
+	/* Back-to-top floating button */
+	.back-to-top {
+	  position: fixed;
+	  bottom: 24px;
+	  right: 24px;
+	  width: 44px;
+	  height: 44px;
+	  border-radius: 50%;
+	  background: var(--c-bg);
+	  border: 1px solid var(--c-border);
+	  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  z-index: 90;
+	  opacity: 0;
+	  visibility: hidden;
+	  transform: translateY(12px);
+	  transition: all .25s var(--ease);
+	  cursor: pointer;
+	}
+	.back-to-top--visible {
+	  opacity: 1;
+	  visibility: visible;
+	  transform: translateY(0);
+	}
+	.back-to-top:hover {
+	  background: var(--c-red);
+	  border-color: var(--c-red);
+	  color: #fff;
+	  box-shadow: 0 4px 16px rgba(184,0,0,0.25);
+	}
+	.back-to-top svg {
+	  width: 20px;
+	  height: 20px;
+	  pointer-events: none;
+	}
+	}</style>
+</head>
+<body>
+
+<!-- SVG Sprite -->
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="ic-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,2 22,12 6,22"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ic-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="ic-weibo" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zm-4.598-4.507c-.493 1.295.921 2.875 2.279 3.078 1.173.178 2.327-.641 2.618-1.8.286-1.144-.394-2.422-1.702-2.824-1.356-.416-2.695.293-3.195 1.546zm4.851 2.901c-.352.899-1.323 1.391-2.168.968-.847-.425-.875-1.434-.531-2.278.351-.855 1.188-1.296 1.973-.96.828.369.965 1.324.726 2.27zm8.762-9.406c-.645-2.975-3.993-5.001-7.195-4.347-.356.072-.517.479-.363.793l.721 1.468c.144.294.493.43.789.349 1.308-.331 2.733.2 3.398 1.406.554 1.006.539 2.187.074 3.064-.143.272-.013.604.269.714l1.573.581c.294.108.622-.056.734-.374l.104-.29c.6-1.754.359-3.563-.104-5.364z"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+	  <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3"/></symbol>
+	  <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+	  <symbol id="ic-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07c0-6.63-5.37-12-12-12s-12 5.37-12 12c0 5.99 4.39 10.95 10.13 11.85v-8.38H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.23 2.69.23v2.95h-1.52c-1.49 0-1.95.93-1.95 1.88v2.25h3.33l-.53 3.47h-2.8v8.38C19.61 23.03 24 18.06 24 12.07z"/></symbol>
+	  <symbol id="ic-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5a3.02 3.02 0 0 0-2.12 2.14C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+</svg>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar__inner wrap">
+    <div class="top-bar__left">
+      <a href="index.html" class="top-bar__logo">NEWS<span style="font-weight:300">ONLINE</span></a>
+      <span class="top-bar__tagline">Trusted Reporting. Independent Journalism.</span>
+    </div>
+    <div class="top-bar__actions">
+      <button class="top-bar__btn"><svg><use href="#ic-search"/></svg> Search</button>
+      <!-- Search dropdown — positioned relative to .top-bar__actions -->
+      <div class="search-panel" id="searchPanel" aria-hidden="true">
+        <div class="search-panel__inner">
+          <form class="search-panel__form" id="searchForm" role="search" aria-label="Search news">
+            <svg><use href="#ic-search"/></svg>
+            <input class="search-panel__input" type="search" id="searchInput" placeholder="Search news, topics, locations..." autocomplete="off" aria-label="Search">
+            <button type="button" class="search-panel__close" id="searchClose" aria-label="Close search">&times;</button>
+          </form>
+          <div class="search-panel__trending">
+            <span class="search-panel__trending-label">Trending</span>
+            <a href="#sec-politics">Housing reform</a>
+            <a href="#sec-climate">Sea level rise</a>
+            <a href="#sec-tech">AI safety</a>
+            <a href="#sec-business">Interest rates</a>
+            <a href="#sec-sports">World Cup qualifiers</a>
+          </div>
+        </div>
+      </div>
+      <button class="top-bar__btn"><svg><use href="#ic-user"/></svg> Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop for closing search on outside click -->
+<div class="search-panel__backdrop" id="searchBackdrop"></div>
+
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+  <div class="site-header__inner wrap">
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="site-nav__list" id="nav-list">
+        <li><a href="#top" class="site-nav__link active">Home</a></li>
+        <li><a href="#sec-world" class="site-nav__link">World</a></li>
+        <li><a href="#sec-politics" class="site-nav__link">Politics</a></li>
+        <li><a href="#sec-business" class="site-nav__link">Business</a></li>
+        <li><a href="#sec-tech" class="site-nav__link">Tech</a></li>
+        <li><a href="#sec-climate" class="site-nav__link">Climate</a></li>
+        <li><a href="#sec-health" class="site-nav__link">Health</a></li>
+        <li><a href="#sec-sports" class="site-nav__link">Sports</a></li>
+        <li><a href="#sec-culture" class="site-nav__link">Culture</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== LEADERBOARD AD ===== -->
+<div class="ad-leaderboard" id="adLeaderboard" aria-label="Advertisement">
+  <div class="ad-leaderboard__inner">
+    <span class="ad-leaderboard__label">ADVERTISEMENT</span>
+    <div class="ad-leaderboard__slot">
+      <div class="ad-leaderboard__creative">
+        <div class="ad-leaderboard__creative-logo" aria-hidden="true">WL</div>
+        <div class="ad-leaderboard__creative-body">
+          <p class="ad-leaderboard__creative-headline">Global Markets Weekly — Free for a Limited Time</p>
+          <p class="ad-leaderboard__creative-desc">Expert analysis on trade policy, currency shifts, and emerging-market growth — trusted by 200,000+ readers worldwide.</p>
+        </div>
+        <a href="#" class="ad-leaderboard__creative-cta" role="button" aria-label="Learn more about Global Markets Weekly">Learn more</a>
+      </div>
+      <button class="ad-leaderboard__close" id="adClose" aria-label="Close advertisement" title="Close ad">&times;</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<div class="wrap">
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero__grid">
+    <!-- PRIMARY HERO: Headline story (placeholder — user's live reporting) -->
+    <!-- USER: Replace image, headline, and summary with your live reporting story -->
+    <a href="article-headline.html" class="hero__primary">
+      <div class="hero__img hero__img--placeholder">
+        <svg><use href="#ic-cam"/></svg>
+      </div>
+      <span class="hero__kicker">Lead Story</span>
+      <h1 class="hero__headline hero__headline--placeholder">[YOUR HEADLINE &mdash; Replace with your live reporting story]</h1>
+      <p class="hero__summary hero__summary--placeholder">[Your lead paragraph goes here &mdash; replace with a compelling 2-3 sentence summary of your original news story, based on your on-location reporting video.]</p>
+      <div class="hero__meta"><span>By [Author Name]</span> · <time>[Date]</time></div>
+    </a>
+
+    <!-- SECONDARY HERO -->
+    <div class="hero__side">
+      <a href="article-tech-ai.html">
+        <div class="hero__img"><img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="Delegates at AI safety summit" loading="lazy"></div>
+        <span class="hero__kicker">Technology</span>
+        <h2 class="hero__subheadline">AI Safety Summit Reaches Landmark Agreement on Global Standards</h2>
+        <div class="hero__meta"><span>By Sarah Chen</span> · <time>14 Jun 2026</time></div>
+      </a>
+      <a href="article-politics.html">
+        <div class="hero__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="House of Commons chamber during debate" loading="lazy"></div>
+        <span class="hero__kicker">Politics</span>
+        <h2 class="hero__subheadline">Parliament Set for Showdown Vote on Housing Reform Bill</h2>
+        <div class="hero__meta"><span>By James Mitchell</span> · <time>14 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN LAYOUT: Stories + Sidebar ===== -->
+<div class="main-layout">
+  <!-- LEFT: Top Stories -->
+  <div>
+    <div class="section-title">Top Stories <a href="#top-stories">See All ↓</a></div>
+    <div class="stories-grid">
+      <!-- Story 1 — World -->
+      <a href="article-politics.html" class="story-item" id="section-world">
+        <div class="story-item__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="Parliament chamber during debate" loading="lazy"></div>
+        <span class="story-item__kicker">World</span>
+        <h3 class="story-item__title">Diplomatic Breakthrough: Rival Nations Agree to Ceasefire Framework After Marathon Talks</h3>
+        <div class="story-item__meta"><span>By Anna Lindstr&ouml;m</span> · <time>11 Jun 2026</time></div>
+      </a>
+      <!-- Story 2 — Politics -->
+      <a href="article-politics.html" class="story-item" id="section-politics">
+        <div class="story-item__img"><img src="images/news/photo-1575320181282-9afab399332c.jpg" alt="Protesters gathered outside Houses of Parliament" loading="lazy"></div>
+        <span class="story-item__kicker">Politics</span>
+        <h3 class="story-item__title">Parliament Set for Showdown Vote on Housing Reform Bill</h3>
+        <div class="story-item__meta"><span>By James Mitchell</span> · <time>14 Jun 2026</time></div>
+      </a>
+      <!-- Story 3 — Climate -->
+      <a href="article-climate.html" class="story-item" id="section-climate">
+        <div class="story-item__img"><img src="images/news/photo-1611273426858-450d8e3c9fce.jpg" alt="Coastal flooding from sea level rise" loading="lazy"></div>
+        <span class="story-item__kicker">Climate</span>
+        <h3 class="story-item__title">UN Climate Report Warns of Accelerating Sea Level Rise Across Coastal Cities</h3>
+        <div class="story-item__meta"><span>By Dr. Elena Rossi</span> · <time>13 Jun 2026</time></div>
+      </a>
+      <!-- Story 4 — Health -->
+      <a href="article-health.html" class="story-item" id="section-health">
+        <div class="story-item__img"><img src="images/news/photo-1778864874969-16e2432b2709.jpg" alt="WHO emergency committee meeting" loading="lazy"></div>
+        <span class="story-item__kicker">Health</span>
+        <h3 class="story-item__title">Global Health Body Declares End to Three-Year Disease Emergency</h3>
+        <div class="story-item__meta"><span>By David Okafor</span> · <time>13 Jun 2026</time></div>
+      </a>
+      <!-- Story 5 — Business -->
+      <a href="article-business.html" class="story-item" id="section-business">
+        <div class="story-item__img"><img src="images/news/photo-1449157291145-7efd050a4d0e.jpg" alt="Financial district towers in fog" loading="lazy"></div>
+        <span class="story-item__kicker">Business</span>
+        <h3 class="story-item__title">Central Banks Signal Coordinated Rate Cuts Amid Global Economic Slowdown</h3>
+        <div class="story-item__meta"><span>By Priya Kapoor</span> &middot; <time>12 Jun 2026</time></div>
+      </a>
+      <!-- Story 6 — Sports -->
+      <a href="article-sports.html" class="story-item" id="section-sports">
+        <div class="story-item__img"><img src="images/news/photo-1489944440615-453fc2b6a9a9.jpg" alt="Football stadium aerial view on match day" loading="lazy"></div>
+        <span class="story-item__kicker">Sports</span>
+        <h3 class="story-item__title">World Cup Qualifiers: Underdog Squad Stuns Defending Champions in Thriller</h3>
+        <div class="story-item__meta"><span>By Carlos Mendez</span> &middot; <time>12 Jun 2026</time></div>
+      </a>
+      <!-- Story 7 — Technology -->
+      <a href="article-tech-ai.html" class="story-item" id="section-tech">
+        <div class="story-item__img"><img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="Quantum computing milestone" loading="lazy"></div>
+        <span class="story-item__kicker">Technology</span>
+        <h3 class="story-item__title">Quantum Computing Milestone: Processor Solves Problem 1,000&times; Faster Than Supercomputer</h3>
+        <div class="story-item__meta"><span>By Sarah Chen</span> &middot; <time>11 Jun 2026</time></div>
+      </a>
+      <!-- Story 8 — Culture -->
+      <a href="#" class="story-item" id="section-culture">
+        <div class="story-item__img"><img src="images/news/photo-1569783721854-33a99b4c0bae.jpg" alt="Visitors at contemporary art exhibition" loading="lazy"></div>
+        <span class="story-item__kicker">Culture</span>
+        <h3 class="story-item__title">Venice Biennale 2026: African Pavilions Break Attendance Records as Contemporary Art Goes Global</h3>
+        <div class="story-item__meta"><span>By Amara Osei</span> &middot; <time>10 Jun 2026</time></div>
+      </a>
+      <!-- Story 9 — Arts & Travel -->
+      <a href="#" class="story-item">
+        <div class="story-item__img"><img src="images/news/photo-1545569341-9eb8b30979d9.jpg" alt="Japanese pagoda surrounded by cherry trees" loading="lazy"></div>
+        <span class="story-item__kicker">Arts &amp; Travel</span>
+        <h3 class="story-item__title">Japan&rsquo;s Hidden Art Islands: Naoshima and Teshima Draw Record Visitors for 2026 Season</h3>
+        <div class="story-item__meta"><span>By Yuki Tanaka</span> &middot; <time>10 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <aside class="sidebar">
+    <!-- Most Read -->
+    <div class="most-read">
+      <h3 class="most-read__title">Most Read</h3>
+      <ol class="most-read__list">
+        <li class="most-read__item"><a href="article-politics.html" class="most-read__text">Parliament set for showdown vote on controversial housing reform bill</a></li>
+        <li class="most-read__item"><a href="article-tech-ai.html" class="most-read__text">AI safety summit reaches landmark agreement on global standards</a></li>
+        <li class="most-read__item"><a href="article-climate.html" class="most-read__text">UN climate report warns of accelerating sea level rise across coastal cities</a></li>
+        <li class="most-read__item"><a href="article-sports.html" class="most-read__text">World Cup qualifiers: Underdog squad stuns defending champions</a></li>
+        <li class="most-read__item"><a href="article-health.html" class="most-read__text">Global health body declares end to three-year disease emergency</a></li>
+      </ol>
+    </div>
+
+    <!-- Have Your Say (Poll) -->
+    <div class="poll-widget" id="poll-widget">
+      <h3 class="poll-widget__title">Have Your Say</h3>
+      <p class="poll-widget__subtitle" id="poll-subtitle">What matters most to you in the upcoming election?</p>
+      <p class="poll-widget__subtitle" id="poll-thanks" style="display:none;color:#2e7d32;">✓ Vote recorded — see how your voice compares below</p>
+      <form id="poll-form">
+        <div class="poll-options">
+          <label class="poll-opt"><input type="radio" name="poll" value="a" required><span class="poll-opt__label">Healthcare &amp; Social Services</span></label>
+          <label class="poll-opt"><input type="radio" name="poll" value="b" required><span class="poll-opt__label">Economy &amp; Cost of Living</span></label>
+          <label class="poll-opt"><input type="radio" name="poll" value="c" required><span class="poll-opt__label">Climate Change &amp; Environment</span></label>
+          <label class="poll-opt"><input type="radio" name="poll" value="d" required><span class="poll-opt__label">Education &amp; Skills Training</span></label>
+        </div>
+        <div class="poll-error" id="poll-error">Please select an option before submitting.</div>
+      </form>
+      <div class="poll-results" id="poll-results">
+        <div class="poll-res-meta">
+          <span class="poll-live-dot"></span>
+          <span id="poll-total">1,532 votes</span>
+        </div>
+        <div class="poll-res-chart" id="poll-chart">
+          <div class="poll-chart-row" data-key="a">
+            <span class="poll-chart-label">Healthcare</span>
+            <div class="poll-chart-bar-wrap"><div class="poll-chart-bar poll-chart-bar--a" id="poll-bar-a"></div></div>
+            <span class="poll-chart-pct" id="poll-pct-a">0%</span>
+            <span class="poll-chart-count" id="poll-count-a">0</span>
+          </div>
+          <div class="poll-chart-row" data-key="b">
+            <span class="poll-chart-label">Economy</span>
+            <div class="poll-chart-bar-wrap"><div class="poll-chart-bar poll-chart-bar--b" id="poll-bar-b"></div></div>
+            <span class="poll-chart-pct" id="poll-pct-b">0%</span>
+            <span class="poll-chart-count" id="poll-count-b">0</span>
+          </div>
+          <div class="poll-chart-row" data-key="c">
+            <span class="poll-chart-label">Climate</span>
+            <div class="poll-chart-bar-wrap"><div class="poll-chart-bar poll-chart-bar--c" id="poll-bar-c"></div></div>
+            <span class="poll-chart-pct" id="poll-pct-c">0%</span>
+            <span class="poll-chart-count" id="poll-count-c">0</span>
+          </div>
+          <div class="poll-chart-row" data-key="d" id="poll-row-d">
+            <span class="poll-chart-label">Education</span>
+            <div class="poll-chart-bar-wrap"><div class="poll-chart-bar poll-chart-bar--d" id="poll-bar-d"></div></div>
+            <span class="poll-chart-pct" id="poll-pct-d">0%</span>
+            <span class="poll-chart-count" id="poll-count-d">0</span>
+          </div>
+        </div>
+        <!-- Trend chart: weekly opinion shift -->
+        <div class="poll-trend" id="poll-trend">
+          <div class="poll-trend__title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px;"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="17 7 21 7 21 11"/></svg> How opinion shifted this week</div>
+          <div class="poll-trend__chart" id="poll-trend-chart">
+            <!-- JS-populated -->
+          </div>
+          <div class="poll-trend__labels" id="poll-trend-labels">
+            <!-- JS-populated -->
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn--primary" id="poll-submit" form="poll-form">Vote</button>
+    </div>
+
+    	    <!-- Watch & Listen — cover cards + click-to-load -->
+		    <div class="multimedia" data-od-id="watch-listen">
+		      <h3 class="multimedia__title">Watch &amp; Listen</h3>
+
+		      <p class="multimedia__subtitle">Watch</p>
+
+		      <!-- BBC News video -->
+		      <div class="media-card media-card--video" data-player="youtube" data-vid="dIc_rUkrP6c" data-od-id="watch-bbc-iran">
+		        <div class="media-card__cover" title="Click to play">
+		          <img src="images/news/youtube-dIc_rUkrP6c.jpg"
+		               alt="Iran and US agree deal to end war" loading="lazy">
+		          <span class="media-card__play-btn"></span>
+		        </div>
+		        <div class="media-card__info">
+		          <span class="media-card__label">Iran and US agree deal to end war</span>
+		          <span class="media-card__badge media-card__badge--video">BBC News</span>
+		        </div>
+		        <div class="media-card__meta">37 min &middot; BBC News</div>
+		        <button class="media-card__stop" title="Stop playback" aria-label="Stop playback">&times;</button>
+		        <div class="media-card__player">
+		          <div class="media-card__video-wrap"></div>
+		        </div>
+		      </div>
+
+		      <!-- Reuters video -->
+		      <div class="media-card media-card--video" data-player="youtube" data-vid="gU8KXivuzc4" data-od-id="watch-reuters-oil">
+		        <div class="media-card__cover" title="Click to play">
+		          <img src="images/news/youtube-gU8KXivuzc4.jpg"
+		               alt="Oil tumbles stocks surge after US-Iran peace deal" loading="lazy">
+		          <span class="media-card__play-btn"></span>
+		        </div>
+		        <div class="media-card__info">
+		          <span class="media-card__label">Oil tumbles, stocks surge after peace deal</span>
+		          <span class="media-card__badge media-card__badge--video">Reuters</span>
+		        </div>
+		        <div class="media-card__meta">6 min &middot; Reuters</div>
+		        <button class="media-card__stop" title="Stop playback" aria-label="Stop playback">&times;</button>
+		        <div class="media-card__player">
+		          <div class="media-card__video-wrap"></div>
+		        </div>
+		      </div>
+
+			      <p class="multimedia__subtitle">Listen</p>
+
+			      <!-- Live Audio — radio-style module with waveform visualizer -->
+			      <div class="live-audio" data-od-id="live-audio" id="liveAudio">
+			        <div class="live-audio__header">
+			          <span class="live-audio__dot"></span>
+			          <span class="live-audio__title">Live Audio</span>
+			        </div>
+
+			        <!-- Animated waveform equalizer — no cover image needed -->
+			        <div class="live-audio__waves">
+			          <span></span><span></span><span></span><span></span><span></span>
+			          <span></span><span></span><span></span><span></span><span></span>
+			        </div>
+			        <button class="live-audio__play" title="Play" aria-label="Play podcast"></button>
+
+			        <!-- Channel switcher -->
+			        <div class="live-audio__channels">
+			          <button class="live-audio__ch live-audio__ch--active" data-ch="bbc">BBC Global News</button>
+			          <button class="live-audio__ch" data-ch="npr">NPR Up First</button>
+			        </div>
+
+			        <!-- Now playing info -->
+			        <div class="live-audio__now">
+			          <div class="live-audio__episode">US and Iran agree peace deal</div>
+			          <div class="live-audio__source">Global News Podcast · BBC World Service</div>
+			        </div>
+
+			        <!-- Audio player (hidden until play) -->
+			        <div class="live-audio__player"></div>
+
+			        <!-- Stop -->
+			        <button class="live-audio__stop" title="Stop playback" aria-label="Stop playback">&times;</button>
+			      </div>
+
+		    </div>
+</aside>
+</div>
+
+
+<!-- ===== CATEGORY SECTIONS ===== -->
+<section class="cat-section" id="sec-world" data-od-id="cat-sec-world">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">World</h2>
+    <a href="article-politics.html" class="cat-section__more">More World →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="Diplomatic meeting at UN headquarters" loading="lazy"></div>
+      <span class="cat-feature__kicker">World</span>
+      <h3 class="cat-feature__headline">Iran Peace Deal Takes Hold: Ceasefire Monitors Deploy Along Front Lines as Troops Begin Withdrawal</h3>
+      <p class="cat-feature__summary">UN-mandated observers have begun deploying along the 1,200 km frontline, marking the first tangible step toward ending a conflict that has displaced over two million civilians since 2024.</p>
+      <div class="cat-feature__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-headlines">
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">G7 Leaders Draft Framework for Global Minimum Corporate Tax, Final Vote Expected Friday</h4>
+        <div class="cat-headline__meta"><span>By Mark Ellis</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Myanmar Peace Talks Resume in Bangkok as Junta Signals Willingness to Release Political Prisoners</h4>
+        <div class="cat-headline__meta"><span>By Aye Mon</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">UN Security Council Reform Proposal Gains Traction: African Union Demands Permanent Seats</h4>
+        <div class="cat-headline__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="cat-section" id="sec-politics" data-od-id="cat-sec-politics">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Politics</h2>
+    <a href="article-politics.html" class="cat-section__more">More Politics →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1575320181282-9afab399332c.jpg" alt="Houses of Parliament exterior view" loading="lazy"></div>
+      <span class="cat-feature__kicker">Politics</span>
+      <h3 class="cat-feature__headline">Housing Reform Bill Passes Key Committee Vote, Setting Stage for Historic Parliamentary Showdown</h3>
+      <p class="cat-feature__summary">The landmark bill, which would create 1.5 million new social housing units and cap rent increases at 3% annually, cleared the cross-party committee 18–11 and now heads to a full parliamentary vote next week.</p>
+      <div class="cat-feature__meta"><span>By James Mitchell</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-headlines">
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Immigration Reform Debate Heats Up as Cross-Party Coalition Proposes Points-Based System</h4>
+        <div class="cat-headline__meta"><span>By Rachel O&rsquo;Brien</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Election Integrity Measures: Parliament to Debate Mandatory Voter ID and Postal Vote Overhaul</h4>
+        <div class="cat-headline__meta"><span>By James Mitchell</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Cabinet Reshuffle Rumours Intensify as PM Prepares to Replace Three Senior Ministers</h4>
+        <div class="cat-headline__meta"><span>By Rachel O&rsquo;Brien</span> &middot; <time>13 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="cat-section" id="sec-business" data-od-id="cat-sec-business">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Business</h2>
+    <a href="article-business.html" class="cat-section__more">More Business →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1449157291145-7efd050a4d0e.jpg" alt="Financial district skyscrapers in morning fog" loading="lazy"></div>
+      <span class="cat-feature__kicker">Business</span>
+      <h3 class="cat-feature__headline">Global Markets Rally as Central Banks Deliver Coordinated Rate Cuts — FTSE 100 Hits All-Time High</h3>
+      <p class="cat-feature__summary">The Bank of England, Federal Reserve, and ECB delivered a rare synchronised 25-basis-point cut, sending equities surging. The FTSE 100 closed above 8,900 for the first time in history.</p>
+      <div class="cat-feature__meta"><span>By Priya Kapoor</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-headlines">
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Electric Vehicle Trade War: EU Considers Retaliatory Tariffs on Chinese Battery Imports</h4>
+        <div class="cat-headline__meta"><span>By Tom Berger</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Cryptocurrency Regulation: G20 Finance Ministers Agree on Global Stablecoin Framework</h4>
+        <div class="cat-headline__meta"><span>By Priya Kapoor</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Supply Chain Reboot: Foxconn Breaks Ground on €4.2 Billion Chip Plant in Saxony</h4>
+        <div class="cat-headline__meta"><span>By Tom Berger</span> &middot; <time>13 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="cat-section" id="sec-tech" data-od-id="cat-sec-tech">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Technology</h2>
+    <a href="article-tech-ai.html" class="cat-section__more">More Technology →</a>
+  </div>
+  <div class="cat-cards">
+    <a href="article-tech-ai.html" class="cat-card">
+      <div class="cat-card__img"><img src="images/news/photo-1518770660439-4636190af475.jpg" alt="Close-up of a microchip on a circuit board" loading="lazy"></div>
+      <span class="cat-card__kicker">Fusion Energy</span>
+      <h3 class="cat-card__headline">First Commercial Fusion Reactor Breaks Ground in Southern France</h3>
+      <div class="cat-card__meta"><span>By Sarah Chen</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <a href="article-tech-ai.html" class="cat-card">
+      <div class="cat-card__img"><img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="AI safety delegates at summit" loading="lazy"></div>
+      <span class="cat-card__kicker">AI Policy</span>
+      <h3 class="cat-card__headline">AI Safety Summit Reaches Landmark Agreement on Global Standards</h3>
+      <div class="cat-card__meta"><span>By Sarah Chen</span> &middot; <time>14 Jun 2026</time></div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-card__img"><img src="images/news/photo-1639754390580-2e7437267698.jpg" alt="Quantum computer in a lab" loading="lazy"></div>
+      <span class="cat-card__kicker">Quantum Computing</span>
+      <h3 class="cat-card__headline">Quantum Encryption Goes Mainstream: First Post-Quantum VPN Launches</h3>
+      <div class="cat-card__meta"><span>By Marcus Liu</span> &middot; <time>14 Jun 2026</time></div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-card__img"><img src="images/news/photo-1569428034239-f9565e32e224.jpg" alt="Autonomous cargo vessel at sea" loading="lazy"></div>
+      <span class="cat-card__kicker">Autonomous Shipping</span>
+      <h3 class="cat-card__headline">Crewless Cargo Vessel Completes Rotterdam-to-Singapore Voyage</h3>
+      <div class="cat-card__meta"><span>By Marcus Liu</span> &middot; <time>13 Jun 2026</time></div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-card__img"><img src="images/news/photo-1519389950473-47ba0277781c.jpg" alt="EU antitrust hearing room" loading="lazy"></div>
+      <span class="cat-card__kicker">Regulation</span>
+      <h3 class="cat-card__headline">EU Orders Apple to Open iMessage and NFC to Third Parties</h3>
+      <div class="cat-card__meta"><span>By Marcus Liu</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-card__img"><img src="images/news/photo-1677442136019-21780ecad995.jpg" alt="AI data center servers" loading="lazy"></div>
+      <span class="cat-card__kicker">Data Centres</span>
+      <h3 class="cat-card__headline">Google Bets GBP 15bn on UK Data Centres as AI Infrastructure Race Intensifies</h3>
+      <div class="cat-card__meta"><span>By Sarah Chen</span> &middot; <time>13 Jun 2026</time></div>
+    </a>
+  </div>
+</section>
+<section class="cat-section" id="sec-climate" data-od-id="cat-sec-climate">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Climate</h2>
+    <a href="article-climate.html" class="cat-section__more">More Climate →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1536926219478-b81cb954657e.jpg" alt="Arctic ice sheets melting into ocean" loading="lazy"></div>
+      <span class="cat-feature__kicker">Climate &amp; Environment</span>
+      <h3 class="cat-feature__headline">Arctic Ice Hits Record Low for Third Straight Year — Scientists Warn of ‘Irreversible Tipping Point’</h3>
+      <p class="cat-feature__summary">NSIDC data confirms summer sea ice extent fell to 3.2 million km², the lowest in recorded history. Researchers say the Arctic could be ice-free in summer by 2035, decades earlier than previous models predicted.</p>
+      <div class="cat-feature__meta"><span>By Dr. Elena Rossi</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-headlines">
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Iceland Launches World’s Largest Direct Air Capture Plant, Removing 36,000 Tonnes of CO₂ Annually</h4>
+        <div class="cat-headline__meta"><span>By Finn Larsen</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Amazon Drought Enters Third Year: River Levels at 120-Year Low, Indigenous Communities Face Water Crisis</h4>
+        <div class="cat-headline__meta"><span>By Dr. Elena Rossi</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Global Plastics Treaty: 175 Nations Sign Agreement to Phase Out Single-Use Plastics by 2035</h4>
+        <div class="cat-headline__meta"><span>By Finn Larsen</span> &middot; <time>13 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="cat-section" id="sec-health" data-od-id="cat-sec-health">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Health</h2>
+    <a href="article-health.html" class="cat-section__more">More Health →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1576091160550-2173dba999ef.jpg" alt="Medical researcher examining test results" loading="lazy"></div>
+      <span class="cat-feature__kicker">Health</span>
+      <h3 class="cat-feature__headline">Breakthrough mRNA Vaccine Shows 92% Efficacy Against Dengue in Phase III Trial — Rollout Planned for 2027</h3>
+      <p class="cat-feature__summary">The vaccine, developed by a UK-Brazil research consortium, protected 92% of participants against all four dengue serotypes. The WHO has already fast-tracked prequalification review.</p>
+      <div class="cat-feature__meta"><span>By David Okafor</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-headlines">
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Long COVID Study of 50,000 Patients Identifies Three Distinct Biological Subtypes, Paving Way for Targeted Treatments</h4>
+        <div class="cat-headline__meta"><span>By Dr. Nina Gupta</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Mental Health Apps Face New FDA Scrutiny: ‘Digital Therapeutics’ Must Now Prove Clinical Efficacy</h4>
+        <div class="cat-headline__meta"><span>By David Okafor</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Universal Healthcare Debate: Study Shows Single-Payer System Would Save UK £45 Billion Annually</h4>
+        <div class="cat-headline__meta"><span>By Dr. Nina Gupta</span> &middot; <time>13 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="cat-section" id="sec-sports" data-od-id="cat-sec-sports">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Sports</h2>
+    <a href="article-sports.html" class="cat-section__more">More Sports →</a>
+  </div>
+  <div class="cat-split">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1489944440615-453fc2b6a9a9.jpg" alt="Stadium filled with fans on match night" loading="lazy"></div>
+      <span class="cat-feature__kicker">Sports</span>
+      <h3 class="cat-feature__headline">Champions League Final Set: Madrid Derby at Wembley Sells Out in Under Four Hours</h3>
+      <p class="cat-feature__summary">Real Madrid and Atlético Madrid will face each other in the first same-city Champions League final since 2016. Wembley’s 90,000 seats were gone within minutes of going on sale.</p>
+      <div class="cat-feature__meta"><span>By Carlos Mendez</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-split__side">
+      <a href="#" class="cat-card">
+        <h3 class="cat-card__headline">NBA Draft 2026: French Phenom Victor Wembanyama’s Younger Brother Declares, Projected Top-3 Pick</h3>
+        <div class="cat-card__meta"><span>By Alex Thompson</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-card">
+        <h3 class="cat-card__headline">Olympic Games 2028: Los Angeles Organisers Unveil ‘Car-Free Games’ Transport Plan with 3,000 Electric Buses</h3>
+        <div class="cat-card__meta"><span>By Carlos Mendez</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-card">
+        <h3 class="cat-card__headline">Formula 1: FIA Announces Radical 2027 Regulation Overhaul — Smaller Cars, Sustainable Fuels, Active Aero</h3>
+        <div class="cat-card__meta"><span>By Alex Thompson</span> &middot; <time>13 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="cat-section" id="sec-culture" data-od-id="cat-sec-culture">
+  <div class="cat-section__header">
+    <span class="cat-section__bar"></span>
+    <h2 class="cat-section__title">Culture &amp; Arts</h2>
+    <a href="#sec-culture" class="cat-section__more">More Culture &amp; Arts →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1569783721854-33a99b4c0bae.jpg" alt="Visitors at a contemporary art gallery" loading="lazy"></div>
+      <span class="cat-feature__kicker">Culture &amp; Arts</span>
+      <h3 class="cat-feature__headline">‘The Cartographer’s Dream’ Wins 2026 Booker Prize — Kenyan Author, 24, Becomes Youngest Winner in History</h3>
+      <p class="cat-feature__summary">Wanjiku Mwangi’s debut novel, a magical-realist exploration of colonial mapmaking and African identity, beat out five established authors. The Guardian called it ‘a once-in-a-generation voice.’</p>
+      <div class="cat-feature__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time></div>
+    </a>
+    <div class="cat-headlines">
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Cannes Film Festival 2026: First Palestinian Film in Competition Wins Palme d’Or to Standing Ovation</h4>
+        <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Music Streaming 2026: Indie Labels Now Command 38% of Global Streams as Algorithm Fatigue Drives Discovery</h4>
+        <div class="cat-headline__meta"><span>By Leo Fischer</span> &middot; <time>14 Jun 2026</time></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">British Museum Returns 93 Benin Bronzes to Nigeria in Landmark Repatriation Agreement After 127 Years</h4>
+        <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>13 Jun 2026</time></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.wrap -->
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer__inner wrap">
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div>
+      <p>University Journalism Course Project &middot; JRN209<br>Trusted Reporting. Independent Journalism.</p>
+    </div>
+    <nav class="site-footer__nav">
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="accessibility.html">Accessibility</a>
+    </nav>
+    <div class="site-footer__share">
+      <button class="share-btn" data-share="facebook" title="Share on Facebook"><svg><use href="#ic-facebook"/></svg></button>
+      <button class="share-btn" data-share="twitter" title="Share on X"><svg><use href="#ic-x"/></svg></button>
+      <button class="share-btn" data-share="instagram" title="Follow on Instagram"><svg><use href="#ic-instagram"/></svg></button>
+      <button class="share-btn" data-share="tiktok" title="Follow on TikTok"><svg><use href="#ic-tiktok"/></svg></button>
+      <button class="share-btn" data-share="youtube" title="Subscribe on YouTube"><svg><use href="#ic-youtube"/></svg></button>
+      <button class="share-btn" data-share="weibo" title="Share on Weibo"><svg><use href="#ic-weibo"/></svg></button>
+      <button class="share-btn" data-share="copy" title="Copy link"><svg><use href="#ic-link"/></svg></button>
+    </div>
+  </div>
+  <p class="site-footer__copy">&copy; 2026 News Online. All rights reserved. XMUM JRN209.</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- SIGN-IN MODAL -->
+<div class="signin-overlay" id="signinOverlay" aria-hidden="true">
+  <div class="signin-modal" role="dialog" aria-modal="true" aria-label="Sign in to News Online">
+    <button class="signin-modal__close" id="signinClose" aria-label="Close sign in">&times;</button>
+    <div class="signin-modal__brand">
+      <span class="signin-modal__logo">NEWS<span style="font-weight:300">ONLINE</span></span>
+      <h2 class="signin-modal__title">Welcome back</h2>
+      <p class="signin-modal__subtitle">Sign in to access your bookmarks, reading history, and personalised news feed.</p>
+    </div>
+    <div class="signin-modal__field">
+      <label class="signin-modal__label" for="signinEmail">Email address</label>
+      <input class="signin-modal__input" type="email" id="signinEmail" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="signin-modal__field">
+      <label class="signin-modal__label" for="signinPassword">Password</label>
+      <input class="signin-modal__input" type="password" id="signinPassword" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <a href="#" class="signin-modal__forgot" id="signinForgot">Forgot password?</a>
+    <button class="signin-modal__submit" id="signinSubmit">Sign in</button>
+    <div class="signin-modal__divider">or continue with</div>
+    <div class="signin-modal__social">
+      <button class="signin-modal__social-btn" id="signinGoogle">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <button class="signin-modal__social-btn" id="signinApple">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        Continue with Apple
+      </button>
+    </div>
+    <p class="signin-modal__footer">Don't have an account? <a href="#" id="signinCreate">Create one now</a></p>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // Toast
+  function toast(msg) {
+    var t = document.createElement('div');
+    t.className = 'toast'; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){
+      t.style.animation = 'toastOut .3s cubic-bezier(0.16,1,0.3,1) forwards';
+      setTimeout(function(){ t.remove(); }, 300);
+    }, 2000);
+  }
+
+	  // =====================
+  // SEARCH PANEL
+  // =====================
+  var searchPanel = document.getElementById('searchPanel');
+  var searchBackdrop = document.getElementById('searchBackdrop');
+  var searchInput = document.getElementById('searchInput');
+  var searchClose = document.getElementById('searchClose');
+  var searchForm = document.getElementById('searchForm');
+  var searchBtn = document.querySelector('.top-bar__btn:first-child'); // Search button
+
+  function openSearch() {
+    searchPanel.classList.add('search-panel--open');
+    searchPanel.setAttribute('aria-hidden', 'false');
+    searchBackdrop.classList.add('search-panel__backdrop--open');
+    searchBtn.classList.add('top-bar__btn--active');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ searchInput.focus(); }, 100);
+  }
+
+  function closeSearch() {
+    searchPanel.classList.remove('search-panel--open');
+    searchPanel.setAttribute('aria-hidden', 'true');
+    searchBackdrop.classList.remove('search-panel__backdrop--open');
+    searchBtn.classList.remove('top-bar__btn--active');
+    document.body.style.overflow = '';
+  }
+
+  searchBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if (searchPanel.classList.contains('search-panel--open')) { closeSearch(); }
+    else { openSearch(); }
+  });
+
+  searchClose.addEventListener('click', closeSearch);
+  searchBackdrop.addEventListener('click', closeSearch);
+  searchForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var query = searchInput.value.trim();
+    if (query) {
+      toast('Searching for "' + query + '" — results coming soon');
+      searchInput.value = '';
+      closeSearch();
+    }
+  });
+
+  // =====================
+  // SIGN-IN MODAL
+  // =====================
+  var signinOverlay = document.getElementById('signinOverlay');
+  var signinClose = document.getElementById('signinClose');
+  var signinSubmit = document.getElementById('signinSubmit');
+  var signinEmail = document.getElementById('signinEmail');
+  var signinForgot = document.getElementById('signinForgot');
+  var signinCreate = document.getElementById('signinCreate');
+  var signinBtn = document.querySelector('.top-bar__btn:last-child'); // Sign In button
+
+  function openSignin() {
+    signinOverlay.classList.add('signin-overlay--open');
+    signinOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ signinEmail.focus(); }, 150);
+  }
+
+  function closeSignin() {
+    signinOverlay.classList.remove('signin-overlay--open');
+    signinOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  signinBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    openSignin();
+  });
+
+  signinClose.addEventListener('click', closeSignin);
+  signinOverlay.addEventListener('click', function(e){
+    if (e.target === signinOverlay) closeSignin();
+  });
+
+  signinSubmit.addEventListener('click', function(e){
+    e.preventDefault();
+    var email = signinEmail.value.trim();
+    if (!email) { toast('Please enter your email address'); signinEmail.focus(); return; }
+    if (!email.includes('@')) { toast('Please enter a valid email address'); return; }
+    signinSubmit.textContent = 'Signing in…';
+    signinSubmit.disabled = true;
+    setTimeout(function(){
+      toast('Signed in as ' + email);
+      signinSubmit.textContent = 'Sign in';
+      signinSubmit.disabled = false;
+      signinEmail.value = '';
+      document.getElementById('signinPassword').value = '';
+      closeSignin();
+    }, 800);
+  });
+
+  signinForgot.addEventListener('click', function(e){
+    e.preventDefault();
+    toast('Password reset link sent to your email');
+  });
+
+  signinCreate.addEventListener('click', function(e){
+    e.preventDefault();
+    toast('Account creation coming soon');
+  });
+
+  document.getElementById('signinGoogle').addEventListener('click', function(){
+    toast('Google sign-in coming soon');
+  });
+
+  document.getElementById('signinApple').addEventListener('click', function(){
+    toast('Apple sign-in coming soon');
+  });
+
+  // =====================
+  // GLOBAL: Escape key closes search / sign-in
+  // =====================
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      if (signinOverlay.classList.contains('signin-overlay--open')) { closeSignin(); return; }
+      if (searchPanel.classList.contains('search-panel--open')) { closeSearch(); return; }
+    }
+  });
+
+  // Ad close button — hide leaderboard with slide-up animation
+
+  // ── Dynamically set mobile nav top offset ──
+  function setNavTop() {
+    var header = document.getElementById("site-header");
+    var topBar = document.querySelector(".top-bar");
+    var h = (topBar ? topBar.offsetHeight : 32) + (header ? header.offsetHeight : 48);
+    document.documentElement.style.setProperty("--nav-top", h + "px");
+  }
+  setNavTop();
+  window.addEventListener("resize", setNavTop);
+	  var adClose = document.getElementById('adClose');
+	  var adBoard = document.getElementById('adLeaderboard');
+	  if (adClose && adBoard) {
+	    adClose.addEventListener('click', function(){
+	      adBoard.style.transition = 'max-height .35s cubic-bezier(0.16,1,0.3,1), opacity .25s ease, padding .35s ease';
+	      adBoard.style.maxHeight = adBoard.offsetHeight + 'px';
+	      requestAnimationFrame(function(){
+	        adBoard.style.maxHeight = '0px';
+	        adBoard.style.opacity = '0';
+	        adBoard.style.padding = '0';
+	        adBoard.style.overflow = 'hidden';
+	      });
+	      setTimeout(function(){ adBoard.remove(); setNavTop(); }, 400);
+	    });
+	  }
+  // Mobile nav
+  var hamburger = document.getElementById('hamburger');
+  var navList = document.getElementById('nav-list');
+  hamburger.addEventListener('click', function(){
+    var open = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !open);
+    navList.classList.toggle('nav--open');
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  navList.querySelectorAll('a').forEach(function(l){
+    l.addEventListener('click', function(){
+      hamburger.setAttribute('aria-expanded', 'false');
+      navList.classList.remove('nav--open');
+      document.body.style.overflow = '';
+    });
+  });
+
+
+  // ── Back to top button ──
+  var backToTopBtn = document.getElementById('backToTop');
+  if (backToTopBtn) {
+    var lastScrollY = 0;
+    var ticking = false;
+    function updateBackToTop() {
+      var show = window.scrollY > 800;
+      if (show) { backToTopBtn.classList.add('back-to-top--visible'); }
+      else { backToTopBtn.classList.remove('back-to-top--visible'); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(updateBackToTop); ticking = true; }
+    }, {passive: true});
+    backToTopBtn.addEventListener('click', function() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+  }
+  // =====================
+  // POLL — realistic base + animated bar chart + trend chart
+
+  // ── Image error fallback ──
+  document.querySelectorAll('img').forEach(function(img) {
+    if (!img.hasAttribute('data-err-handled')) {
+      img.setAttribute('data-err-handled', '1');
+      img.addEventListener('error', function() {
+        this.style.display = 'none';
+        var parent = this.parentElement;
+        if (parent) {
+          parent.style.background = '#e8e8e8';
+          parent.style.display = 'flex';
+          parent.style.alignItems = 'center';
+          parent.style.justifyContent = 'center';
+          var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('width', '32');
+          svg.setAttribute('height', '32');
+          svg.style.opacity = '0.3';
+          svg.innerHTML = '<use href="#ic-cam"/>';
+          parent.appendChild(svg);
+        }
+      });
+    }
+  });
+  // =====================
+  var pollForm = document.getElementById('poll-form');
+  var pollSubmit = document.getElementById('poll-submit');
+  var pollResults = document.getElementById('poll-results');
+  var pollError = document.getElementById('poll-error');
+  var pollKeys = ['a','b','c','d'];
+
+  // Realistic base votes — user's vote is one among thousands
+  var pollBase = {a:342, b:720, c:486, d:252}; // total 1,800
+  // Simulated growth since page load (random +1 every few seconds)
+  var pollSimGrowth = {a:0, b:0, c:0, d:0};
+  var pollUserVote = null; // which key the user voted for
+
+  function pollTotal() {
+    var t = 0;
+    pollKeys.forEach(function(k){ t += pollBase[k] + pollSimGrowth[k]; });
+    return t;
+  }
+
+  function pollPct(k) {
+    var t = pollTotal();
+    return t > 0 ? Math.round((pollBase[k] + pollSimGrowth[k]) / t * 100) : 0;
+  }
+
+  function formatNum(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  // voted before?
+  if (localStorage.getItem('jrn209_poll_key')) {
+    pollUserVote = localStorage.getItem('jrn209_poll_key');
+    showResults(true);
+  }
+
+  // Simulate other voters trickling in
+  var simTimer = setInterval(function(){
+    if (pollResults.style.display === 'none') return;
+    var k = pollKeys[Math.floor(Math.random() * 4)];
+    pollSimGrowth[k]++;
+    updateChartBars();
+  }, 12000 + Math.random() * 8000); // every 12-20s, a random vote comes in
+
+  function updateChartBars() {
+    pollKeys.forEach(function(k){
+      var pct = pollPct(k);
+      var bar = document.getElementById('poll-bar-' + k);
+      if (bar) bar.style.width = pct + '%';
+      var pctEl = document.getElementById('poll-pct-' + k);
+      if (pctEl) pctEl.textContent = pct + '%';
+      var countEl = document.getElementById('poll-count-' + k);
+      if (countEl) countEl.textContent = formatNum(pollBase[k] + pollSimGrowth[k]);
+    });
+    var totalEl = document.getElementById('poll-total');
+    if (totalEl) totalEl.textContent = formatNum(pollTotal()) + ' votes';
+  }
+
+  function showResults(skipAnim) {
+    pollForm.style.display = 'none';
+    pollSubmit.style.display = 'none';
+    pollResults.style.display = 'block';
+    // Swap subtitle — the question ("what matters to you") is moot after voting
+    var subEl = document.getElementById('poll-subtitle');
+    var thanksEl = document.getElementById('poll-thanks');
+    if (subEl) subEl.style.display = 'none';
+    if (thanksEl) thanksEl.style.display = 'block';
+
+    // Mark user's voted row
+    pollKeys.forEach(function(k){
+      var row = document.querySelector('.poll-chart-row[data-key="' + k + '"]');
+      if (row) {
+        if (k === pollUserVote) row.classList.add('poll-voted');
+        else row.classList.remove('poll-voted');
+      }
+    });
+
+    // Show voted tag floating inside bar-wrap — absolute positioned so bar never squishes
+    if (pollUserVote) {
+      var vRow = document.querySelector('.poll-chart-row[data-key="' + pollUserVote + '"]');
+      if (vRow && !vRow.querySelector('.poll-voted-tag')) {
+        vRow.classList.add('poll-voted');
+        var tag = document.createElement('span');
+        tag.className = 'poll-voted-tag poll-voted-tag--visible'; tag.textContent = 'Your vote';
+        vRow.appendChild(tag);
+      }
+    }
+
+    updateChartBars();
+
+    if (skipAnim) {
+      // Already voted — no count-up, just set
+      pollKeys.forEach(function(k){
+        var bar = document.getElementById('poll-bar-' + k);
+        if (bar) { bar.style.transition = 'none'; bar.style.width = pollPct(k) + '%'; }
+      });
+    } else {
+      // Fresh vote — animate bars from 0
+      pollKeys.forEach(function(k){
+        var bar = document.getElementById('poll-bar-' + k);
+        if (bar) { bar.style.transition = 'none'; bar.style.width = '0'; }
+      });
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          pollKeys.forEach(function(k){
+            var bar = document.getElementById('poll-bar-' + k);
+            if (bar) {
+              bar.style.transition = 'width 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
+              bar.style.width = pollPct(k) + '%';
+            }
+          });
+        });
+      });
+    }
+
+    // Render trend chart (last 7 days opinion shift)
+    renderTrendChart();
+  }
+
+  // Simulated weekly trend data (day -6 → day 0 = today)
+  function renderTrendChart() {
+    // Simulated daily % for each option over the last 7 days
+    var trends = {
+      a: [20, 20, 19, 19, 18, 18, 18], // Healthcare — edging down as WHO emergency ends
+      b: [45, 44, 43, 42, 41, 40, 40], // Economy — still #1 but easing as rate cuts land
+      c: [18, 20, 23, 25, 26, 27, 28], // Climate — SURGING +10 as UN report & coastal flooding dominate headlines
+      d: [17, 16, 15, 14, 15, 15, 14]  // Education — steady, niche concern
+    };
+    var days = ['Mon','Tue','Wed','Thu','Fri','Sat','Today'];
+
+    // Build trend bars (7 groups of 4 stacked or side-by-side)
+    var chartEl = document.getElementById('poll-trend-chart');
+    var labelsEl = document.getElementById('poll-trend-labels');
+    if (!chartEl || !labelsEl) return;
+
+    var maxH = 55;
+    // Compute max daily total so bars never exceed container height
+    var maxPct = 0;
+    for (var dd = 0; dd < 7; dd++) {
+      var td = trends.a[dd] + trends.b[dd] + trends.c[dd] + trends.d[dd];
+      if (td > maxPct) maxPct = td;
+    }
+
+    var chartHtml = '';
+    var labelsHtml = '';
+    for (var d = 0; d < 7; d++) {
+      var totalDay = trends.a[d] + trends.b[d] + trends.c[d] + trends.d[d];
+      // Scale to maxPct so tallest stack = maxH, others proportional
+      var hA = Math.round((trends.a[d] / maxPct) * maxH);
+      var hB = Math.round((trends.b[d] / maxPct) * maxH);
+      var hC = Math.round((trends.c[d] / maxPct) * maxH);
+      var hD = Math.round((trends.d[d] / maxPct) * maxH);
+      chartHtml += '<div class="poll-trend__stack" style="display:flex;flex-direction:column-reverse;flex:1;align-items:center;gap:0;">';
+      chartHtml += '<div class="poll-trend__bar poll-trend__bar--d" style="height:' + hD + 'px"></div>';
+      chartHtml += '<div class="poll-trend__bar poll-trend__bar--c" style="height:' + hC + 'px"></div>';
+      chartHtml += '<div class="poll-trend__bar poll-trend__bar--b" style="height:' + hB + 'px"></div>';
+      chartHtml += '<div class="poll-trend__bar poll-trend__bar--a" style="height:' + hA + 'px"></div>';
+      chartHtml += '</div>';
+      labelsHtml += '<span class="poll-trend__label">' + days[d] + '</span>';
+    }
+    chartEl.innerHTML = chartHtml;
+    labelsEl.innerHTML = labelsHtml;
+
+    // Animate trend bars
+    var allBars = chartEl.querySelectorAll('.poll-trend__bar');
+    allBars.forEach(function(bar, i){
+      var h = bar.style.height;
+      bar.style.height = '0';
+      setTimeout(function(){
+        bar.style.height = h;
+      }, 100 + i * 60);
+    });
+  }
+
+  pollSubmit.addEventListener('click', function(e){
+    e.preventDefault();
+    pollError.style.display = 'none';
+    var sel = pollForm.querySelector('input[name="poll"]:checked');
+    if (!sel) { pollError.style.display = 'block'; return; }
+    pollSubmit.disabled = true;
+    pollSubmit.textContent = 'Submitting...';
+
+    // Simulate network delay, then add user's vote
+    setTimeout(function(){
+      pollBase[sel.value]++; // user's vote added to base
+      pollUserVote = sel.value;
+      localStorage.setItem('jrn209_poll_key', sel.value);
+      showResults(false);
+    }, 400);
+  });
+
+  // Share buttons
+  document.querySelectorAll('[data-share]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var p = btn.getAttribute('data-share');
+      var url = encodeURIComponent(location.href);
+      var title = encodeURIComponent(document.title);
+      if (p === 'copy') {
+        if (navigator.clipboard) { navigator.clipboard.writeText(location.href).then(function(){ toast('Link copied to clipboard'); }).catch(function(){ toast('Copy failed'); }); }
+        else { var ta = document.createElement('textarea'); ta.value = location.href; ta.style.cssText = 'position:fixed;left:-9999px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('Link copied'); } catch(e){} document.body.removeChild(ta); }
+      } else if (p === 'weibo') {
+        window.open('https://service.weibo.com/share/share.php?url='+url+'&title='+title, '_blank', 'width=600,height=450');
+      } else if (p === 'twitter') {
+        window.open('https://twitter.com/intent/tweet?url='+url+'&text='+title, '_blank', 'width=600,height=450');
+      } else if (p === 'facebook') {
+        window.open('https://www.facebook.com/sharer/sharer.php?u='+url, '_blank', 'width=600,height=450');
+      } else if (p === 'instagram') {
+        toast('Find us on Instagram @newsonline');
+      } else if (p === 'tiktok') {
+        toast('Follow us on TikTok @newsonline');
+      } else if (p === 'youtube') {
+        toast('Subscribe to our YouTube channel @NewsOnline');
+      }
+    });
+  });
+
+  // ── Multimedia cards: click-to-load + stop ──
+  (function(){
+
+    // Click cover → load player
+    document.querySelectorAll(".media-card__cover").forEach(function(cover){
+      cover.addEventListener("click", function(){
+        var card = cover.closest(".media-card");
+        if (!card || card.classList.contains("media-card--active")) return;
+
+        var pType = card.getAttribute("data-player");
+
+        // ── YouTube ── (offline-friendly: shows note instead of embedding)
+        if (pType === "youtube") {
+          var vid = card.getAttribute("data-vid");
+          var wrapEl = card.querySelector(".media-card__video-wrap");
+          if (wrapEl && !wrapEl.querySelector("iframe") && !wrapEl.querySelector(".media-card__offline-msg")) {
+            var msg = document.createElement("div");
+            msg.className = "media-card__offline-msg";
+            msg.innerHTML = '<p style="color:#666;font-size:14px;padding:20px;text-align:center">📺 离线模式下视频不可用<br><small>联网后可观看: youtube.com/watch?v=' + vid + '</small></p>';
+            wrapEl.appendChild(msg);
+          }
+        }
+
+
+        card.classList.add("media-card--active");
+      });
+    });
+
+    // Stop button → remove player, go back to cover
+    document.querySelectorAll(".media-card__stop").forEach(function(btn){
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        var card = btn.closest(".media-card");
+        if (!card) return;
+        card.classList.remove("media-card--active");
+        // Remove player so video stops completely
+        var vw = card.querySelector(".media-card__video-wrap");
+        if (vw) { vw.innerHTML = ""; }
+      });
+    });
+  })();
+
+  // ── Live Audio module ──
+  (function(){
+    var la = document.getElementById('liveAudio');
+    if (!la) return;
+
+    var podcasts = {
+      bbc: {
+        title: 'US and Iran agree peace deal',
+        source: 'Global News Podcast · BBC World Service',
+        audio: 'http://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-rss-low/proto/http/vpid/p0ns0h81.mp3'
+      },
+      npr: {
+        title: 'Iran Deal, UFC Event At White House, Trump Heads To G7',
+        source: 'Up First · NPR',
+        audio: 'https://prfx.byspotify.com/e/play.podtrac.com/npr-510318/npr.simplecastaudio.com/d52bee4a-b10a-40f8-9417-45064e6b8632/episodes/b0bf6e49-0392-4fbc-9c4f-54f683524d4b/audio/128/default.mp3?awCollectionId=d52bee4a-b10a-40f8-9417-45064e6b8632&awEpisodeId=b0bf6e49-0392-4fbc-9c4f-54f683524d4b&feed=HMwRVgVt&t=podcast&e=nx-s1-5858622&p=510318&d=766&size=12265892'
+      }
+    };
+    var currentCh = 'bbc';
+
+    // Channel switcher
+    la.querySelectorAll('.live-audio__ch').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var ch = this.getAttribute('data-ch');
+        if (ch === currentCh && la.classList.contains('live-audio--playing')) return;
+        if (la.classList.contains('live-audio--playing')) { stopLiveAudio(); }
+        currentCh = ch;
+        la.querySelectorAll('.live-audio__ch').forEach(function(b){ b.classList.remove('live-audio__ch--active'); });
+        this.classList.add('live-audio__ch--active');
+        la.querySelector('.live-audio__episode').textContent = podcasts[ch].title;
+        la.querySelector('.live-audio__source').textContent = podcasts[ch].source;
+      });
+    });
+
+    // Play button — offline: show note instead of loading external streams
+    la.querySelector('.live-audio__play').addEventListener('click', function(){
+      if (la.classList.contains('live-audio--playing')) return;
+      var playerWrap = la.querySelector('.live-audio__player');
+      if (!playerWrap.querySelector('audio') && !playerWrap.querySelector('.live-audio__offline-note')) {
+        var note = document.createElement('div');
+        note.className = 'live-audio__offline-note';
+        note.style.cssText = 'color:#8b949e;font-size:12px;padding:8px 0;text-align:center;';
+        note.textContent = '📻 离线模式下音频流不可用 — 联网后可收听 BBC/NPR 直播';
+        playerWrap.appendChild(note);
+      }
+      la.classList.add('live-audio--playing');
+    });
+
+    // Stop button
+    la.querySelector('.live-audio__stop').addEventListener('click', function(e){
+      e.stopPropagation();
+      stopLiveAudio();
+    });
+
+    function stopLiveAudio(){
+      la.classList.remove('live-audio--playing');
+      la.querySelector('.live-audio__player').innerHTML = '';
+    }
+  })();
+})();
+</script>
+<script>
+/* Offset scroll for sticky header when arriving with a hash */
+(function(){
+  if (!location.hash) return;
+  var target = document.querySelector(location.hash);
+  if (!target) return;
+  var header = document.getElementById('site-header');
+  var topBar = document.querySelector('.top-bar');
+  if (!header) return;
+  var offset = header.offsetHeight + (topBar ? topBar.offsetHeight : 0);
+  setTimeout(function(){
+    var top = target.getBoundingClientRect().top + window.pageYOffset - offset - 16;
+    window.scrollTo({top: top, behavior: 'smooth'});
+  }, 100);
+})();
+</script>
+</body>
+</html>

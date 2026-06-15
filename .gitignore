@@ -1,0 +1,5 @@
+.od-skills/
+*.artifact.json
+.claude/
+.DS_Store
+Thumbs.db
