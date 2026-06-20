@@ -61,6 +61,7 @@ input, textarea { font: inherit; }
   --font-mono:    'Geist', 'SF Mono', 'Consolas', monospace;
   /* Layout */
   --max-w:        1280px;
+  --sidebar-w:    320px;
   --ease:         cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -459,7 +460,7 @@ input, textarea { font: inherit; }
 	  height: 90px;
 	  background: #fff;
 	  border: 1px dashed var(--c-border);
-	  
+
 	  display: flex;
 	  align-items: center;
 	  justify-content: center;
@@ -515,7 +516,7 @@ input, textarea { font: inherit; }
 	  color: #fff;
 	  font-size: 13px;
 	  font-weight: 600;
-	  
+
 	  transition: background .15s;
 	  white-space: nowrap;
 	}
@@ -752,7 +753,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: flex; align-items: center; gap: 10px;
   padding: 10px 12px;
   border: 1px solid var(--c-border);
-  
+
   cursor: pointer;
   transition: all .15s;
   min-height: 44px;
@@ -1202,7 +1203,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   .hero__grid { grid-template-columns: 2fr 1fr; }
   .hero__primary { border-bottom: none; padding-bottom: 0; }
   .hero__side { grid-template-columns: 1fr; }
-  .main-layout { grid-template-columns: 1fr 320px; }
+  .main-layout { grid-template-columns: 1fr var(--sidebar-w); }
   .stories-grid { grid-template-columns: 1fr 1fr; }
   .story-item { grid-template-columns: 1fr; }
   .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
@@ -1265,7 +1266,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .cat-feature {
   display: block;
   transition: opacity .15s;
-  
+
 }
 .cat-feature:hover { opacity: 0.92; }
 .cat-feature__img {
@@ -1351,7 +1352,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
 @media (min-width: 768px) {
   .cat-grid {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr var(--sidebar-w);
     gap: 20px;
     align-items: start;
   }
@@ -1382,7 +1383,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   aspect-ratio: 16 / 10;
   background: var(--c-bg-grey);
   overflow: hidden;
-  
+
   margin-bottom: 10px;
 }
 .cat-card__img img {
@@ -1527,12 +1528,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  border: 1px solid var(--c-border);
 		  transition: border-color 0.6s ease;
 		}
-		.weather-card--clear  { border-left: 3px solid #C8963A; }
-		.weather-card--cloudy { border-left: 3px solid #8B96A0; }
-		.weather-card--rain   { border-left: 3px solid #5B7D99; }
-		.weather-card--storm  { border-left: 3px solid #5B4A6A; }
-		.weather-card--snow   { border-left: 3px solid #8DAFC4; }
-		.weather-card--fog    { border-left: 3px solid #A8AEB5; }
+		.weather-card--clear,
+		.weather-card--cloudy,
+		.weather-card--rain,
+		.weather-card--storm,
+		.weather-card--snow,
+		.weather-card--fog { border-left: 3px solid var(--c-red); }
 
 		.weather-card__content {
 		  padding: 16px 16px 14px;
@@ -1751,7 +1752,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .wc-match__score--live {
   color: var(--c-red, #B80000);
 }
-
 
 		/* =============================================
 		   PAGE VIEWS — footer
@@ -2043,7 +2043,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   font-weight: 600;
   color: #fff;
   background: #B80000;
-  
+
   text-decoration: none;
   letter-spacing: 0.03em;
   transition: background .15s, transform .15s;
@@ -2317,7 +2317,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
       </ol>
     </div>
 
-    
 		    <!-- Weather — sidebar compact -->
 		    <div class="weather-card weather-card--clear" id="weatherCard">
 		      <div class="weather-card__content">
@@ -2342,10 +2341,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		        </div>
 		      </div>
 		    </div>
-	    </div>
 
-
-	    
 	    <!-- World Cup 2026 Scores -->
 	    <div class="wc-scores" id="wcScores">
 	      <div class="wc-scores__head">
@@ -2354,7 +2350,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	      </div>
 	      <div class="wc-scores__list" id="wcList"></div>
 	    </div>
-
 
 	    <!-- Have Your Say (Poll) -->
     <div class="poll-widget" id="poll-widget">
@@ -2415,7 +2410,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <button type="submit" class="btn btn--primary" id="poll-submit" form="poll-form">Vote</button>
     </div>
 
-
 	    <!-- Watch & Listen -->
         <div class="wl-sidebar" id="wlSidebar">
           <h3 class="wl-sidebar__title">Watch &amp; Listen</h3>
@@ -2456,7 +2450,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
       </aside>
 </div>
-
 
 <!-- ===== CATEGORY SECTIONS ===== -->
 <section class="cat-section" id="sec-world" data-od-id="cat-sec-world">
@@ -2950,7 +2943,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
     });
   });
 
-
   // ── Back to top button ──
   var backToTopBtn = document.getElementById('backToTop');
   if (backToTopBtn) {
@@ -3230,7 +3222,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
             wrapEl.appendChild(msg);
           }
         }
-
 
         card.classList.add("media-card--active");
       });
