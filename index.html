@@ -1271,7 +1271,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .cat-feature:hover { opacity: 0.92; }
 .cat-feature__img {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
+  max-height: 380px;
   background: var(--c-bg-grey);
   overflow: hidden;
   margin-bottom: 10px;
@@ -1279,6 +1280,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .cat-feature__img img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center 25%;
   transition: transform .3s ease;
 }
 .cat-feature:hover .cat-feature__img img { transform: scale(1.02); }
