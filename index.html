@@ -1515,38 +1515,31 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		}
 
 		/* =============================================
-		   APPLE-STYLE WEATHER — sidebar
+		/* =============================================
+		   WEATHER — sidebar (compact, refined)
 		   ============================================= */
 		.weather-card {
 		  position: relative;
 		  padding: 0;
 		  margin-bottom: 16px;
 		  color: var(--c-text);
-		  overflow: hidden;
-		  min-height: 420px;
-		  display: flex;
-		  flex-direction: column;
 		  background: var(--c-surface);
 		  border: 1px solid var(--c-border);
-		  transition: border-color 0.8s ease;
+		  transition: border-color 0.6s ease;
 		}
-		.weather-card--clear  { border-left: 3px solid #D4A030; }
-		.weather-card--cloudy { border-left: 3px solid #8599A8; }
-		.weather-card--rain   { border-left: 3px solid #4A7499; }
-		.weather-card--storm  { border-left: 3px solid #3D2B50; }
-		.weather-card--snow   { border-left: 3px solid #96BCD8; }
-		.weather-card--fog    { border-left: 3px solid #A0AAB2; }
-		.weather-card__anim {
-		  position: absolute; inset: 0; z-index: 1;
-		  pointer-events: none; opacity: 0.55;
-		}
+		.weather-card--clear  { border-left: 3px solid #C8963A; }
+		.weather-card--cloudy { border-left: 3px solid #8B96A0; }
+		.weather-card--rain   { border-left: 3px solid #5B7D99; }
+		.weather-card--storm  { border-left: 3px solid #5B4A6A; }
+		.weather-card--snow   { border-left: 3px solid #8DAFC4; }
+		.weather-card--fog    { border-left: 3px solid #A8AEB5; }
+
 		.weather-card__content {
-		  position: relative; z-index: 2;
-		  padding: 20px 18px 16px;
-		  display: flex; flex-direction: column; flex: 1;
+		  padding: 16px 16px 14px;
 		}
 		.weather-card__top {
 		  display: flex; justify-content: space-between; align-items: flex-start;
+		  margin-bottom: 10px;
 		}
 		.weather-card__city {
 		  font-family: var(--font-display);
@@ -1558,31 +1551,32 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  text-align: right; line-height: 1.45;
 		}
 		.weather-card__main {
-		  display: flex; align-items: center; gap: 14px;
-		  margin: 6px 0 10px;
-		}
- 		.weather-card__icon {
-		  margin-bottom: 2px;
+		  display: flex; align-items: center; gap: 12px;
+		  margin-bottom: 4px;
 		}
 		.weather-card__icon svg {
-		  width: 64px; height: 64px;
+		  width: 44px; height: 44px; display: block;
 		}
 		.weather-card__temp {
 		  font-family: var(--font-display);
-		  font-size: 64px; font-weight: 400; line-height: 0.95;
-		  color: var(--c-text); letter-spacing: -0.035em;
+		  font-size: 42px; font-weight: 400; line-height: 1;
+		  color: var(--c-text); letter-spacing: -0.03em;
 		}
 		.weather-card__condition {
-		  font-size: 14px; color: var(--c-text-soft); font-weight: 500;
+		  font-size: 13px; color: var(--c-text-soft); font-weight: 500;
 		}
 		.weather-card__hilow {
-		  font-size: 13px; color: var(--c-text-light);
+		  font-size: 12px; color: var(--c-text-light);
+		}
+		.weather-card__meta-row {
+		  display: flex; align-items: baseline; gap: 8px;
+		  margin-bottom: 12px;
 		}
 		/* Hourly strip */
 		.weather-hourly {
-		  display: flex; gap: 2px; overflow-x: auto;
-		  padding: 12px 0 8px; margin: 0 -18px;
-		  padding-left: 18px; padding-right: 18px;
+		  display: flex; gap: 1px; overflow-x: auto;
+		  padding: 10px 0; margin: 0 -16px;
+		  padding-left: 16px; padding-right: 16px;
 		  scrollbar-width: none;
 		  border-top: 1px solid var(--c-border);
 		  border-bottom: 1px solid var(--c-border);
@@ -1590,8 +1584,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		.weather-hourly::-webkit-scrollbar { display: none; }
 		.weather-hour {
 		  display: flex; flex-direction: column; align-items: center;
-		  gap: 5px; min-width: 48px; flex-shrink: 0;
-		  padding: 6px 2px; border-radius: 8px;
+		  gap: 4px; min-width: 40px; flex-shrink: 0;
+		  padding: 5px 1px; border-radius: 6px;
 		  transition: background 0.2s;
 		}
 		.weather-hour__time {
@@ -1599,10 +1593,10 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  color: var(--c-text-light); font-variant-numeric: tabular-nums;
 		  font-family: var(--font-mono, monospace);
 		}
-		.weather-hour__icon { width: 22px; height: 22px; }
+		.weather-hour__icon { width: 18px; height: 18px; }
 		.weather-hour__icon svg { width: 100%; height: 100%; }
 		.weather-hour__temp {
-		  font-size: 13px; font-weight: 600;
+		  font-size: 12px; font-weight: 600;
 		  color: var(--c-text); font-variant-numeric: tabular-nums;
 		  font-family: var(--font-mono, monospace);
 		}
@@ -1610,9 +1604,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		.weather-hour--now .weather-hour__time { color: var(--c-red); font-weight: 700; }
 		/* Metrics grid */
 		.weather-metrics {
-		  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px;
-		  margin-top: auto; padding-top: 14px;
-		  border-top: 1px solid var(--c-border);
+		  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px;
+		  padding-top: 12px;
 		}
 		.weather-metric { display: flex; flex-direction: column; gap: 1px; }
 		.weather-metric__label {
@@ -1624,7 +1617,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		}
 
 /* =============================================
-   WORLD CUP SCORES — sidebar
+   WORLD CUP SCORES — sidebar (site-aligned)
    ============================================= */
 .wc-scores {
   background: var(--c-surface);
@@ -1635,7 +1628,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 12px;
+  padding: 12px 16px 10px;
   border-bottom: 2px solid var(--c-text);
 }
 .wc-scores__title {
@@ -1651,20 +1644,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: inline-block;
   width: 7px;
   height: 7px;
-  background: #00c853;
+  background: var(--c-red, #B80000);
   border-radius: 50%;
   animation: pulse-live 2s infinite;
   flex-shrink: 0;
 }
 @keyframes pulse-live {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,200,83,0.5); }
-  50% { opacity: 0.35; box-shadow: 0 0 0 8px rgba(0,200,83,0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(184,0,0,0.4); }
+  50% { opacity: 0.35; box-shadow: 0 0 0 7px rgba(184,0,0,0); }
 }
 .wc-scores__live-label {
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 600;
-  color: #00c853;
+  color: var(--c-red, #B80000);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -1673,27 +1666,26 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 16px;
+  padding: 10px 14px;
   border-bottom: 1px solid var(--c-border);
   transition: background .15s ease;
-  cursor: default;
 }
 .wc-match:last-child { border-bottom: none; }
 .wc-match:hover { background: var(--c-bg); }
 .wc-match--live {
-  border-left: 3px solid #00c853;
-  padding-left: 13px;
+  border-left: 3px solid var(--c-red, #B80000);
+  padding-left: 11px;
 }
-.wc-match--live:hover { background: rgba(0,200,83,0.03); }
+.wc-match--live:hover { background: rgba(184,0,0,0.025); }
 
 .wc-match__group {
   font-size: 9px;
   font-weight: 700;
   color: var(--c-red, #B80000);
-  background: rgba(184,0,0,0.07);
-  padding: 2px 6px;
-  border-radius: 3px;
-  letter-spacing: 0.06em;
+  background: rgba(184,0,0,0.06);
+  padding: 2px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
   text-align: center;
   line-height: 1.4;
   flex-shrink: 0;
@@ -1713,7 +1705,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   gap: 3px;
 }
 .wc-match__flag {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1;
 }
 .wc-match__vs {
@@ -1732,7 +1724,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   gap: 6px;
 }
 .wc-match__meta--live {
-  color: #00c853;
+  color: var(--c-red, #B80000);
   font-weight: 600;
 }
 .wc-match__meta--live::before {
@@ -1740,25 +1732,26 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: inline-block;
   width: 5px;
   height: 5px;
-  background: #00c853;
+  background: var(--c-red, #B80000);
   border-radius: 50%;
   animation: pulse-live 2s infinite;
   flex-shrink: 0;
 }
 .wc-match__score {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--c-text);
   font-variant-numeric: tabular-nums;
   font-family: var(--font-mono, 'SF Mono', monospace);
   letter-spacing: 0.04em;
   text-align: center;
-  min-width: 38px;
+  min-width: 36px;
   flex-shrink: 0;
 }
 .wc-match__score--live {
-  color: #B80000;
+  color: var(--c-red, #B80000);
 }
+
 
 		/* =============================================
 		   PAGE VIEWS — footer
@@ -2325,30 +2318,30 @@ a:hover .hero__subheadline { color: var(--c-red); }
     </div>
 
     
-	    <!-- Apple-style Weather — Kuala Lumpur -->
-	    <div class="weather-card weather-card--clear" id="weatherCard">
-	      <canvas class="weather-card__anim" id="wxCanvas"></canvas>
-	      <div class="weather-card__content">
-	        <div class="weather-card__top">
-	          <span class="weather-card__city" id="wxCity">Kuala Lumpur</span>
-	          <span class="weather-card__datetime" id="wxDatetime">--</span>
-	        </div>
-	        <div class="weather-card__icon" id="wxMainIcon"></div>
-        <div class="weather-card__main">
-	          <span class="weather-card__temp" id="wxTemp">--°</span>
-	          <div>
-	            <div class="weather-card__condition" id="wxDesc">Loading…</div>
-	            <div class="weather-card__hilow" id="wxHiLo"></div>
-	          </div>
-	        </div>
-	        <div class="weather-hourly" id="wxHourly"></div>
-	        <div class="weather-metrics">
-	          <div class="weather-metric"><span class="weather-metric__label">Humidity</span><span class="weather-metric__value" id="wxHum">--</span></div>
-	          <div class="weather-metric"><span class="weather-metric__label">Wind</span><span class="weather-metric__value" id="wxWind">--</span></div>
-	          <div class="weather-metric"><span class="weather-metric__label">UV Index</span><span class="weather-metric__value" id="wxUV">--</span></div>
-	          <div class="weather-metric"><span class="weather-metric__label">Pressure</span><span class="weather-metric__value" id="wxPress">--</span></div>
-	        </div>
-	      </div>
+		    <!-- Weather — sidebar compact -->
+		    <div class="weather-card weather-card--clear" id="weatherCard">
+		      <div class="weather-card__content">
+		        <div class="weather-card__top">
+		          <span class="weather-card__city" id="wxCity">Kuala Lumpur</span>
+		          <span class="weather-card__datetime" id="wxDatetime">--</span>
+		        </div>
+		        <div class="weather-card__main">
+		          <div class="weather-card__icon" id="wxMainIcon"></div>
+		          <span class="weather-card__temp" id="wxTemp">--°</span>
+		        </div>
+		        <div class="weather-card__meta-row">
+		          <span class="weather-card__condition" id="wxDesc">Loading…</span>
+		          <span class="weather-card__hilow" id="wxHiLo"></span>
+		        </div>
+		        <div class="weather-hourly" id="wxHourly"></div>
+		        <div class="weather-metrics">
+		          <div class="weather-metric"><span class="weather-metric__label">Humidity</span><span class="weather-metric__value" id="wxHum">--</span></div>
+		          <div class="weather-metric"><span class="weather-metric__label">Wind</span><span class="weather-metric__value" id="wxWind">--</span></div>
+		          <div class="weather-metric"><span class="weather-metric__label">UV Index</span><span class="weather-metric__value" id="wxUV">--</span></div>
+		          <div class="weather-metric"><span class="weather-metric__label">Pressure</span><span class="weather-metric__value" id="wxPress">--</span></div>
+		        </div>
+		      </div>
+		    </div>
 	    </div>
 
 
@@ -3329,58 +3322,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     }
   });
 
-  // =====================
-  // APPLE-STYLE WEATHER ENGINE
-  // =====================
-  var _wx = { code:0, temp:24, hi:26, lo:22, hum:75, wind:8, windDir:'NE', uv:3, press:1012, vis:10, hrs:[] };
-  /* ---- Canvas particle animations ---- */
-  var _wxAnim = null;
-	  function wxStartAnim(code) {
-	    var cv = document.getElementById("wxCanvas"); if (!cv) return;
-	    var rect = cv.parentElement.getBoundingClientRect();
-	    cv.width = rect.width * 2; cv.height = rect.height * 2;
-	    cv.style.width = rect.width + "px"; cv.style.height = rect.height + "px";
-	    var ctx = cv.getContext("2d"); ctx.scale(2,2);
-	    if (_wxAnim) cancelAnimationFrame(_wxAnim);
-	    var W = rect.width, H = rect.height;
-	    var drops=[], flakes=[], rays=[], flashes=[];
-
-	    if (code===0||code===1) { // Clear — warm golden glow
-	      for (var i=0;i<3;i++) rays.push({a:Math.random()*Math.PI*2, r:24+Math.random()*10, s:0.3+Math.random()*0.7, o:0});
-	    }
-	    if (code>=51&&code<=67||code>=80&&code<=82) { // Rain — subtle blue-grey strokes
-	      for (var i=0;i<100;i++) drops.push({x:Math.random()*W, y:Math.random()*H, s:0.8+Math.random()*1.2, v:8+Math.random()*12, o:0.08+Math.random()*0.18});
-	    }
-	    if (code>=71&&code<=77) { // Snow — soft icy flakes
-	      for (var i=0;i<70;i++) flakes.push({x:Math.random()*W, y:Math.random()*H, r:1+Math.random()*2.2, v:0.4+Math.random()*0.8, w:0.3+Math.random()*1.2, o:0.3+Math.random()*0.4});
-	    }
-	    if (code>=95&&code<=99) { // Storm — heavy rain strokes
-	      for (var i=0;i<110;i++) drops.push({x:Math.random()*W, y:Math.random()*H, s:1.2+Math.random()*2, v:10+Math.random()*14, o:0.1+Math.random()*0.25});
-	    }
-	    if (code===45||code===48) { // Fog — horizontal haze
-	      for (var i=0;i<8;i++) flakes.push({x:Math.random()*W, y:10+Math.random()*(H-60), r:30+Math.random()*60, v:0.15+Math.random()*0.35, w:0, o:0.04+Math.random()*0.05});
-	    }
-
-	    function tick() {
-	      ctx.clearRect(0,0,W,H);
-	      // Sun rays — warm golden (#D4A030)
-	      for (var i=0;i<rays.length;i++) { var r=rays[i]; r.o+=0.01; if(r.o>1)r.o=0; ctx.save(); ctx.globalAlpha=0.07*Math.sin(r.o*Math.PI); ctx.strokeStyle="#D4A030"; ctx.lineWidth=1.2; ctx.translate(36,30); ctx.rotate(r.a); ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r.r,0); ctx.stroke(); ctx.restore(); }
-	      // Rain drops — blue-grey (#4A7499)
-	      for (var i=0;i<drops.length;i++) { var d=drops[i]; d.y+=d.v; d.x-=1.5; if(d.y>H+10){d.y=-10;d.x=Math.random()*W;} ctx.save(); ctx.globalAlpha=d.o; ctx.strokeStyle="#4A7499"; ctx.lineWidth=d.s; ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(d.x+2,d.y+8); ctx.stroke(); ctx.restore(); }
-	      // Lightning — pale golden flash
-	      if (code>=95&&code<=99&&Math.random()<0.04) { flashes.push({o:1}); }
-	      for (var i=0;i<flashes.length;i++) { var f=flashes[i]; f.o-=0.06; if(f.o<=0){flashes.splice(i,1);i--;continue;} ctx.save(); ctx.globalAlpha=f.o*0.12; ctx.fillStyle="#D4A030"; ctx.fillRect(0,0,W,H); ctx.restore(); }
-	      // Snow flakes — icy blue (#96BCD8)
-	      for (var i=0;i<flakes.length;i++) { var fk=flakes[i]; fk.y+=fk.v; fk.x+=Math.sin(fk.y*0.02)*fk.w; if(fk.y>H+10){fk.y=-10;fk.x=Math.random()*W;} ctx.save(); ctx.globalAlpha=fk.o; ctx.fillStyle="#96BCD8"; ctx.beginPath(); ctx.arc(fk.x,fk.y,fk.r,0,Math.PI*2); ctx.fill(); ctx.restore(); }
-	      // Fog — horizontal grey strips (#A0AAB2)
-	      if (code===45||code===48) { for (var i=0;i<flakes.length;i++){var f=flakes[i]; f.x+=f.v; if(f.x>W+80)f.x=-80; ctx.save(); ctx.globalAlpha=f.o; ctx.fillStyle="#A0AAB2"; ctx.filter="blur("+f.r+"px)"; ctx.fillRect(f.x-60,f.y-8,120,16); ctx.filter="none"; ctx.restore();} }
-
-	      _wxAnim = requestAnimationFrame(tick);
-	    }
-	    tick();
-	  }
-
-  function wxApplyTheme(code) {
+function wxApplyTheme(code) {
     var card = document.getElementById('weatherCard'); if (!card) return;
     card.className = 'weather-card';
     if (code===0||code===1) card.classList.add('weather-card--clear');
@@ -3465,6 +3407,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	    return S+cloudPath+E;
 	  }
 
+  var _wx = {};
   function updateWeather() {
     var card = document.getElementById('weatherCard'); if (!card) return;
     fetch('https://api.open-meteo.com/v1/forecast?latitude=3.139&longitude=101.6869&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m,apparent_temperature,pressure_msl,uv_index&hourly=temperature_2m,weather_code&timezone=Asia/Kuala_Lumpur&forecast_days=2')
@@ -3489,12 +3432,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
         var ts=_wx.hrs.map(function(h){return h.t;});
         _wx.hi=Math.max.apply(null,ts); _wx.lo=Math.min.apply(null,ts);
 
-        wxApplyTheme(code); wxStartAnim(code); wxRender();
+        wxApplyTheme(code); wxRender();
       })
       .catch(function(){
         _wx.code=2; _wx.temp=31; _wx.hi=33; _wx.lo=25; _wx.hum=72; _wx.wind=9; _wx.windDir='NE'; _wx.uv=8; _wx.press=1010;
         _wx.hrs=[]; for(var i=0;i<12;i++){var hh=(new Date().getHours()+i)%24; _wx.hrs.push({h:hh,t:26+Math.round(Math.sin(i*0.6)*3),c:i<6?2:0});}
-        wxApplyTheme(2); wxStartAnim(2); wxRender();
+        wxApplyTheme(2); wxRender();
       });
   }
 
