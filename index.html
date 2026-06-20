@@ -1623,81 +1623,142 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  font-size: 14px; font-weight: 600; color: var(--c-text);
 		}
 
-		/* =============================================
-		   WORLD CUP SCORES — sidebar
 /* =============================================
    WORLD CUP SCORES — sidebar
    ============================================= */
 .wc-scores {
   background: var(--c-surface);
   border: 1px solid var(--c-border);
-  padding: 16px;
+  padding: 0;
+}
+.wc-scores__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 2px solid var(--c-text);
 }
 .wc-scores__title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-  margin-bottom: 12px;
+  color: var(--c-text);
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.wc-scores__live {
+.wc-scores__live-dot {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   background: #00c853;
   border-radius: 50%;
   animation: pulse-live 2s infinite;
+  flex-shrink: 0;
 }
 @keyframes pulse-live {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,200,83,0.4); }
-  50% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(0,200,83,0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,200,83,0.5); }
+  50% { opacity: 0.35; box-shadow: 0 0 0 8px rgba(0,200,83,0); }
 }
+.wc-scores__live-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  color: #00c853;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .wc-match {
-  display: grid;
-  grid-template-columns: 24px 1fr auto;
-  grid-template-rows: auto auto;
-  gap: 1px 10px;
+  display: flex;
   align-items: center;
-  padding: 10px 0;
+  gap: 10px;
+  padding: 11px 16px;
   border-bottom: 1px solid var(--c-border);
+  transition: background .15s ease;
+  cursor: default;
 }
 .wc-match:last-child { border-bottom: none; }
+.wc-match:hover { background: var(--c-bg); }
+.wc-match--live {
+  border-left: 3px solid #00c853;
+  padding-left: 13px;
+}
+.wc-match--live:hover { background: rgba(0,200,83,0.03); }
+
 .wc-match__group {
-  grid-row: 1 / 3; grid-column: 1;
-  font-size: 9px; font-weight: 700;
-  color: #B80000;
-  background: rgba(184,0,0,0.06);
-  padding: 4px 3px; border-radius: 3px;
-  letter-spacing: 0.04em;
-  text-align: center; line-height: 1.2;
-  writing-mode: vertical-rl;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--c-red, #B80000);
+  background: rgba(184,0,0,0.07);
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  line-height: 1.4;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+.wc-match__body {
+  flex: 1;
+  min-width: 0;
 }
 .wc-match__teams {
-  grid-row: 1; grid-column: 2;
-  font-size: 18px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--c-text);
-  letter-spacing: 4px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.wc-match__flag {
+  font-size: 16px;
+  line-height: 1;
+}
+.wc-match__vs {
+  font-size: 10px;
+  color: var(--c-text-soft);
+  font-weight: 400;
+  margin: 0 2px;
+}
+.wc-match__meta {
+  font-size: 10px;
+  color: var(--c-text-soft);
+  font-weight: 500;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wc-match__meta--live {
+  color: #00c853;
+  font-weight: 600;
+}
+.wc-match__meta--live::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #00c853;
+  border-radius: 50%;
+  animation: pulse-live 2s infinite;
+  flex-shrink: 0;
 }
 .wc-match__score {
-  grid-row: 1; grid-column: 3;
-  font-size: 15px; font-weight: 700;
+  font-size: 17px;
+  font-weight: 700;
   color: var(--c-text);
   font-variant-numeric: tabular-nums;
-  font-family: var(--font-mono, monospace);
-  letter-spacing: 0.02em;
-  background: var(--c-bg-grey);
-  padding: 2px 8px; border-radius: 4px;
-  text-align: center; min-width: 42px;
+  font-family: var(--font-mono, 'SF Mono', monospace);
+  letter-spacing: 0.04em;
+  text-align: center;
+  min-width: 38px;
+  flex-shrink: 0;
 }
-.wc-match__time {
-  grid-row: 2; grid-column: 2 / 4;
-  font-size: 10px; color: var(--c-text-soft);
-  font-weight: 500;
+.wc-match__score--live {
+  color: #B80000;
 }
-.wc-match__time--live { color: #00c853; font-weight: 600; }
-.wc-match__time--ft { color: var(--c-text-soft); }
 
 		/* =============================================
 		   PAGE VIEWS — footer
@@ -2294,7 +2355,10 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	    
 	    <!-- World Cup 2026 Scores -->
 	    <div class="wc-scores" id="wcScores">
-	      <h3 class="wc-scores__title"><span class="wc-scores__live"></span> World Cup 2026</h3>
+	      <div class="wc-scores__head">
+	        <h3 class="wc-scores__title"><span class="wc-scores__live-dot"></span> World Cup 2026</h3>
+	        <span class="wc-scores__live-label">Live</span>
+	      </div>
 	      <div class="wc-scores__list" id="wcList"></div>
 	    </div>
 
@@ -3475,10 +3539,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
   // WORLD CUP 2026 SCORES
   // =====================
   var matches = [
-    { g:'D', h:'🇺🇸', a:'🇬🇧', hs:1, as:1, t:"52'" },
-    { g:'E', h:'🇧🇷', a:'🇩🇪', hs:2, as:0, t:'FT' },
-    { g:'C', h:'🇦🇷', a:'🇫🇷', hs:1, as:1, t:"78'" },
-    { g:'B', h:'🇪🇸', a:'🇵🇹', hs:0, as:0, t:"34'" }
+    { g:'A', h:'🇺🇸', a:'🇲🇽', hn:'USA', an:'Mexico',      hs:2, as:1, t:"63'" },
+    { g:'D', h:'🇧🇷', a:'🇩🇪', hn:'Brazil', an:'Germany',  hs:3, as:2, t:'FT' },
+    { g:'C', h:'🇦🇷', a:'🇫🇷', hn:'Argentina', an:'France', hs:1, as:1, t:"78'" },
+    { g:'E', h:'🇪🇸', a:'🇵🇹', hn:'Spain', an:'Portugal',  hs:0, as:0, t:"34'" },
+    { g:'B', h:'🇬🇧', a:'🇮🇹', hn:'England', an:'Italy',   hs:1, as:0, t:'HT' },
+    { g:'F', h:'🇯🇵', a:'🇰🇷', hn:'Japan', an:'S. Korea',  hs:0, as:0, t:"12'" }
   ];
 
   function renderMatches() {
@@ -3486,18 +3552,31 @@ a:hover .hero__subheadline { color: var(--c-red); }
     if (!list) return;
     list.innerHTML = matches.map(function(m) {
       var isLive = m.t !== 'FT' && m.t !== 'HT';
-      var timeCls = m.t === 'FT' ? ' wc-match__time--ft' : (isLive ? ' wc-match__time--live' : '');
-      var timeLabel = m.t === 'FT' ? 'Full Time' : (m.t === 'HT' ? 'Half Time' : m.t + ' · LIVE');
-      return '<div class="wc-match"><span class="wc-match__group">GRP ' + m.g + '</span><span class="wc-match__teams">' + m.h + ' vs ' + m.a + '</span><span class="wc-match__score">' + m.hs + ' – ' + m.as + '</span><span class="wc-match__time' + timeCls + '">' + timeLabel + '</span></div>';
+      var liveCls = isLive ? ' wc-match--live' : '';
+      var scoreCls = isLive ? ' wc-match__score--live' : '';
+      var metaCls = isLive ? ' wc-match__meta--live' : (m.t === 'FT' ? '' : '');
+      var metaLabel = m.t === 'FT' ? 'Full Time' : (m.t === 'HT' ? 'Half Time' : m.t + '\' · LIVE');
+      return '<div class="wc-match' + liveCls + '">' +
+        '<span class="wc-match__group">GRP ' + m.g + '</span>' +
+        '<div class="wc-match__body">' +
+          '<div class="wc-match__teams">' +
+            '<span class="wc-match__flag">' + m.h + '</span>' +
+            '<span class="wc-match__vs">vs</span>' +
+            '<span class="wc-match__flag">' + m.a + '</span>' +
+          '</div>' +
+          '<div class="wc-match__meta' + (metaCls ? ' ' + metaCls : '') + '">' + metaLabel + '</div>' +
+        '</div>' +
+        '<span class="wc-match__score' + scoreCls + '">' + m.hs + '–' + m.as + '</span>' +
+      '</div>';
     }).join('');
   }
 
   function simTicks() {
     var changed = false;
     matches.forEach(function(m) {
-      if (m.t === 'FT') return;
+      if (m.t === 'FT' || m.t === 'HT') return;
       var min = parseInt(m.t) || 45;
-      if (Math.random() < 0.15) {
+      if (Math.random() < 0.12) {
         if (Math.random() < 0.5) m.hs++; else m.as++;
         changed = true;
       }
