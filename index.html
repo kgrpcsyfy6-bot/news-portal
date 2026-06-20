@@ -1673,9 +1673,9 @@ a:hover .hero__subheadline { color: var(--c-red); }
 }
 .wc-match__teams {
   grid-row: 1; grid-column: 2;
-  font-size: 12px; font-weight: 600;
+  font-size: 18px;
   color: var(--c-text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: 4px;
 }
 .wc-match__score {
   grid-row: 1; grid-column: 3;
@@ -3473,10 +3473,10 @@ a:hover .hero__subheadline { color: var(--c-red); }
   // WORLD CUP 2026 SCORES
   // =====================
   var matches = [
-    { g:'D', h:'🇺🇸 USA', a:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England', hs:1, as:1, t:"52'" },
-    { g:'E', h:'🇧🇷 Brazil', a:'🇩🇪 Germany', hs:2, as:0, t:'FT' },
-    { g:'C', h:'🇦🇷 Argentina', a:'🇫🇷 France', hs:1, as:1, t:"78'" },
-    { g:'B', h:'🇪🇸 Spain', a:'🇵🇹 Portugal', hs:0, as:0, t:"34'" }
+    { g:'D', h:'🇺🇸', a:'🇬🇧', hs:1, as:1, t:"52'" },
+    { g:'E', h:'🇧🇷', a:'🇩🇪', hs:2, as:0, t:'FT' },
+    { g:'C', h:'🇦🇷', a:'🇫🇷', hs:1, as:1, t:"78'" },
+    { g:'B', h:'🇪🇸', a:'🇵🇹', hs:0, as:0, t:"34'" }
   ];
 
   function renderMatches() {
