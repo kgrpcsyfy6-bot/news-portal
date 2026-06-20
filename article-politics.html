@@ -152,7 +152,7 @@ body {
   max-width: 1100px;
   margin: 0 auto 0;
 }
-.article-hero-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-hero-caption {
   max-width: 720px;
   margin: 12px auto 48px;
@@ -169,7 +169,7 @@ body {
   max-width: 720px;
   margin: 32px auto 0;
 }
-.article-inline-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-inline-caption {
   max-width: 640px;
   margin: 10px auto 32px;
@@ -421,6 +421,11 @@ body {
   .related-grid { grid-template-columns: 1fr 1fr 1fr; }
   .related-item:last-child:nth-child(odd) { grid-column: auto; }
 }
+/* Content reveal on scroll */
+.article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.article-reveal--visible { opacity: 1; transform: translateY(0); }
+/* Image fade-in */
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -473,7 +478,7 @@ body {
 <main>
   <!-- ===== MASTHEAD ===== -->
   <div class="wrap">
-    <header class="article-masthead" data-od-id="masthead">
+    <header class="article-masthead article-reveal" data-od-id="masthead">
       <span class="article-kicker">Politics · UK Parliament</span>
       <h1 class="article-headline">Parliament Passes Controversial Housing Reform Bill After Marathon Debate</h1>
       <div class="article-byline-row">
@@ -492,13 +497,13 @@ body {
   <figure class="article-hero-img" data-od-id="hero-image">
     <img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="House of Commons chamber during debate" loading="eager">
   </figure>
-  <figcaption class="article-hero-caption">
+  <figcaption class="article-hero-caption article-reveal">
     The House of Commons chamber during the marathon sixteen-hour debate on the Housing Reform Bill. (Samuel Hagger / Unsplash)
   </figcaption>
 
   <!-- ===== ARTICLE BODY ===== -->
   <div class="wrap">
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>LONDON — Parliament approved the government's flagship Housing Reform Bill in the early hours of Sunday morning, following a gruelling sixteen-hour debate that exposed deep divisions over how to address the country's worsening housing affordability crisis. The bill passed with a margin of 312 votes to 298, a narrower victory than ministers had anticipated, after a significant rebellion from backbench MPs concerned about the impact of proposed rent caps on landlords.</p>
 
       <p>The legislation introduces a suite of measures that supporters describe as the most ambitious overhaul of housing policy in a generation. At its core is a nationwide cap on annual rent increases, limited to the lower of 3% or the Consumer Prices Index for the next five years. The bill also sets binding annual construction targets of 300,000 new homes per year, backed by a new Homes Accelerator agency with powers to override local planning authorities that persistently block development. First-time buyers will receive government-backed equity loans worth up to 25% of a property's value, with the loan repayable only when the home is sold or after thirty years.</p>
@@ -514,14 +519,14 @@ body {
     </aside>
 
     <!-- Inline Image -->
-    <figure class="article-inline-img" data-od-id="inline-image">
+    <figure class="article-inline-img article-reveal" data-od-id="inline-image">
       <img src="images/news/photo-1672023732754-d11eb6e78d5e.jpg" alt="New housing development under construction — part of government 300,000 homes target" loading="lazy">
     </figure>
-    <figcaption class="article-inline-caption">
+    <figcaption class="article-inline-caption article-reveal">
       A new housing development under construction — the Housing Reform Bill sets binding annual targets of 300,000 new homes per year, backed by a new Homes Accelerator agency with planning override powers. (Ernie Journeys / Unsplash)
     </figcaption>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The opposition, however, condemned the bill as a "blunt instrument" that risked unintended consequences. Shadow Housing Minister Graham Fletcher argued that the rent cap would shrink the private rental sector by driving landlords to sell, ultimately reducing supply and hurting the very tenants the bill is meant to protect. "The government is prescribing painkillers for a condition that requires surgery," he said to jeers from government benches. The opposition tabled eighteen amendments, all of which were defeated, though the government conceded on two procedural points relating to the appeals process for planning decisions.</p>
 
       <p>Housing economists and market analysts offered mixed reactions. A report from the Institute for Fiscal Studies, published hours before the vote, estimated that the construction targets could add 0.6% to annual GDP growth over the next decade if met, but questioned whether the construction industry had the workforce capacity to deliver at that scale. The Royal Institution of Chartered Surveyors warned that without a parallel investment in skills training, the targets were "aspirational at best." Meanwhile, the National Residential Landlords Association said it was already preparing a legal challenge to the rent cap provisions, arguing they constituted an "unlawful deprivation of property rights" under European human rights law.</p>
@@ -534,14 +539,14 @@ body {
       <p class="pull-quote__attr">— Graham Fletcher, Shadow Housing Minister</p>
     </aside>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>Outside Parliament, a crowd of several hundred housing campaigners who had gathered since Friday evening erupted into cheers as the result was announced at 2:12 am. Many were draped in the purple scarves of the Homes Before Profit coalition, which has been lobbying for rent controls for years. Elena Vasquez, 29, a renter and youth organiser from Manchester, told reporters: "I have moved six times in seven years because of rent hikes. Each time I move further from my job, my family, my community. Tonight someone finally heard us." Alongside the celebration, a smaller counter-protest of property investors held signs warning that the bill would "destroy pension savings."</p>
 
       <p>The bill now proceeds to the upper chamber, where it faces further scrutiny and potential amendment. Government whips have indicated they expect royal assent by early August, though constitutional experts note that the upper chamber's limited power to block manifesto commitments makes outright obstruction unlikely. If enacted on schedule, the rent cap provisions would take effect from January 2027, while the construction targets would begin from the 2027-28 financial year. For the millions of households watching this marathon parliamentary session from home, the real test is not what was said in the chamber but what will change on the ground.</p>
     </div>
 
     <!-- Author Bio -->
-    <div class="author-bio" data-od-id="author-bio">
+    <div class="author-bio article-reveal" data-od-id="author-bio">
       <div class="author-bio__avatar"><img src="images/news/photo-1507003211169-0a1dd7228f2d.jpg" alt="James Mitchell"></div>
       <div>
         <p class="author-bio__name">James Mitchell</p>
@@ -560,7 +565,7 @@ body {
     <!-- Related Posts -->
     <section class="related-posts" data-od-id="related-posts">
       <h2 class="related-posts__title">More in Politics</h2>
-      <div class="related-grid">
+      <div class="related-grid article-reveal">
         <a href="#" class="related-item">
           <div class="related-item__img"><img src="images/news/photo-1526374965328-7f61d4dc18c5.jpg" alt="Security" loading="lazy"></div>
           <span class="related-item__kicker">Politics</span>
@@ -583,7 +588,7 @@ body {
     </section>
 
     <!-- Comments -->
-    <section class="comments-section" id="comments" data-od-id="comments">
+    <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
@@ -686,6 +691,36 @@ body {
       }
     });
   });
+  /* Image fade-in on load */
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+    if (img.complete) { img.style.opacity = "1"; }
+    else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
+  });
+  /* Broken image fallback */
+  document.querySelectorAll("img").forEach(function(img){
+    img.addEventListener("error", function(){
+      this.style.display = "none";
+      var p = this.parentElement;
+      p.style.background = "#e8e8e8";
+      p.style.display = "flex";
+      p.style.alignItems = "center";
+      p.style.justifyContent = "center";
+      var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","32"); svg.setAttribute("height","32");
+      svg.setAttribute("viewBox","0 0 24 24");
+      svg.setAttribute("fill","none"); svg.setAttribute("stroke","#999");
+      svg.setAttribute("stroke-width","1.5");
+      svg.innerHTML = "<path d=\"M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/>";
+      p.appendChild(svg);
+    });
+  });
+  /* Scroll reveal */
+  (function(){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("article-reveal--visible"); ro.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
+  })();
 })();
 </script>
 </body>

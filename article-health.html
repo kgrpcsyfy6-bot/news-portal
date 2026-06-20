@@ -152,7 +152,7 @@ body {
   max-width: 1100px;
   margin: 0 auto 0;
 }
-.article-hero-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-hero-caption {
   max-width: 720px;
   margin: 12px auto 48px;
@@ -169,7 +169,7 @@ body {
   max-width: 720px;
   margin: 32px auto 0;
 }
-.article-inline-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-inline-caption {
   max-width: 640px;
   margin: 10px auto 32px;
@@ -421,6 +421,11 @@ body {
   .related-grid { grid-template-columns: 1fr 1fr 1fr; }
   .related-item:last-child:nth-child(odd) { grid-column: auto; }
 }
+/* Content reveal on scroll */
+.article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.article-reveal--visible { opacity: 1; transform: translateY(0); }
+/* Image fade-in */
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -473,7 +478,7 @@ body {
 <main>
   <!-- ===== MASTHEAD ===== -->
   <div class="wrap">
-    <header class="article-masthead" data-od-id="masthead">
+    <header class="article-masthead article-reveal" data-od-id="masthead">
       <span class="article-kicker">Global Health · WHO</span>
       <h1 class="article-headline">WHO Declares End to Three-Year Global Health Emergency as Cases Drop 94%</h1>
       <div class="article-byline-row">
@@ -492,13 +497,13 @@ body {
   <figure class="article-hero-img" data-od-id="hero-image">
     <img src="images/news/photo-1778864874969-16e2432b2709.jpg" alt="Health workers and officials during WHO emergency committee meeting" loading="eager">
   </figure>
-  <figcaption class="article-hero-caption">
+  <figcaption class="article-hero-caption article-reveal">
     Health workers and officials during a WHO emergency committee meeting in Geneva, where Director-General Dr Fatima Hassan announced the end of the MARV-R emergency. (saad ali / Unsplash)
   </figcaption>
 
   <!-- ===== ARTICLE BODY ===== -->
   <div class="wrap">
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>GENEVA — The World Health Organization officially lifted the Public Health Emergency of International Concern (PHEIC) for the Marburg variant respiratory virus (MARV-R) on Friday, drawing a formal close to a three-year global health crisis that infected an estimated 18.7 million people and claimed over 410,000 lives across 142 countries. The declaration, announced by WHO Director-General Dr Fatima Hassan at a press conference in Geneva, marks the end of the longest-running PHEIC since the COVID-19 pandemic and represents what health officials describe as a hard-won victory for international scientific collaboration.</p>
 
       <p>MARV-R, a respiratory-borne filovirus first identified in a cluster of patients in Kisangani, Democratic Republic of Congo, in March 2023, was initially feared to be a far more lethal pathogen. The virus, a recombinant strain combining genetic material from the Marburg virus and a common human respiratory coronavirus, presented with an alarming dual pathology: haemorrhagic fever in severe cases and highly efficient respiratory transmission in mild ones. Early case fatality rates in Central Africa approached 28%, but a globally coordinated vaccination campaign, built on mRNA platform technology adapted from COVID-19 vaccine research, achieved remarkable speed. The first MARV-R vaccine entered Phase III trials just 114 days after the viral genome was sequenced and published by Congolese and Belgian researchers.</p>
@@ -514,14 +519,14 @@ body {
     </aside>
 
     <!-- Inline Image -->
-    <figure class="article-inline-img" data-od-id="inline-image">
+    <figure class="article-inline-img article-reveal" data-od-id="inline-image">
       <img src="images/news/photo-1532938911079-1b06ac7ceec7.jpg" alt="Doctor with stethoscope — global health emergency response coordination" loading="lazy">
     </figure>
-    <figcaption class="article-inline-caption">
+    <figcaption class="article-inline-caption article-reveal">
       Healthcare workers were at the frontline of the global response to the MARV-R outbreak — the WHO credits their efforts as the decisive factor in bringing the three-year emergency to an end. (Online Marketing / Unsplash)
     </figcaption>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The turning point came in late 2024, when the WHO-backed COVAX-II initiative, in partnership with the African Vaccine Acquisition Trust and Gavi, delivered the two-billionth vaccine dose. By that point, second-generation mRNA vaccines targeting the conserved nucleoprotein of the virus had demonstrated 91% efficacy against severe disease and, crucially, 78% efficacy against transmission. Mass vaccination campaigns in high-burden regions, combined with improved antiviral treatments — particularly the monoclonal antibody cocktail marviremab, developed by a consortium of Nigerian, South African, and Brazilian research institutes — drove a sustained decline in both cases and deaths. Weekly global cases peaked at 890,000 in September 2023 and fell to fewer than 5,200 last week, a reduction of 94%.</p>
 
       <p>Epidemiologists and public health experts, while welcoming the declaration, urged governments not to repeat the pattern of underinvestment in pandemic preparedness that followed previous health emergencies. "The cycle is depressingly familiar," said Dr Chikere Eze, Director of the Africa Centres for Disease Control and Prevention. "A crisis erupts, funding floods in, the crisis recedes, and funding evaporates. We need a standing capacity for vaccine manufacturing and genomic surveillance on every continent, funded not by emergency appeals but by permanent, predictable mechanisms."</p>
@@ -534,14 +539,14 @@ body {
       <p class="pull-quote__attr">— Dr Chikere Eze, Africa CDC Director</p>
     </aside>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The economic toll of MARV-R has been estimated at US$1.9 trillion in lost output, supply chain disruptions, and healthcare expenditures, according to the International Monetary Fund. However, the cost was substantially lower than early modelling had projected, thanks in large part to the speed of the vaccine rollout and the fact that many countries avoided the prolonged lockdowns that characterised the COVID-19 era. A review published in The Lancet last month credited "muscle memory" from COVID-19 — the regulatory pathways, manufacturing capacity, and distribution networks built during that pandemic — as the single biggest factor in the accelerated response to MARV-R.</p>
 
       <p>The WHO has now shifted its focus to a long-term management framework, which includes maintaining vaccine stockpiles, sustaining genomic surveillance networks, and integrating MARV-R vaccination into routine childhood immunisation programmes in endemic regions. A landmark pandemic preparedness treaty, currently under negotiation in Geneva and expected to be finalised by the end of 2026, aims to codify many of the ad-hoc mechanisms that proved effective during the MARV-R response into binding international law. "We have been given a rare gift," Dr Hassan concluded. "We know what works. We have seen it work. Now the question is whether we have the collective will to institutionalise that knowledge before the next crisis arrives."</p>
     </div>
 
     <!-- Author Bio -->
-    <div class="author-bio" data-od-id="author-bio">
+    <div class="author-bio article-reveal" data-od-id="author-bio">
       <div class="author-bio__avatar"><img src="images/news/photo-1506794778202-cad84cf45f1d.jpg" alt="David Okafor"></div>
       <div>
         <p class="author-bio__name">David Okafor</p>
@@ -560,7 +565,7 @@ body {
     <!-- Related Posts -->
     <section class="related-posts" data-od-id="related-posts">
       <h2 class="related-posts__title">More in Health</h2>
-      <div class="related-grid">
+      <div class="related-grid article-reveal">
         <a href="#" class="related-item">
           <div class="related-item__img"><img src="images/news/photo-1498837167922-ddd27525d352.jpg" alt="Healthy food" loading="lazy"></div>
           <span class="related-item__kicker">Nutrition</span>
@@ -583,7 +588,7 @@ body {
     </section>
 
     <!-- Comments -->
-    <section class="comments-section" id="comments" data-od-id="comments">
+    <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
@@ -686,6 +691,36 @@ body {
       }
     });
   });
+  /* Image fade-in on load */
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+    if (img.complete) { img.style.opacity = "1"; }
+    else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
+  });
+  /* Broken image fallback */
+  document.querySelectorAll("img").forEach(function(img){
+    img.addEventListener("error", function(){
+      this.style.display = "none";
+      var p = this.parentElement;
+      p.style.background = "#e8e8e8";
+      p.style.display = "flex";
+      p.style.alignItems = "center";
+      p.style.justifyContent = "center";
+      var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","32"); svg.setAttribute("height","32");
+      svg.setAttribute("viewBox","0 0 24 24");
+      svg.setAttribute("fill","none"); svg.setAttribute("stroke","#999");
+      svg.setAttribute("stroke-width","1.5");
+      svg.innerHTML = "<path d=\"M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/>";
+      p.appendChild(svg);
+    });
+  });
+  /* Scroll reveal */
+  (function(){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("article-reveal--visible"); ro.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
+  })();
 })();
 </script>
 </body>

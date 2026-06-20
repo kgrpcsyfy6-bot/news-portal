@@ -152,7 +152,7 @@ body {
   max-width: 1100px;
   margin: 0 auto 0;
 }
-.article-hero-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-hero-caption {
   max-width: 720px;
   margin: 12px auto 48px;
@@ -169,7 +169,7 @@ body {
   max-width: 720px;
   margin: 32px auto 0;
 }
-.article-inline-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-inline-caption {
   max-width: 640px;
   margin: 10px auto 32px;
@@ -403,6 +403,11 @@ body {
   .related-grid { grid-template-columns: 1fr 1fr 1fr; }
   .related-item:last-child:nth-child(odd) { grid-column: auto; }
 }
+/* Content reveal on scroll */
+.article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.article-reveal--visible { opacity: 1; transform: translateY(0); }
+/* Image fade-in */
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -452,7 +457,7 @@ body {
 
 <main>
   <div class="wrap">
-    <header class="article-masthead" data-od-id="masthead">
+    <header class="article-masthead article-reveal" data-od-id="masthead">
       <span class="article-kicker">Technology · AI Safety</span>
       <h1 class="article-headline">AI Safety Summit Reaches Landmark Agreement on Global Standards</h1>
       <div class="article-byline-row">
@@ -470,12 +475,12 @@ body {
   <figure class="article-hero-img" data-od-id="hero-image">
     <img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="Delegates gather at international summit" loading="eager">
   </figure>
-  <figcaption class="article-hero-caption">
+  <figcaption class="article-hero-caption article-reveal">
     Delegates from more than forty nations at the AI Safety Summit in Geneva, where the landmark IFFAIS treaty on frontier AI safety was signed. (Matthew TenBruggencate / Unsplash)
   </figcaption>
 
   <div class="wrap">
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>GENEVA — Representatives from more than forty nations signed a landmark treaty on frontier artificial intelligence safety on Sunday, concluding a week-long summit in Geneva that organisers are calling the most significant international agreement on AI governance since the technology entered mainstream use. The treaty, formally known as the International Framework on Frontier AI Safety (IFFAIS), mandates that any AI model trained with computing power exceeding 10²⁵ floating-point operations must undergo mandatory safety evaluations before public release.</p>
 
       <p>Companies will be required to submit detailed risk assessments covering cybersecurity vulnerabilities, potential for misuse in biological and chemical weapons development, and the risk of autonomous systems causing large-scale harm. An independent International AI Safety Institute (IAISI), headquartered in Geneva with regional offices in Singapore and Nairobi, will oversee the evaluation process.</p>
@@ -490,14 +495,14 @@ body {
     </aside>
 
     <!-- Inline Image -->
-    <figure class="article-inline-img" data-od-id="inline-image">
+    <figure class="article-inline-img article-reveal" data-od-id="inline-image">
       <img src="images/news/photo-1697577418970-95d99b5a55cf.jpg" alt="AI processor chip — the hardware powering next-generation artificial intelligence" loading="lazy">
     </figure>
-    <figcaption class="article-inline-caption">
+    <figcaption class="article-inline-caption article-reveal">
       An AI processor chip — the IFFAIS treaty mandates that frontier AI systems above a defined compute threshold must undergo mandatory third-party safety evaluations before deployment. (Igor Omilaev / Unsplash)
     </figcaption>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The agreement was not reached easily. Negotiations stretched into the early hours of Sunday morning as delegates from the European Union, the United States, and China wrangled over the precise threshold for what constitutes a "frontier" model and the level of access that IAISI inspectors would have to proprietary training data and algorithms. The final text represents a compromise: companies may redact commercially sensitive details from public-facing audit summaries, but IAISI technical staff will retain full access to unredacted versions under strict confidentiality provisions.</p>
 
       <p>Several major technology firms expressed reservations about the treaty. In a statement, the Global AI Industry Alliance — which represents companies including several leading US and Chinese AI labs — warned that the evaluation framework could "create significant compliance burdens that disproportionately affect smaller innovators and open-source developers." However, a coalition of AI safety research organisations, including the Centre for AI Safety and the Future of Life Institute, described the treaty as "the minimum viable framework" and urged signatory nations to move swiftly to domestic implementation.</p>
@@ -509,13 +514,13 @@ body {
       <p class="pull-quote__attr">— Senior IAISI negotiator</p>
     </aside>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The treaty also establishes a scientific advisory panel, drawn from academia, civil society, and industry, which will publish an annual "State of Frontier AI" report cataloguing emerging capabilities and risks. A separate incident-reporting mechanism will allow whistleblowers and independent researchers to flag safety concerns directly to the IAISI, with legal protections modelled on those available in aviation and pharmaceutical safety reporting systems.</p>
 
       <p>Signatories now face the task of passing domestic legislation to give the treaty legal force within their own jurisdictions. The United Kingdom and the European Union are expected to move fastest, with the UK government indicating it will introduce an AI Safety Bill in the next parliamentary session. The United States, where Congress remains divided on technology regulation, may face a longer path to ratification. Nevertheless, summit officials expressed confidence that the treaty's entry-into-force threshold — ratification by at least twenty signatory states, including three of the five largest AI-producing economies — could be met within eighteen months.</p>
     </div>
 
-    <div class="author-bio" data-od-id="author-bio">
+    <div class="author-bio article-reveal" data-od-id="author-bio">
       <div class="author-bio__avatar"><img src="images/news/photo-1494790108377-be9c29b29330.jpg" alt="Sarah Chen"></div>
       <div>
         <p class="author-bio__name">Sarah Chen</p>
@@ -532,7 +537,7 @@ body {
 
     <section class="related-posts" data-od-id="related-posts">
       <h2 class="related-posts__title">More in Technology</h2>
-      <div class="related-grid">
+      <div class="related-grid article-reveal">
         <a href="#" class="related-item">
           <div class="related-item__img"><img src="images/news/photo-1485827404703-89b55fcc595e.jpg" alt="AI robot" loading="lazy"></div>
           <span class="related-item__kicker">Robotics</span>
@@ -554,7 +559,7 @@ body {
       </div>
     </section>
 
-    <section class="comments-section" id="comments" data-od-id="comments">
+    <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
@@ -656,6 +661,36 @@ body {
       }
     });
   });
+  /* Image fade-in on load */
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+    if (img.complete) { img.style.opacity = "1"; }
+    else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
+  });
+  /* Broken image fallback */
+  document.querySelectorAll("img").forEach(function(img){
+    img.addEventListener("error", function(){
+      this.style.display = "none";
+      var p = this.parentElement;
+      p.style.background = "#e8e8e8";
+      p.style.display = "flex";
+      p.style.alignItems = "center";
+      p.style.justifyContent = "center";
+      var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","32"); svg.setAttribute("height","32");
+      svg.setAttribute("viewBox","0 0 24 24");
+      svg.setAttribute("fill","none"); svg.setAttribute("stroke","#999");
+      svg.setAttribute("stroke-width","1.5");
+      svg.innerHTML = "<path d=\"M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/>";
+      p.appendChild(svg);
+    });
+  });
+  /* Scroll reveal */
+  (function(){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("article-reveal--visible"); ro.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
+  })();
 })();
 </script>
 </body>

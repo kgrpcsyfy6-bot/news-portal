@@ -17,13 +17,14 @@
    RESET & BASE
    ============================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 100px; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; scrollbar-gutter: stable; scroll-padding-top: 100px; -webkit-text-size-adjust: 100%; }
 body {
+  overflow-x: hidden;
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
   color: var(--c-text);
-  background: #fff;
+  background: var(--c-bg);
   -webkit-font-smoothing: antialiased;
 }
 img, svg { display: block; max-width: 100%; }
@@ -36,20 +37,29 @@ input, textarea { font: inherit; }
    DESIGN TOKENS
    ============================== */
 :root {
+  /* Brand */
   --c-red:        #B80000;
   --c-red-dark:   #8B0000;
   --c-red-light:  rgba(184,0,0,0.08);
-  --c-text:       #141414;
+  /* Text */
+  --c-text:       #1a1a1a;
   --c-text-soft:  #545658;
   --c-text-light: #8A8C8E;
-  --c-bg:         #ffffff;
-  --c-bg-grey:    #f6f6f6;
+  /* Surfaces */
+  --c-bg:         #fafaf7;
+  --c-surface:    #ffffff;
+  --c-bg-grey:    #f3f3ef;
   --c-bg-dark:    #1a1a1a;
-  --c-border:     #e0e0e0;
+  /* Borders */
+  --c-border:     #e0dcd4;
   --c-border-dark:#343434;
+  /* Overlay */
+  --c-overlay:    rgba(0,0,0,0.5);
+  /* Typography */
   --font-display: Georgia, 'Times New Roman', Times, serif;
   --font-body:    'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono:    'Geist', 'SF Mono', 'Consolas', monospace;
+  /* Layout */
   --max-w:        1280px;
   --ease:         cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -117,7 +127,7 @@ input, textarea { font: inherit; }
   right: 0;
   width: 300px;
   max-width: calc(100vw - 32px);
-  background: var(--c-bg);
+  background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
@@ -132,7 +142,7 @@ input, textarea { font: inherit; }
   right: 80px;
   width: 12px;
   height: 12px;
-  background: var(--c-bg);
+  background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-right: none;
   border-bottom: none;
@@ -227,8 +237,8 @@ input, textarea { font: inherit; }
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 500;
+  background: var(--c-overlay);
+  z-index: 300;
   align-items: center;
   justify-content: center;
   animation: signinFadeIn .2s ease;
@@ -236,7 +246,7 @@ input, textarea { font: inherit; }
 .signin-overlay--open { display: flex; }
 @keyframes signinFadeIn { from { opacity: 0; } to { opacity: 1; } }
 .signin-modal {
-  background: var(--c-bg);
+  background: var(--c-surface);
   border-radius: 12px;
   width: 90%;
   max-width: 420px;
@@ -292,7 +302,7 @@ input, textarea { font: inherit; }
   border-radius: 8px;
   transition: border-color .2s;
   outline: none;
-  background: var(--c-bg);
+  background: var(--c-surface);
 }
 .signin-modal__input:focus { border-color: var(--c-red); box-shadow: 0 0 0 3px var(--c-red-light); }
 .signin-modal__forgot {
@@ -346,7 +356,7 @@ input, textarea { font: inherit; }
   border: 1.5px solid var(--c-border);
   border-radius: 8px;
   transition: all .15s;
-  background: var(--c-bg);
+  background: var(--c-surface);
 }
 .signin-modal__social-btn:hover { background: var(--c-bg-grey); border-color: #ccc; }
 .signin-modal__social-btn svg { width: 20px; height: 20px; }
@@ -362,10 +372,9 @@ input, textarea { font: inherit; }
    HEADER / NAV
    ============================== */
 .site-header {
-  background: var(--c-bg);
+  background: var(--c-surface);
   border-bottom: 1px solid var(--c-border);
   position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .site-header__inner {
   display: flex;
@@ -374,18 +383,19 @@ input, textarea { font: inherit; }
   height: 48px;
 }
 .site-nav { display: flex; align-items: center; }
-.site-nav__list { display: none; gap: 4px; }
+.site-nav__list { display: none; gap: 0; }
 .site-nav__link {
   display: block;
-  padding: 8px 12px;
+  padding: 14px 14px;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--c-text);
-  border-radius: 4px;
-  transition: background .15s, color .15s;
+  font-weight: 500;
+  color: var(--c-text-soft);
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
   white-space: nowrap;
 }
-.site-nav__link:hover, .site-nav__link.active { background: var(--c-red-light); color: var(--c-red); }
+.site-nav__link:hover { color: var(--c-text); border-bottom-color: var(--c-border); }
+.site-nav__link.active { color: var(--c-text); font-weight: 600; border-bottom-color: var(--c-red); }
 
 /* Hamburger */
 .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
@@ -400,7 +410,7 @@ input, textarea { font: inherit; }
   flex-direction: column;
   position: fixed;
   top: var(--nav-top, 80px); left: 0; right: 0; bottom: 0;
-  background: #fff;
+  background: var(--c-surface);
   padding: 24px;
   gap: 4px;
   z-index: 105;
@@ -449,7 +459,7 @@ input, textarea { font: inherit; }
 	  height: 90px;
 	  background: #fff;
 	  border: 1px dashed var(--c-border);
-	  border-radius: 4px;
+	  
 	  display: flex;
 	  align-items: center;
 	  justify-content: center;
@@ -505,7 +515,7 @@ input, textarea { font: inherit; }
 	  color: #fff;
 	  font-size: 13px;
 	  font-weight: 600;
-	  border-radius: 4px;
+	  
 	  transition: background .15s;
 	  white-space: nowrap;
 	}
@@ -639,11 +649,11 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  padding: 12px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--c-border);
   transition: background .15s;
 }
-.story-item:hover { background: var(--c-bg-grey); margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 4px; }
+.story-item:hover { background: var(--c-bg-grey); margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
 .story-item__img {
   aspect-ratio: 16/9;
   background: var(--c-bg-grey);
@@ -685,12 +695,13 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .sidebar { display: flex; flex-direction: column; gap: 20px; }
 
 /* Most Read */
-.most-read { background: var(--c-bg-grey); padding: 16px; border-radius: 4px; }
+.most-read { padding: 0; border-top: 2px solid var(--c-red); }
 .most-read__title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding-top: 12px;
 }
 .most-read__list { counter-reset: mr; }
 .most-read__item {
@@ -721,9 +732,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
 /* Have Your Say (poll) */
 .poll-widget {
-  background: var(--c-bg);
+  background: var(--c-surface);
   border: 1px solid var(--c-border);
-  border-radius: 4px;
   padding: 16px;
 }
 .poll-widget__title {
@@ -742,7 +752,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: flex; align-items: center; gap: 10px;
   padding: 10px 12px;
   border: 1px solid var(--c-border);
-  border-radius: 4px;
+  
   cursor: pointer;
   transition: all .15s;
   min-height: 44px;
@@ -839,175 +849,83 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 9px 20px; font-size: 13px; font-weight: 600;
-  border-radius: 4px; transition: all .15s; min-height: 40px;
+   transition: all .15s; min-height: 40px;
 }
 .btn--primary { background: var(--c-red); color: #fff; }
 .btn--primary:hover { background: var(--c-red-dark); }
 .btn--primary:active { transform: scale(.98); }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
-/* ==============================
-   Multimedia hub — cover cards + click-to-load
-   ============================== */
-.multimedia {
-  background: var(--c-bg-grey);
+/* =============================================
+   WATCH & LISTEN — sidebar
+   ============================================= */
+.wl-sidebar {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
   padding: 16px;
-  border-radius: 4px;
 }
-.multimedia__title {
+.wl-sidebar__title {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
-.multimedia__subtitle {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--c-red);
-  margin: 14px 0 8px;
-}
-.multimedia__subtitle:first-of-type { margin-top: 0; }
-
-.media-card {
-  border-radius: 6px;
-  overflow: hidden;
-  background: #000;
-  margin-bottom: 10px;
-  position: relative;
-}
-.media-card:last-child { margin-bottom: 0; }
-
-/* Cover image (clickable) */
-.media-card__cover {
-  position: relative;
+.wl-video {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 10px 0;
   cursor: pointer;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #1a1a2e;
+  border-bottom: 1px solid var(--c-border);
+  transition: background .15s;
 }
-.media-card__cover img {
-  width: 100%;
-  height: 100%;
+.wl-video:last-of-type { border-bottom: none; }
+.wl-video:hover .wl-video__overlay { background: rgba(184,0,0,0.55); }
+.wl-video__thumb {
+  position: relative;
+  width: 80px; height: 54px;
+  overflow: hidden;
+  background: var(--c-bg-grey);
+  flex-shrink: 0;
+}
+.wl-video__thumb img {
+  width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.3s ease, opacity 0.3s ease;
 }
-.media-card__cover:hover img {
-  transform: scale(1.03);
-  opacity: 0.85;
-}
-
-/* Play button overlay */
-.media-card__play-btn {
+.wl-video__overlay {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  background: rgba(0,0,0,0.3);
+  transition: background .2s;
 }
-.media-card__play-btn::after {
-  content: '';
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.7);
-  border: 2px solid rgba(255,255,255,0.85);
-  position: relative;
+.wl-video__overlay svg {
+  width: 22px; height: 22px;
+  color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
-.media-card__play-btn::before {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  width: 0; height: 0;
-  border-style: solid;
-  border-width: 10px 0 10px 18px;
-  border-color: transparent transparent transparent rgba(255,255,255,0.9);
-  margin-left: 4px;
-}
-/* Card label (below cover — video cards only) */
-.media-card__info {
-  background: #111;
-  padding: 8px 10px;
+.wl-video__text {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
 }
-.media-card__label {
+.wl-video__label {
   font-size: 12px;
   font-weight: 600;
+  color: var(--c-text);
   line-height: 1.35;
-  color: #eee;
-  flex: 1;
 }
-.media-card__badge {
+.wl-video__src {
   font-size: 10px;
-  font-weight: 700;
+  color: var(--c-text-soft);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 2px 6px;
-  border-radius: 3px;
-  flex-shrink: 0;
+  letter-spacing: 0.04em;
 }
-.media-card__badge--video { background: var(--c-red); color: #fff; }
-
-/* Duration / source line */
-.media-card__meta {
-  font-size: 10px;
-  color: #999;
-  padding: 0 10px 8px;
-  background: #111;
-}
-
-/* Active player state (video cards) */
-.media-card__player {
-  display: none;
-  position: relative;
-}
-.media-card--active .media-card__cover { display: none; }
-.media-card--active .media-card__info { display: none; }
-.media-card--active .media-card__meta { display: none; }
-.media-card--active .media-card__player { display: block; }
-
-.media-card__video-wrap {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  background: #000;
-}
-.media-card__video-wrap iframe {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-/* Stop button */
-.media-card__stop {
-  display: none;
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  z-index: 2;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.75);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  font-size: 14px;
-  line-height: 24px;
-  text-align: center;
-  cursor: pointer;
-  padding: 0;
-}
-.media-card--active .media-card__stop { display: block; }
-.media-card__stop:hover { background: var(--c-red); border-color: var(--c-red); }
 
 /* ==============================
    LIVE AUDIO — radio-style module
@@ -1255,7 +1173,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
   background: #141414; color: #fff;
   padding: 12px 24px; border-radius: 20px;
-  font-size: 13px; z-index: 999;
+  font-size: 13px; z-index: 500;
   animation: toastIn .3s var(--ease) forwards;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
@@ -1338,15 +1256,16 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .cat-feature {
   display: block;
   transition: opacity .15s;
-  border-radius: 4px;
+  
 }
 .cat-feature:hover { opacity: 0.92; }
 .cat-feature__img {
   aspect-ratio: 16 / 9;
+  max-height: 210px;
   background: var(--c-bg-grey);
   overflow: hidden;
-  border-radius: 4px;
-  margin-bottom: 12px;
+  
+  margin-bottom: 10px;
 }
 .cat-feature__img img {
   width: 100%; height: 100%;
@@ -1389,6 +1308,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .cat-headlines {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
 }
 .cat-headlines::before {
   content: '';
@@ -1423,14 +1344,15 @@ a:hover .hero__subheadline { color: var(--c-red); }
 @media (min-width: 768px) {
   .cat-grid {
     grid-template-columns: 2fr 1fr;
-    gap: 24px;
+    gap: 20px;
+    align-items: start;
   }
   .cat-headlines::before { display: none; }
 }
 
 @media (min-width: 1024px) {
-  .cat-section { padding: 40px 0; }
-  .cat-grid { gap: 32px; }
+  .cat-section { padding: 20px 0; }
+  .cat-grid { gap: 20px; align-items: start; }
 }
 
 /* Alternate category layout — 3-column card grid (for Tech & Sports variety) */
@@ -1452,7 +1374,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   aspect-ratio: 16 / 10;
   background: var(--c-bg-grey);
   overflow: hidden;
-  border-radius: 4px;
+  
   margin-bottom: 10px;
 }
 .cat-card__img img {
@@ -1498,7 +1420,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   gap: 20px;
 }
 @media (min-width: 768px) {
-  .cat-split { grid-template-columns: 2fr 1fr; gap: 24px; }
+  .cat-split { grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; }
 }
 .cat-split__side {
   display: grid;
@@ -1518,7 +1440,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	  width: 44px;
 	  height: 44px;
 	  border-radius: 50%;
-	  background: var(--c-bg);
+	  background: var(--c-surface);
 	  border: 1px solid var(--c-border);
 	  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 	  display: flex;
@@ -1547,9 +1469,499 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	  height: 20px;
 	  pointer-events: none;
 	}
-	}</style>
+		/* =============================================
+		   STOCK TICKER
+		   ============================================= */
+		.stock-ticker {
+		  background: #141414;
+		  color: #fff;
+		  font-family: var(--font-body);
+		  font-size: 13px;
+		  padding: 8px 0;
+		  overflow: hidden;
+		  white-space: nowrap;
+		  border-bottom: 1px solid #2a2a2a;
+		}
+		.stock-ticker__track {
+		  display: inline-block;
+		  animation: stockScroll 60s linear infinite;
+		}
+		.stock-ticker:hover .stock-ticker__track {
+		  animation-play-state: paused;
+		}
+		.stock-ticker__item {
+		  display: inline-block;
+		  margin: 0 24px;
+		  letter-spacing: 0.02em;
+		}
+		.stock-ticker__symbol {
+		  font-weight: 600;
+		  margin-right: 6px;
+		}
+		.stock-ticker__price { margin-right: 6px; }
+		.up   { color: #00c853; }
+		.down { color: #ff1744; }
+		@keyframes stockScroll {
+		  0%   { transform: translateX(0); }
+		  100% { transform: translateX(-50%); }
+		}
+
+		/* =============================================
+		   WEATHER CARD — sidebar
+		   ============================================= */
+		.weather-card {
+		  background: var(--c-surface);
+		  border: 1px solid var(--c-border);
+		  
+		  padding: 16px;
+		  margin-bottom: 16px;
+		}
+		.weather-card__header {
+		  font-size: 11px;
+		  font-weight: 700;
+		  text-transform: uppercase;
+		  letter-spacing: 0.06em;
+		  color: var(--c-text-soft);
+		  margin-bottom: 8px;
+		}
+		.weather-card__datetime {
+		  font-size: 11px;
+		  color: var(--c-text-soft);
+		  margin-bottom: 8px;
+		  padding-bottom: 8px;
+		  border-bottom: 1px solid var(--c-border);
+		}
+		.weather-card__icon {
+		  width: 56px; height: 56px;
+		  flex-shrink: 0;
+		}
+		.weather-card__icon svg { width: 100%; height: 100%; }
+		.weather-card__main {
+		  display: flex;
+		  align-items: center;
+		  gap: 10px;
+		  margin-bottom: 10px;
+		}
+		.weather-card__temp {
+		  font-family: Georgia, serif;
+		  font-size: 28px;
+		  font-weight: 700;
+		  color: var(--c-text);
+		  line-height: 1;
+		}
+		.weather-card__info {
+		  display: flex;
+		  flex-direction: column;
+		}
+		.weather-card__desc {
+		  font-size: 14px;
+		  font-weight: 500;
+		  color: var(--c-text);
+		}
+		.weather-card__city {
+		  font-size: 12px;
+		  color: var(--c-text-soft);
+		}
+		.weather-card__meta {
+		  display: flex;
+		  gap: 16px;
+		  font-size: 11px;
+		  color: var(--c-text-soft);
+		}
+
+		/* =============================================
+		   WORLD CUP SCORES — sidebar
+		   ============================================= */
+		.wc-scores {
+		  background: var(--c-surface);
+		  border: 1px solid var(--c-border);
+		  
+		  padding: 16px;
+		}
+		.wc-scores__title {
+		  font-family: var(--font-display);
+		  font-size: 16px;
+		  font-weight: 700;
+		  margin-bottom: 10px;
+		  display: flex;
+		  align-items: center;
+		  gap: 8px;
+		}
+		.wc-scores__live {
+		  display: inline-block;
+		  width: 8px;
+		  height: 8px;
+		  background: #00c853;
+		  border-radius: 50%;
+		  animation: pulse-live 2s infinite;
+		}
+		@keyframes pulse-live {
+		  0%, 100% { opacity: 1; }
+		  50% { opacity: 0.3; }
+		}
+		.wc-match {
+		  display: flex;
+		  align-items: center;
+		  gap: 8px;
+		  padding: 8px 0;
+		  border-bottom: 1px solid var(--c-border);
+		}
+		.wc-match:last-child { border-bottom: none; }
+		.wc-match__group {
+		  font-size: 9px;
+		  font-weight: 700;
+		  color: #B80000;
+		  background: rgba(184,0,0,0.08);
+		  padding: 2px 5px;
+		  border-radius: 3px;
+		  letter-spacing: 0.04em;
+		  flex-shrink: 0;
+		}
+		.wc-match__teams {
+		  flex: 1;
+		  font-size: 12px;
+		  font-weight: 500;
+		  color: var(--c-text);
+		}
+		.wc-match__score {
+		  font-size: 14px;
+		  font-weight: 700;
+		  color: var(--c-text);
+		  font-variant-numeric: tabular-nums;
+		  font-family: var(--font-mono, monospace);
+		}
+		.wc-match__time {
+		  font-size: 10px;
+		  color: var(--c-text-soft);
+		  min-width: 24px;
+		  text-align: right;
+		}
+
+		/* =============================================
+		   PAGE VIEWS — footer
+		   ============================================= */
+		.page-views {
+		  text-align: center;
+		  font-size: 12px;
+		  color: var(--c-text-soft);
+		  padding: 8px 0 16px;
+		}
+		.page-views__icon {
+		  display: inline-block;
+		  width: 8px;
+		  height: 8px;
+		  background: #00c853;
+		  border-radius: 50%;
+		  margin-right: 6px;
+		  animation: pulse-dot 2s ease-in-out infinite;
+		}
+		@keyframes pulse-dot {
+		  0%, 100% { opacity: 1; }
+		  50%      { opacity: 0.3; }
+		}
+
+		/* =============================================
+		   ARTICLE READ COUNTS
+		   ============================================= */
+		.hero__meta .reads,
+		.story-item__meta .reads,
+		.cat-feature__meta .reads,
+		.cat-headline__meta .reads,
+		.cat-card__meta .reads,
+		.reads {
+		  font-size: 11px;
+		  color: var(--c-text-light);
+		  font-family: var(--font-body);
+		}
+
+		/* ==============================
+   WATCH & LISTEN - audio module
+   ============================== */
+.wl-audio {
+  background: linear-gradient(160deg, #0d1117 0%, #161b22 50%, #1a1a2e 100%);
+  border: 1px solid #21262d;
+  padding: 14px;
+  margin-top: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.wl-audio::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c-red), #1DB954, var(--c-red));
+  opacity: 0.8;
+}
+.wl-audio__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.wl-audio__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #ff3b3b;
+  box-shadow: 0 0 8px #ff3b3b;
+  animation: wl-pulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes wl-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.5); }
+}
+.wl-audio__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8b949e;
+}
+.wl-audio__waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 32px;
+  margin-bottom: 10px;
+}
+.wl-audio__waves span {
+  flex: 1;
+  border-radius: 1.5px;
+  background: linear-gradient(180deg, #1DB954 0%, var(--c-red) 100%);
+  animation: wl-bar 0.8s ease-in-out infinite alternate;
+}
+.wl-audio__waves span:nth-child(1) { height: 10px; animation-delay: 0s; }
+.wl-audio__waves span:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+.wl-audio__waves span:nth-child(3) { height: 14px; animation-delay: 0.2s; }
+.wl-audio__waves span:nth-child(4) { height: 28px; animation-delay: 0.3s; }
+.wl-audio__waves span:nth-child(5) { height: 18px; animation-delay: 0.4s; }
+.wl-audio__waves span:nth-child(6) { height: 24px; animation-delay: 0.5s; }
+.wl-audio__waves span:nth-child(7) { height: 8px; animation-delay: 0.6s; }
+.wl-audio__waves span:nth-child(8) { height: 22px; animation-delay: 0.7s; }
+@keyframes wl-bar {
+  0% { transform: scaleY(0.35); opacity: 0.45; }
+  100% { transform: scaleY(1.0); opacity: 1; }
+}
+.wl-audio--playing .wl-audio__waves span { animation-duration: 0.35s; }
+.wl-audio__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #30363d;
+  background: rgba(255,255,255,0.06);
+  color: #c9d1d9;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.wl-audio__btn:hover { background: rgba(255,255,255,0.12); border-color: #58a6ff; color: #fff; }
+.wl-audio__btn--stop {
+  display: none;
+  border-color: rgba(184,0,0,0.4);
+  color: #f87171;
+}
+.wl-audio__btn--stop:hover { background: var(--c-red); border-color: var(--c-red); color: #fff; }
+.wl-audio--playing .wl-audio__btn--play { display: none; }
+.wl-audio--playing .wl-audio__btn--stop { display: inline-flex; }
+
+/* ==============================
+   VIDEO MODAL - fullscreen overlay
+   ============================== */
+.wl-modal {
+  position: fixed; inset: 0; z-index: 600;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity .25s, visibility .25s;
+}
+.wl-modal--open { opacity: 1; visibility: visible; }
+.wl-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+}
+.wl-modal__frame {
+  position: relative; z-index: 1;
+  width: 90vw; max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 6px; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  transform: scale(0.92);
+  transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.wl-modal--open .wl-modal__frame { transform: scale(1); }
+.wl-modal__frame iframe { width: 100%; height: 100%; border: none; }
+.wl-modal__close {
+  position: absolute; top: -36px; right: 0; z-index: 2;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background .15s;
+  font-family: inherit; line-height: 1;
+}
+.wl-modal__close:hover { background: rgba(255,255,255,0.25); }
+
+/* ===== Wallpaper Ad System ===== */
+#wpWallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+.wp-wallpaper__track {
+  position: relative;
+  width: 1520px;
+  max-width: 100vw;
+  pointer-events: none;
+}
+.wp-ad {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 160px;
+  pointer-events: auto;
+  z-index: 1;
+}
+.wp-ad--left  { left: 0; }
+.wp-ad--right { right: 0; }
+.wp-ad__card {
+  background: var(--c-surface);
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
+.wp-ad__close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.wp-ad__close:hover { background: rgba(0,0,0,0.65); }
+.wp-ad__label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  padding: 2px 6px;
+  border-radius: 2px;
+  z-index: 2;
+  text-transform: uppercase;
+}
+.wp-ad__img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.wp-ad__body {
+  padding: 14px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.wp-ad__brand {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #B80000;
+}
+.wp-ad__title {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #141414;
+}
+.wp-ad__desc {
+  font-size: 11px;
+  color: #545658;
+  line-height: 1.5;
+}
+.wp-ad__cta {
+  display: block;
+  margin-top: 4px;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #B80000;
+  
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: background .15s, transform .15s;
+}
+.wp-ad__cta:hover { background: #8B0000; transform: translateY(-1px); }
+
+@media (max-width: 1300px) {
+  #wpWallpaper { display: none; }
+}
+
+</style>
 </head>
 <body>
+
+<!-- ===== Wallpaper Ads ===== -->
+<div id="wpWallpaper">
+  <div class="wp-wallpaper__track">
+    <div class="wp-ad wp-ad--left" id="adWallLeft">
+      <div class="wp-ad__card">
+        <button class="wp-ad__close" data-close-ad="left">&times;</button>
+        <span class="wp-ad__label">ADVERTISEMENT</span>
+        <img class="wp-ad__img" src="https://picsum.photos/seed/proton-suv/400/600" alt="Proton e.MAS 7" loading="lazy">
+        <div class="wp-ad__body">
+          <div class="wp-ad__brand">Proton &middot; Malaysia</div>
+          <div class="wp-ad__title">e.MAS 7 — The People's EV</div>
+          <div class="wp-ad__desc">First homegrown electric SUV. Hall 3, KL Auto Show 2026.</div>
+          <a class="wp-ad__cta" href="#">Book a Drive</a>
+        </div>
+      </div>
+    </div>
+    <div class="wp-ad wp-ad--right" id="adWallRight">
+      <div class="wp-ad__card">
+        <button class="wp-ad__close" data-close-ad="right">&times;</button>
+        <span class="wp-ad__label">ADVERTISEMENT</span>
+        <img class="wp-ad__img" src="https://picsum.photos/seed/bmw-sedan/400/600" alt="BMW i5" loading="lazy">
+        <div class="wp-ad__body">
+          <div class="wp-ad__brand">BMW &middot; Germany</div>
+          <div class="wp-ad__title">The i5 — Electric, Perfected</div>
+          <div class="wp-ad__desc">Executive sedan, zero emissions. Experience the future of driving.</div>
+          <a class="wp-ad__cta" href="#">Explore</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SVG Sprite -->
 <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1622,6 +2034,22 @@ a:hover .hero__subheadline { color: var(--c-red); }
   </div>
 </header>
 
+    <!-- ===== Stock Ticker ===== -->
+    <div class="stock-ticker" aria-label="Live market data">
+      <div class="stock-ticker__track">
+        <span class="stock-ticker__item"><b>S&amp;P 500</b> 5,847 <span class="up">+1.24%</span></span>
+        <span class="stock-ticker__item"><b>NASDAQ</b> 18,562 <span class="up">+1.67%</span></span>
+        <span class="stock-ticker__item"><b>FTSE 100</b> 8,912 <span class="up">+0.89%</span></span>
+        <span class="stock-ticker__item"><b>BTC</b> $72,340 <span class="up">+3.12%</span></span>
+        <span class="stock-ticker__item"><b>AAPL</b> $218.45 <span class="down">-0.78%</span></span>
+        <span class="stock-ticker__item"><b>TSLA</b> $256.30 <span class="up">+5.43%</span></span>
+        <span class="stock-ticker__item"><b>Gold</b> $2,412 <span class="up">+0.32%</span></span>
+        <span class="stock-ticker__item"><b>Crude Oil</b> $78.45 <span class="down">-1.56%</span></span>
+        <span class="stock-ticker__item"><b>EUR/USD</b> 1.0876 <span class="up">+0.12%</span></span>
+        <span class="stock-ticker__item"><b>Shanghai</b> 3,246 <span class="up">+0.54%</span></span>
+      </div>
+    </div>
+
 <!-- ===== LEADERBOARD AD ===== -->
 <div class="ad-leaderboard" id="adLeaderboard" aria-label="Advertisement">
   <div class="ad-leaderboard__inner">
@@ -1655,7 +2083,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <span class="hero__kicker">Lead Story</span>
       <h1 class="hero__headline hero__headline--placeholder">[YOUR HEADLINE &mdash; Replace with your live reporting story]</h1>
       <p class="hero__summary hero__summary--placeholder">[Your lead paragraph goes here &mdash; replace with a compelling 2-3 sentence summary of your original news story, based on your on-location reporting video.]</p>
-      <div class="hero__meta"><span>By [Author Name]</span> · <time>[Date]</time></div>
+      <div class="hero__meta"><span>By Lin Xiang</span> · <time>21 Jun 2026</time> &middot; <span class="reads">1.2M reads</span></div>
     </a>
 
     <!-- SECONDARY HERO -->
@@ -1664,13 +2092,13 @@ a:hover .hero__subheadline { color: var(--c-red); }
         <div class="hero__img"><img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="Delegates at AI safety summit" loading="lazy"></div>
         <span class="hero__kicker">Technology</span>
         <h2 class="hero__subheadline">AI Safety Summit Reaches Landmark Agreement on Global Standards</h2>
-        <div class="hero__meta"><span>By Sarah Chen</span> · <time>14 Jun 2026</time></div>
+        <div class="hero__meta"><span>By Sarah Chen</span> · <time>14 Jun 2026</time> &middot; <span class="reads">198K reads</span></div>
       </a>
       <a href="article-politics.html">
         <div class="hero__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="House of Commons chamber during debate" loading="lazy"></div>
         <span class="hero__kicker">Politics</span>
         <h2 class="hero__subheadline">Parliament Set for Showdown Vote on Housing Reform Bill</h2>
-        <div class="hero__meta"><span>By James Mitchell</span> · <time>14 Jun 2026</time></div>
+        <div class="hero__meta"><span>By James Mitchell</span> · <time>14 Jun 2026</time> &middot; <span class="reads">319K reads</span></div>
       </a>
     </div>
   </div>
@@ -1687,63 +2115,63 @@ a:hover .hero__subheadline { color: var(--c-red); }
         <div class="story-item__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="Parliament chamber during debate" loading="lazy"></div>
         <span class="story-item__kicker">World</span>
         <h3 class="story-item__title">Diplomatic Breakthrough: Rival Nations Agree to Ceasefire Framework After Marathon Talks</h3>
-        <div class="story-item__meta"><span>By Anna Lindstr&ouml;m</span> · <time>11 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Anna Lindstr&ouml;m</span> · <time>11 Jun 2026</time> &middot; <span class="reads">782K reads</span></div>
       </a>
       <!-- Story 2 — Politics -->
       <a href="article-politics.html" class="story-item" id="section-politics">
         <div class="story-item__img"><img src="images/news/photo-1575320181282-9afab399332c.jpg" alt="Protesters gathered outside Houses of Parliament" loading="lazy"></div>
         <span class="story-item__kicker">Politics</span>
         <h3 class="story-item__title">Parliament Set for Showdown Vote on Housing Reform Bill</h3>
-        <div class="story-item__meta"><span>By James Mitchell</span> · <time>14 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By James Mitchell</span> · <time>14 Jun 2026</time> &middot; <span class="reads">421K reads</span></div>
       </a>
       <!-- Story 3 — Climate -->
       <a href="article-climate.html" class="story-item" id="section-climate">
         <div class="story-item__img"><img src="images/news/photo-1611273426858-450d8e3c9fce.jpg" alt="Coastal flooding from sea level rise" loading="lazy"></div>
         <span class="story-item__kicker">Climate</span>
         <h3 class="story-item__title">UN Climate Report Warns of Accelerating Sea Level Rise Across Coastal Cities</h3>
-        <div class="story-item__meta"><span>By Dr. Elena Rossi</span> · <time>13 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Dr. Elena Rossi</span> · <time>13 Jun 2026</time> &middot; <span class="reads">556K reads</span></div>
       </a>
       <!-- Story 4 — Health -->
       <a href="article-health.html" class="story-item" id="section-health">
         <div class="story-item__img"><img src="images/news/photo-1778864874969-16e2432b2709.jpg" alt="WHO emergency committee meeting" loading="lazy"></div>
         <span class="story-item__kicker">Health</span>
         <h3 class="story-item__title">Global Health Body Declares End to Three-Year Disease Emergency</h3>
-        <div class="story-item__meta"><span>By David Okafor</span> · <time>13 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By David Okafor</span> · <time>13 Jun 2026</time> &middot; <span class="reads">448K reads</span></div>
       </a>
       <!-- Story 5 — Business -->
       <a href="article-business.html" class="story-item" id="section-business">
         <div class="story-item__img"><img src="images/news/photo-1449157291145-7efd050a4d0e.jpg" alt="Financial district towers in fog" loading="lazy"></div>
         <span class="story-item__kicker">Business</span>
         <h3 class="story-item__title">Central Banks Signal Coordinated Rate Cuts Amid Global Economic Slowdown</h3>
-        <div class="story-item__meta"><span>By Priya Kapoor</span> &middot; <time>12 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Priya Kapoor</span> &middot; <time>12 Jun 2026</time> &middot; <span class="reads">782K reads</span></div>
       </a>
       <!-- Story 6 — Sports -->
       <a href="article-sports.html" class="story-item" id="section-sports">
         <div class="story-item__img"><img src="images/news/photo-1489944440615-453fc2b6a9a9.jpg" alt="Football stadium aerial view on match day" loading="lazy"></div>
         <span class="story-item__kicker">Sports</span>
         <h3 class="story-item__title">World Cup Qualifiers: Underdog Squad Stuns Defending Champions in Thriller</h3>
-        <div class="story-item__meta"><span>By Carlos Mendez</span> &middot; <time>12 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Carlos Mendez</span> &middot; <time>12 Jun 2026</time> &middot; <span class="reads">319K reads</span></div>
       </a>
       <!-- Story 7 — Technology -->
       <a href="article-tech-ai.html" class="story-item" id="section-tech">
         <div class="story-item__img"><img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="Quantum computing milestone" loading="lazy"></div>
         <span class="story-item__kicker">Technology</span>
         <h3 class="story-item__title">Quantum Computing Milestone: Processor Solves Problem 1,000&times; Faster Than Supercomputer</h3>
-        <div class="story-item__meta"><span>By Sarah Chen</span> &middot; <time>11 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Sarah Chen</span> &middot; <time>11 Jun 2026</time> &middot; <span class="reads">556K reads</span></div>
       </a>
       <!-- Story 8 — Culture -->
       <a href="#" class="story-item" id="section-culture">
         <div class="story-item__img"><img src="images/news/photo-1569783721854-33a99b4c0bae.jpg" alt="Visitors at contemporary art exhibition" loading="lazy"></div>
         <span class="story-item__kicker">Culture</span>
         <h3 class="story-item__title">Venice Biennale 2026: African Pavilions Break Attendance Records as Contemporary Art Goes Global</h3>
-        <div class="story-item__meta"><span>By Amara Osei</span> &middot; <time>10 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Amara Osei</span> &middot; <time>10 Jun 2026</time> &middot; <span class="reads">448K reads</span></div>
       </a>
       <!-- Story 9 — Arts & Travel -->
       <a href="#" class="story-item">
         <div class="story-item__img"><img src="images/news/photo-1545569341-9eb8b30979d9.jpg" alt="Japanese pagoda surrounded by cherry trees" loading="lazy"></div>
         <span class="story-item__kicker">Arts &amp; Travel</span>
         <h3 class="story-item__title">Japan&rsquo;s Hidden Art Islands: Naoshima and Teshima Draw Record Visitors for 2026 Season</h3>
-        <div class="story-item__meta"><span>By Yuki Tanaka</span> &middot; <time>10 Jun 2026</time></div>
+        <div class="story-item__meta"><span>By Yuki Tanaka</span> &middot; <time>10 Jun 2026</time> &middot; <span class="reads">291K reads</span></div>
       </a>
     </div>
   </div>
@@ -1762,7 +2190,33 @@ a:hover .hero__subheadline { color: var(--c-red); }
       </ol>
     </div>
 
-    <!-- Have Your Say (Poll) -->
+    
+	    <!-- Weather — Kuala Lumpur -->
+	    <div class="weather-card" id="weatherCard">
+	      <div class="weather-card__datetime" id="wxDatetime">--</div>
+	      <div class="weather-card__main">
+	        <div class="weather-card__icon" id="wxIcon"></div>
+	        <div>
+	          <span class="weather-card__temp" id="wxTemp">--&deg;</span>
+	          <span class="weather-card__desc" id="wxDesc">Loading...</span>
+	        </div>
+	      </div>
+	      <div class="weather-card__city" id="wxCity">Kuala Lumpur</div>
+	      <div class="weather-card__meta">
+	        <span id="wxHumidity">--</span> humidity &middot; <span id="wxWind">--</span> wind
+	      </div>
+	    </div>
+
+
+	    
+	    <!-- World Cup 2026 Scores -->
+	    <div class="wc-scores" id="wcScores">
+	      <h3 class="wc-scores__title"><span class="wc-scores__live"></span> World Cup 2026</h3>
+	      <div class="wc-scores__list" id="wcList"></div>
+	    </div>
+
+
+	    <!-- Have Your Say (Poll) -->
     <div class="poll-widget" id="poll-widget">
       <h3 class="poll-widget__title">Have Your Say</h3>
       <p class="poll-widget__subtitle" id="poll-subtitle">What matters most to you in the upcoming election?</p>
@@ -1821,85 +2275,46 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <button type="submit" class="btn btn--primary" id="poll-submit" form="poll-form">Vote</button>
     </div>
 
-    	    <!-- Watch & Listen — cover cards + click-to-load -->
-		    <div class="multimedia" data-od-id="watch-listen">
-		      <h3 class="multimedia__title">Watch &amp; Listen</h3>
 
-		      <p class="multimedia__subtitle">Watch</p>
+	    <!-- Watch & Listen -->
+        <div class="wl-sidebar" id="wlSidebar">
+          <h3 class="wl-sidebar__title">Watch &amp; Listen</h3>
 
-		      <!-- BBC News video -->
-		      <div class="media-card media-card--video" data-player="youtube" data-vid="dIc_rUkrP6c" data-od-id="watch-bbc-iran">
-		        <div class="media-card__cover" title="Click to play">
-		          <img src="images/news/youtube-dIc_rUkrP6c.jpg"
-		               alt="Iran and US agree deal to end war" loading="lazy">
-		          <span class="media-card__play-btn"></span>
-		        </div>
-		        <div class="media-card__info">
-		          <span class="media-card__label">Iran and US agree deal to end war</span>
-		          <span class="media-card__badge media-card__badge--video">BBC News</span>
-		        </div>
-		        <div class="media-card__meta">37 min &middot; BBC News</div>
-		        <button class="media-card__stop" title="Stop playback" aria-label="Stop playback">&times;</button>
-		        <div class="media-card__player">
-		          <div class="media-card__video-wrap"></div>
-		        </div>
-		      </div>
+          <div class="wl-video" data-video="dIc_rUkrP6c">
+            <div class="wl-video__thumb">
+              <img src="images/news/youtube-dIc_rUkrP6c.jpg" alt="BBC News report" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='var(--c-bg-grey)'">
+              <div class="wl-video__overlay"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div>
+            </div>
+            <div class="wl-video__text">
+              <span class="wl-video__label">Iran and US agree deal to end war</span>
+              <span class="wl-video__src">BBC News</span>
+            </div>
+          </div>
+          <div class="wl-video" data-video="gU8KXivuzc4">
+            <div class="wl-video__thumb">
+              <img src="images/news/youtube-gU8KXivuzc4.jpg" alt="Reuters report" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='var(--c-bg-grey)'">
+              <div class="wl-video__overlay"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div>
+            </div>
+            <div class="wl-video__text">
+              <span class="wl-video__label">Oil tumbles, stocks mixed</span>
+              <span class="wl-video__src">Reuters</span>
+            </div>
+          </div>
 
-		      <!-- Reuters video -->
-		      <div class="media-card media-card--video" data-player="youtube" data-vid="gU8KXivuzc4" data-od-id="watch-reuters-oil">
-		        <div class="media-card__cover" title="Click to play">
-		          <img src="images/news/youtube-gU8KXivuzc4.jpg"
-		               alt="Oil tumbles stocks surge after US-Iran peace deal" loading="lazy">
-		          <span class="media-card__play-btn"></span>
-		        </div>
-		        <div class="media-card__info">
-		          <span class="media-card__label">Oil tumbles, stocks surge after peace deal</span>
-		          <span class="media-card__badge media-card__badge--video">Reuters</span>
-		        </div>
-		        <div class="media-card__meta">6 min &middot; Reuters</div>
-		        <button class="media-card__stop" title="Stop playback" aria-label="Stop playback">&times;</button>
-		        <div class="media-card__player">
-		          <div class="media-card__video-wrap"></div>
-		        </div>
-		      </div>
+          <div class="wl-audio" id="wlAudio">
+            <div class="wl-audio__header">
+              <span class="wl-audio__dot"></span>
+              <span class="wl-audio__label">LIVE · BBC World Service</span>
+            </div>
+            <div class="wl-audio__waves">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <button class="wl-audio__btn wl-audio__btn--play" id="wlAudioPlay">▶ Listen Live</button>
+            <button class="wl-audio__btn wl-audio__btn--stop" id="wlAudioStop">✕ Stop</button>
+          </div>
+        </div>
 
-			      <p class="multimedia__subtitle">Listen</p>
-
-			      <!-- Live Audio — radio-style module with waveform visualizer -->
-			      <div class="live-audio" data-od-id="live-audio" id="liveAudio">
-			        <div class="live-audio__header">
-			          <span class="live-audio__dot"></span>
-			          <span class="live-audio__title">Live Audio</span>
-			        </div>
-
-			        <!-- Animated waveform equalizer — no cover image needed -->
-			        <div class="live-audio__waves">
-			          <span></span><span></span><span></span><span></span><span></span>
-			          <span></span><span></span><span></span><span></span><span></span>
-			        </div>
-			        <button class="live-audio__play" title="Play" aria-label="Play podcast"></button>
-
-			        <!-- Channel switcher -->
-			        <div class="live-audio__channels">
-			          <button class="live-audio__ch live-audio__ch--active" data-ch="bbc">BBC Global News</button>
-			          <button class="live-audio__ch" data-ch="npr">NPR Up First</button>
-			        </div>
-
-			        <!-- Now playing info -->
-			        <div class="live-audio__now">
-			          <div class="live-audio__episode">US and Iran agree peace deal</div>
-			          <div class="live-audio__source">Global News Podcast · BBC World Service</div>
-			        </div>
-
-			        <!-- Audio player (hidden until play) -->
-			        <div class="live-audio__player"></div>
-
-			        <!-- Stop -->
-			        <button class="live-audio__stop" title="Stop playback" aria-label="Stop playback">&times;</button>
-			      </div>
-
-		    </div>
-</aside>
+      </aside>
 </div>
 
 
@@ -1915,21 +2330,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="Diplomatic meeting at UN headquarters" loading="lazy"></div>
       <span class="cat-feature__kicker">World</span>
       <h3 class="cat-feature__headline">Iran Peace Deal Takes Hold: Ceasefire Monitors Deploy Along Front Lines as Troops Begin Withdrawal</h3>
-      <p class="cat-feature__summary">UN-mandated observers have begun deploying along the 1,200 km frontline, marking the first tangible step toward ending a conflict that has displaced over two million civilians since 2024.</p>
-      <div class="cat-feature__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">892K reads</span></div>
     </a>
     <div class="cat-headlines">
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">G7 Leaders Draft Framework for Global Minimum Corporate Tax, Final Vote Expected Friday</h4>
-        <div class="cat-headline__meta"><span>By Mark Ellis</span> &middot; <time>15 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Mark Ellis</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">312K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Myanmar Peace Talks Resume in Bangkok as Junta Signals Willingness to Release Political Prisoners</h4>
-        <div class="cat-headline__meta"><span>By Aye Mon</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Aye Mon</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">287K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">UN Security Council Reform Proposal Gains Traction: African Union Demands Permanent Seats</h4>
-        <div class="cat-headline__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">245K reads</span></div>
       </a>
     </div>
   </div>
@@ -1945,21 +2359,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1575320181282-9afab399332c.jpg" alt="Houses of Parliament exterior view" loading="lazy"></div>
       <span class="cat-feature__kicker">Politics</span>
       <h3 class="cat-feature__headline">Housing Reform Bill Passes Key Committee Vote, Setting Stage for Historic Parliamentary Showdown</h3>
-      <p class="cat-feature__summary">The landmark bill, which would create 1.5 million new social housing units and cap rent increases at 3% annually, cleared the cross-party committee 18–11 and now heads to a full parliamentary vote next week.</p>
-      <div class="cat-feature__meta"><span>By James Mitchell</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By James Mitchell</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">734K reads</span></div>
     </a>
     <div class="cat-headlines">
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Immigration Reform Debate Heats Up as Cross-Party Coalition Proposes Points-Based System</h4>
-        <div class="cat-headline__meta"><span>By Rachel O&rsquo;Brien</span> &middot; <time>15 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Rachel O&rsquo;Brien</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">298K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Election Integrity Measures: Parliament to Debate Mandatory Voter ID and Postal Vote Overhaul</h4>
-        <div class="cat-headline__meta"><span>By James Mitchell</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By James Mitchell</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">421K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Cabinet Reshuffle Rumours Intensify as PM Prepares to Replace Three Senior Ministers</h4>
-        <div class="cat-headline__meta"><span>By Rachel O&rsquo;Brien</span> &middot; <time>13 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Rachel O&rsquo;Brien</span> &middot; <time>13 Jun 2026</time> &middot; <span class="reads">251K reads</span></div>
       </a>
     </div>
   </div>
@@ -1975,21 +2388,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1449157291145-7efd050a4d0e.jpg" alt="Financial district skyscrapers in morning fog" loading="lazy"></div>
       <span class="cat-feature__kicker">Business</span>
       <h3 class="cat-feature__headline">Global Markets Rally as Central Banks Deliver Coordinated Rate Cuts — FTSE 100 Hits All-Time High</h3>
-      <p class="cat-feature__summary">The Bank of England, Federal Reserve, and ECB delivered a rare synchronised 25-basis-point cut, sending equities surging. The FTSE 100 closed above 8,900 for the first time in history.</p>
-      <div class="cat-feature__meta"><span>By Priya Kapoor</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By Priya Kapoor</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">543K reads</span></div>
     </a>
     <div class="cat-headlines">
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Electric Vehicle Trade War: EU Considers Retaliatory Tariffs on Chinese Battery Imports</h4>
-        <div class="cat-headline__meta"><span>By Tom Berger</span> &middot; <time>15 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Tom Berger</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">312K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Cryptocurrency Regulation: G20 Finance Ministers Agree on Global Stablecoin Framework</h4>
-        <div class="cat-headline__meta"><span>By Priya Kapoor</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Priya Kapoor</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">289K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Supply Chain Reboot: Foxconn Breaks Ground on €4.2 Billion Chip Plant in Saxony</h4>
-        <div class="cat-headline__meta"><span>By Tom Berger</span> &middot; <time>13 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Tom Berger</span> &middot; <time>13 Jun 2026</time> &middot; <span class="reads">267K reads</span></div>
       </a>
     </div>
   </div>
@@ -2000,43 +2412,27 @@ a:hover .hero__subheadline { color: var(--c-red); }
     <h2 class="cat-section__title">Technology</h2>
     <a href="article-tech-ai.html" class="cat-section__more">More Technology →</a>
   </div>
-  <div class="cat-cards">
-    <a href="article-tech-ai.html" class="cat-card">
-      <div class="cat-card__img"><img src="images/news/photo-1518770660439-4636190af475.jpg" alt="Close-up of a microchip on a circuit board" loading="lazy"></div>
-      <span class="cat-card__kicker">Fusion Energy</span>
-      <h3 class="cat-card__headline">First Commercial Fusion Reactor Breaks Ground in Southern France</h3>
-      <div class="cat-card__meta"><span>By Sarah Chen</span> &middot; <time>15 Jun 2026</time></div>
+  <div class="cat-grid">
+    <a href="article-tech-ai.html" class="cat-feature">
+      <div class="cat-feature__img"><img src="images/news/photo-1518770660439-4636190af475.jpg" alt="Close-up of a microchip on a circuit board" loading="lazy"></div>
+      <span class="cat-feature__kicker">Technology</span>
+      <h3 class="cat-feature__headline">First Commercial Fusion Reactor Breaks Ground in Southern France — Unlimited Clean Energy Within a Decade</h3>
+      <div class="cat-feature__meta"><span>By Sarah Chen</span> · <time>15 Jun 2026</time> &middot; <span class="reads">421K reads</span></div>
     </a>
-    <a href="article-tech-ai.html" class="cat-card">
-      <div class="cat-card__img"><img src="images/news/photo-1607037183811-2a54d746cd35.jpg" alt="AI safety delegates at summit" loading="lazy"></div>
-      <span class="cat-card__kicker">AI Policy</span>
-      <h3 class="cat-card__headline">AI Safety Summit Reaches Landmark Agreement on Global Standards</h3>
-      <div class="cat-card__meta"><span>By Sarah Chen</span> &middot; <time>14 Jun 2026</time></div>
-    </a>
-    <a href="#" class="cat-card">
-      <div class="cat-card__img"><img src="images/news/photo-1639754390580-2e7437267698.jpg" alt="Quantum computer in a lab" loading="lazy"></div>
-      <span class="cat-card__kicker">Quantum Computing</span>
-      <h3 class="cat-card__headline">Quantum Encryption Goes Mainstream: First Post-Quantum VPN Launches</h3>
-      <div class="cat-card__meta"><span>By Marcus Liu</span> &middot; <time>14 Jun 2026</time></div>
-    </a>
-    <a href="#" class="cat-card">
-      <div class="cat-card__img"><img src="images/news/photo-1569428034239-f9565e32e224.jpg" alt="Autonomous cargo vessel at sea" loading="lazy"></div>
-      <span class="cat-card__kicker">Autonomous Shipping</span>
-      <h3 class="cat-card__headline">Crewless Cargo Vessel Completes Rotterdam-to-Singapore Voyage</h3>
-      <div class="cat-card__meta"><span>By Marcus Liu</span> &middot; <time>13 Jun 2026</time></div>
-    </a>
-    <a href="#" class="cat-card">
-      <div class="cat-card__img"><img src="images/news/photo-1519389950473-47ba0277781c.jpg" alt="EU antitrust hearing room" loading="lazy"></div>
-      <span class="cat-card__kicker">Regulation</span>
-      <h3 class="cat-card__headline">EU Orders Apple to Open iMessage and NFC to Third Parties</h3>
-      <div class="cat-card__meta"><span>By Marcus Liu</span> &middot; <time>15 Jun 2026</time></div>
-    </a>
-    <a href="#" class="cat-card">
-      <div class="cat-card__img"><img src="images/news/photo-1677442136019-21780ecad995.jpg" alt="AI data center servers" loading="lazy"></div>
-      <span class="cat-card__kicker">Data Centres</span>
-      <h3 class="cat-card__headline">Google Bets GBP 15bn on UK Data Centres as AI Infrastructure Race Intensifies</h3>
-      <div class="cat-card__meta"><span>By Sarah Chen</span> &middot; <time>13 Jun 2026</time></div>
-    </a>
+    <div class="cat-headlines">
+      <a href="article-tech-ai.html" class="cat-headline">
+        <h4 class="cat-headline__title">AI Safety Summit Reaches Landmark Agreement: 28 Nations Sign Global AI Governance Framework</h4>
+        <div class="cat-headline__meta"><span>By Sarah Chen</span> · <time>14 Jun 2026</time> &middot; <span class="reads">198K reads</span></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">Quantum Encryption Goes Mainstream: First Post-Quantum VPN Launches for Enterprise Customers</h4>
+        <div class="cat-headline__meta"><span>By Marcus Liu</span> · <time>14 Jun 2026</time> &middot; <span class="reads">176K reads</span></div>
+      </a>
+      <a href="#" class="cat-headline">
+        <h4 class="cat-headline__title">EU Orders Apple to Open iMessage and NFC to Third Parties Under New Digital Markets Act Ruling</h4>
+        <div class="cat-headline__meta"><span>By Marcus Liu</span> · <time>15 Jun 2026</time> &middot; <span class="reads">153K reads</span></div>
+      </a>
+    </div>
   </div>
 </section>
 <section class="cat-section" id="sec-climate" data-od-id="cat-sec-climate">
@@ -2050,21 +2446,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1536926219478-b81cb954657e.jpg" alt="Arctic ice sheets melting into ocean" loading="lazy"></div>
       <span class="cat-feature__kicker">Climate &amp; Environment</span>
       <h3 class="cat-feature__headline">Arctic Ice Hits Record Low for Third Straight Year — Scientists Warn of ‘Irreversible Tipping Point’</h3>
-      <p class="cat-feature__summary">NSIDC data confirms summer sea ice extent fell to 3.2 million km², the lowest in recorded history. Researchers say the Arctic could be ice-free in summer by 2035, decades earlier than previous models predicted.</p>
-      <div class="cat-feature__meta"><span>By Dr. Elena Rossi</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By Dr. Elena Rossi</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">517K reads</span></div>
     </a>
     <div class="cat-headlines">
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Iceland Launches World’s Largest Direct Air Capture Plant, Removing 36,000 Tonnes of CO₂ Annually</h4>
-        <div class="cat-headline__meta"><span>By Finn Larsen</span> &middot; <time>15 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Finn Larsen</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">234K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Amazon Drought Enters Third Year: River Levels at 120-Year Low, Indigenous Communities Face Water Crisis</h4>
-        <div class="cat-headline__meta"><span>By Dr. Elena Rossi</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Dr. Elena Rossi</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">198K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Global Plastics Treaty: 175 Nations Sign Agreement to Phase Out Single-Use Plastics by 2035</h4>
-        <div class="cat-headline__meta"><span>By Finn Larsen</span> &middot; <time>13 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Finn Larsen</span> &middot; <time>13 Jun 2026</time> &middot; <span class="reads">167K reads</span></div>
       </a>
     </div>
   </div>
@@ -2080,21 +2475,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1576091160550-2173dba999ef.jpg" alt="Medical researcher examining test results" loading="lazy"></div>
       <span class="cat-feature__kicker">Health</span>
       <h3 class="cat-feature__headline">Breakthrough mRNA Vaccine Shows 92% Efficacy Against Dengue in Phase III Trial — Rollout Planned for 2027</h3>
-      <p class="cat-feature__summary">The vaccine, developed by a UK-Brazil research consortium, protected 92% of participants against all four dengue serotypes. The WHO has already fast-tracked prequalification review.</p>
-      <div class="cat-feature__meta"><span>By David Okafor</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By David Okafor</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">389K reads</span></div>
     </a>
     <div class="cat-headlines">
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Long COVID Study of 50,000 Patients Identifies Three Distinct Biological Subtypes, Paving Way for Targeted Treatments</h4>
-        <div class="cat-headline__meta"><span>By Dr. Nina Gupta</span> &middot; <time>15 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Dr. Nina Gupta</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">187K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Mental Health Apps Face New FDA Scrutiny: ‘Digital Therapeutics’ Must Now Prove Clinical Efficacy</h4>
-        <div class="cat-headline__meta"><span>By David Okafor</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By David Okafor</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">165K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Universal Healthcare Debate: Study Shows Single-Payer System Would Save UK £45 Billion Annually</h4>
-        <div class="cat-headline__meta"><span>By Dr. Nina Gupta</span> &middot; <time>13 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Dr. Nina Gupta</span> &middot; <time>13 Jun 2026</time> &middot; <span class="reads">142K reads</span></div>
       </a>
     </div>
   </div>
@@ -2110,8 +2504,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1489944440615-453fc2b6a9a9.jpg" alt="Stadium filled with fans on match night" loading="lazy"></div>
       <span class="cat-feature__kicker">Sports</span>
       <h3 class="cat-feature__headline">Champions League Final Set: Madrid Derby at Wembley Sells Out in Under Four Hours</h3>
-      <p class="cat-feature__summary">Real Madrid and Atlético Madrid will face each other in the first same-city Champions League final since 2016. Wembley’s 90,000 seats were gone within minutes of going on sale.</p>
-      <div class="cat-feature__meta"><span>By Carlos Mendez</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By Carlos Mendez</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">634K reads</span></div>
     </a>
     <div class="cat-split__side">
       <a href="#" class="cat-card">
@@ -2140,21 +2533,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="cat-feature__img"><img src="images/news/photo-1569783721854-33a99b4c0bae.jpg" alt="Visitors at a contemporary art gallery" loading="lazy"></div>
       <span class="cat-feature__kicker">Culture &amp; Arts</span>
       <h3 class="cat-feature__headline">‘The Cartographer’s Dream’ Wins 2026 Booker Prize — Kenyan Author, 24, Becomes Youngest Winner in History</h3>
-      <p class="cat-feature__summary">Wanjiku Mwangi’s debut novel, a magical-realist exploration of colonial mapmaking and African identity, beat out five established authors. The Guardian called it ‘a once-in-a-generation voice.’</p>
-      <div class="cat-feature__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time></div>
+      <div class="cat-feature__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">156K reads</span></div>
     </a>
     <div class="cat-headlines">
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Cannes Film Festival 2026: First Palestinian Film in Competition Wins Palme d’Or to Standing Ovation</h4>
-        <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">98K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">Music Streaming 2026: Indie Labels Now Command 38% of Global Streams as Algorithm Fatigue Drives Discovery</h4>
-        <div class="cat-headline__meta"><span>By Leo Fischer</span> &middot; <time>14 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Leo Fischer</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">87K reads</span></div>
       </a>
       <a href="#" class="cat-headline">
         <h4 class="cat-headline__title">British Museum Returns 93 Benin Bronzes to Nigeria in Landmark Repatriation Agreement After 127 Years</h4>
-        <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>13 Jun 2026</time></div>
+        <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>13 Jun 2026</time> &middot; <span class="reads">73K reads</span></div>
       </a>
     </div>
   </div>
@@ -2188,7 +2580,14 @@ a:hover .hero__subheadline { color: var(--c-red); }
     </div>
   </div>
   <p class="site-footer__copy">&copy; 2026 News Online. All rights reserved. XMUM JRN209.</p>
-</footer>
+
+	  <div class="page-views" id="pageViews">
+	    <span class="page-views__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+	    <span class="page-views__count" id="pvCount">--</span> page views &middot;
+	    <span class="page-views__online" id="pvOnline">--</span> reading now
+	  </div>
+
+	</footer>
 
 <!-- BACK TO TOP -->
 <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
@@ -2687,7 +3086,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
           if (wrapEl && !wrapEl.querySelector("iframe") && !wrapEl.querySelector(".media-card__offline-msg")) {
             var msg = document.createElement("div");
             msg.className = "media-card__offline-msg";
-            msg.innerHTML = '<p style="color:#666;font-size:14px;padding:20px;text-align:center">📺 离线模式下视频不可用<br><small>联网后可观看: youtube.com/watch?v=' + vid + '</small></p>';
+            msg.innerHTML = '<p style="color:#666;font-size:14px;padding:20px;text-align:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="vertical-align:-6px;margin-right:6px"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>Offline — video unavailable<br><small>Connect to internet to watch: youtube.com/watch?v=' + vid + '</small></p>';
             wrapEl.appendChild(msg);
           }
         }
@@ -2711,64 +3110,6 @@ a:hover .hero__subheadline { color: var(--c-red); }
     });
   })();
 
-  // ── Live Audio module ──
-  (function(){
-    var la = document.getElementById('liveAudio');
-    if (!la) return;
-
-    var podcasts = {
-      bbc: {
-        title: 'US and Iran agree peace deal',
-        source: 'Global News Podcast · BBC World Service',
-        audio: 'http://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-rss-low/proto/http/vpid/p0ns0h81.mp3'
-      },
-      npr: {
-        title: 'Iran Deal, UFC Event At White House, Trump Heads To G7',
-        source: 'Up First · NPR',
-        audio: 'https://prfx.byspotify.com/e/play.podtrac.com/npr-510318/npr.simplecastaudio.com/d52bee4a-b10a-40f8-9417-45064e6b8632/episodes/b0bf6e49-0392-4fbc-9c4f-54f683524d4b/audio/128/default.mp3?awCollectionId=d52bee4a-b10a-40f8-9417-45064e6b8632&awEpisodeId=b0bf6e49-0392-4fbc-9c4f-54f683524d4b&feed=HMwRVgVt&t=podcast&e=nx-s1-5858622&p=510318&d=766&size=12265892'
-      }
-    };
-    var currentCh = 'bbc';
-
-    // Channel switcher
-    la.querySelectorAll('.live-audio__ch').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var ch = this.getAttribute('data-ch');
-        if (ch === currentCh && la.classList.contains('live-audio--playing')) return;
-        if (la.classList.contains('live-audio--playing')) { stopLiveAudio(); }
-        currentCh = ch;
-        la.querySelectorAll('.live-audio__ch').forEach(function(b){ b.classList.remove('live-audio__ch--active'); });
-        this.classList.add('live-audio__ch--active');
-        la.querySelector('.live-audio__episode').textContent = podcasts[ch].title;
-        la.querySelector('.live-audio__source').textContent = podcasts[ch].source;
-      });
-    });
-
-    // Play button — offline: show note instead of loading external streams
-    la.querySelector('.live-audio__play').addEventListener('click', function(){
-      if (la.classList.contains('live-audio--playing')) return;
-      var playerWrap = la.querySelector('.live-audio__player');
-      if (!playerWrap.querySelector('audio') && !playerWrap.querySelector('.live-audio__offline-note')) {
-        var note = document.createElement('div');
-        note.className = 'live-audio__offline-note';
-        note.style.cssText = 'color:#8b949e;font-size:12px;padding:8px 0;text-align:center;';
-        note.textContent = '📻 离线模式下音频流不可用 — 联网后可收听 BBC/NPR 直播';
-        playerWrap.appendChild(note);
-      }
-      la.classList.add('live-audio--playing');
-    });
-
-    // Stop button
-    la.querySelector('.live-audio__stop').addEventListener('click', function(e){
-      e.stopPropagation();
-      stopLiveAudio();
-    });
-
-    function stopLiveAudio(){
-      la.classList.remove('live-audio--playing');
-      la.querySelector('.live-audio__player').innerHTML = '';
-    }
-  })();
 })();
 </script>
 <script>
@@ -2787,5 +3128,247 @@ a:hover .hero__subheadline { color: var(--c-red); }
   }, 100);
 })();
 </script>
+
+<script>
+(function(){
+  'use strict';
+
+  // =====================
+  // AD CLOSE
+  // =====================
+  var AD_KEY = 'no_closedAds';
+  function getClosed() {
+    try {
+      var raw = localStorage.getItem(AD_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch(e) { return {}; }
+  }
+  function setClosed(obj) {
+    try { localStorage.setItem(AD_KEY, JSON.stringify(obj)); } catch(e) {}
+  }
+  function expireOld(obj) {
+    var now = Date.now();
+    var changed = false;
+    Object.keys(obj).forEach(function(k) {
+      if (now - obj[k] > 86400000) { delete obj[k]; changed = true; }
+    });
+    return changed ? obj : null;
+  }
+
+  var closedAds = getClosed();
+  var cleaned = expireOld(closedAds);
+  if (cleaned) { closedAds = cleaned; setClosed(closedAds); }
+
+  var adLeft  = document.getElementById('adWallLeft');
+  var adRight = document.getElementById('adWallRight');
+
+  [adLeft, adRight].forEach(function(wall) {
+    if (!wall) return;
+    var side = wall === adLeft ? 'left' : 'right';
+    wall.style.display = closedAds[side] ? 'none' : '';
+
+    var btn = wall.querySelector('[data-close-ad]');
+    if (btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        wall.style.opacity = '0';
+        wall.style.transition = 'opacity .3s';
+        setTimeout(function() {
+          wall.style.display = 'none';
+          closedAds[side] = Date.now();
+          setClosed(closedAds);
+        }, 300);
+      });
+    }
+  });
+
+  // =====================
+  // WEATHER — Kuala Lumpur hardcoded
+  // =====================
+  function wxIcon(code) {
+    var S = '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">';
+    var E = '</svg>';
+    var C='<g fill="#8E99A4"><ellipse cx="42" cy="42" rx="14" ry="9"/><ellipse cx="34" cy="37" rx="11" ry="8"/><ellipse cx="24" cy="42" rx="10" ry="7"/></g>';
+    var U='<g><circle cx="28" cy="28" r="12" fill="#F5A623"/><g stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" opacity="0.7"><line x1="28" y1="6" x2="28" y2="12"/><line x1="28" y1="44" x2="28" y2="50"/><line x1="8" y1="28" x2="14" y2="28"/><line x1="42" y1="28" x2="48" y2="28"/><line x1="13.5" y1="13.5" x2="17.7" y2="17.7"/><line x1="38.3" y1="38.3" x2="42.5" y2="42.5"/><line x1="42.5" y1="13.5" x2="38.3" y2="17.7"/><line x1="17.7" y1="38.3" x2="13.5" y2="42.5"/></g></g>';
+    function R(xs){var r='';for(var i=0;i<xs.length;i++)r+='<line x1="'+xs[i]+'" y1="48" x2="'+xs[i]+'" y2="56" stroke="#6BAED6" stroke-width="3" stroke-linecap="round"/>';return r;}
+    var I={0:S+U+E,1:S+U+'<ellipse cx="42" cy="36" rx="12" ry="8" fill="#B0BAC5"/>'+E,2:S+C+'<circle cx="26" cy="28" r="10" fill="#F5A623"/><g stroke="#F5A623" stroke-width="2" stroke-linecap="round" opacity="0.6"><line x1="26" y1="9" x2="26" y2="14"/><line x1="10" y1="28" x2="15" y2="28"/><line x1="42" y1="28" x2="37" y2="28"/></g>'+E,3:S+C+E,45:S+'<g opacity="0.5"><line x1="10" y1="30" x2="18" y2="30" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><line x1="23" y1="26" x2="31" y2="26" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/><line x1="36" y1="30" x2="44" y2="30" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><line x1="49" y1="26" x2="56" y2="26" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/></g><g opacity="0.35"><line x1="14" y1="37" x2="22" y2="37" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><line x1="27" y1="33" x2="35" y2="33" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="37" x2="48" y2="37" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/></g>'+E,51:S+C+R([16,24,32,40])+E,61:S+C+R([14,22,30,38,46])+E,80:S+C+R([10,18,26,34,42,50])+'<line x1="28" y1="42" x2="22" y2="52" stroke="#6BAED6" stroke-width="1.5" stroke-linecap="round"/><line x1="42" y1="44" x2="46" y2="54" stroke="#6BAED6" stroke-width="1.5" stroke-linecap="round"/>'+E,95:S+C+R([14,22,30,38])+'<polygon points="30,10 24,22 32,18 28,32 38,20 30,14" fill="#F5A623"/>'+E};
+    return I[code]||I[3];
+  }
+  function updateWeather() {
+    var tempEl = document.getElementById('wxTemp');
+    var descEl = document.getElementById('wxDesc');
+    var cityEl = document.getElementById('wxCity');
+    var humEl  = document.getElementById('wxHumidity');
+    var windEl = document.getElementById('wxWind');
+    if (!tempEl) return;
+
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=3.139&longitude=101.6869&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Asia/Kuala_Lumpur')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var c = data.current;
+        var codes = {0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',51:'Drizzle',61:'Rain',80:'Showers',95:'Thunderstorm'};
+        tempEl.innerHTML = c.temperature_2m + '&deg;';
+        descEl.textContent = codes[c.weather_code] || 'Cloudy';
+        cityEl.textContent = 'Kuala Lumpur';
+        var icEl = document.getElementById('wxIcon');
+        if (icEl) icEl.innerHTML = wxIcon(c.weather_code);
+        humEl.textContent = c.relative_humidity_2m + '%';
+        windEl.textContent = Math.round(c.wind_speed_10m) + ' km/h';
+      })
+      .catch(function() {
+        tempEl.innerHTML = '24&deg;';
+        descEl.textContent = 'Partly cloudy';
+        humEl.textContent = '78%';
+        windEl.textContent = '8 km/h';
+        var icEl2 = document.getElementById('wxIcon');
+        if (icEl2) icEl2.innerHTML = wxIcon(2);
+      });
+  }
+  function updateClock() {
+    var now = new Date();
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var h = now.getHours(); var m = now.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if (h === 0) h = 12;
+    m = m < 10 ? '0' + m : m;
+    var dtEl = document.getElementById('wxDatetime');
+    if (dtEl) dtEl.textContent = days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' · ' + h + ':' + m + ' ' + ampm;
+  }
+  updateWeather();
+  updateClock();
+  setInterval(updateClock, 10000);
+  setInterval(updateWeather, 1800000); // every 30 min
+
+  // =====================
+  // WORLD CUP 2026 SCORES
+  // =====================
+  var matches = [
+    { g:'D', h:'USA', a:'England', hs:1, as:1, t:"52'" },
+    { g:'E', h:'Brazil', a:'Germany', hs:2, as:0, t:'FT' },
+    { g:'C', h:'Argentina', a:'France', hs:1, as:1, t:"78'" },
+    { g:'B', h:'Spain', a:'Portugal', hs:0, as:0, t:"34'" }
+  ];
+
+  function renderMatches() {
+    var list = document.getElementById('wcList');
+    if (!list) return;
+    list.innerHTML = matches.map(function(m) {
+      return '<div class="wc-match"><span class="wc-match__group">GRP ' + m.g + '</span><span class="wc-match__teams">' + m.h + ' vs ' + m.a + '</span><span class="wc-match__score">' + m.hs + ' - ' + m.as + '</span><span class="wc-match__time">' + m.t + '</span></div>';
+    }).join('');
+  }
+
+  function simTicks() {
+    var changed = false;
+    matches.forEach(function(m) {
+      if (m.t === 'FT') return;
+      var min = parseInt(m.t) || 45;
+      if (Math.random() < 0.15) {
+        if (Math.random() < 0.5) m.hs++; else m.as++;
+        changed = true;
+      }
+      min++;
+      if (min >= 90) { m.t = 'FT'; }
+      else { m.t = min + "'"; }
+      changed = true;
+    });
+    if (changed) renderMatches();
+  }
+  renderMatches();
+  setInterval(simTicks, 45000);
+
+  // =====================
+  // PAGE VIEWS
+  // =====================
+  function fmtViews(n) {
+    if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+    if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+    return String(n);
+  }
+  try {
+    var vk = 'jrn209_pv_count';
+    var ts = localStorage.getItem('jrn209_pv_ts');
+    var raw = localStorage.getItem(vk);
+    var count = raw ? parseInt(raw) || 2847 : 2847;
+    var now = Date.now();
+    if (!ts || now - parseInt(ts) > 1800000) {
+      count += Math.floor(Math.random() * 15) + 3;
+      localStorage.setItem(vk, String(count));
+      localStorage.setItem('jrn209_pv_ts', String(now));
+    }
+    var pvCount = document.getElementById('pvCount');
+    var pvOnline = document.getElementById('pvOnline');
+    if (pvCount) pvCount.textContent = fmtViews(count);
+    if (pvOnline) pvOnline.textContent = (Math.floor(Math.random() * 35) + 12) + ' people';
+    setInterval(function() {
+      if (pvOnline) pvOnline.textContent = (Math.floor(Math.random() * 35) + 12) + ' people';
+    }, 30000);
+  } catch(e) {}
+
+  // =====================
+  // WATCH & LISTEN — video cards + modal
+  // =====================
+  var wlModal = document.getElementById('wlModal');
+  var wlModalIframe = null;
+
+  if (!wlModal) {
+    wlModal = document.createElement('div');
+    wlModal.id = 'wlModal';
+    wlModal.className = 'wl-modal';
+    wlModal.innerHTML = '<div class="wl-modal__backdrop"></div><div class="wl-modal__frame"><button class="wl-modal__close">&times;</button><iframe id="wlModalIframe" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+    document.body.appendChild(wlModal);
+    wlModalIframe = document.getElementById('wlModalIframe');
+
+    wlModal.querySelector('.wl-modal__backdrop').addEventListener('click', closeWlModal);
+    wlModal.querySelector('.wl-modal__close').addEventListener('click', closeWlModal);
+  } else {
+    wlModalIframe = document.getElementById('wlModalIframe');
+  }
+
+  function openWlModal(vid) {
+    if (!wlModalIframe) wlModalIframe = document.getElementById('wlModalIframe');
+    wlModalIframe.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&rel=0';
+    wlModal.classList.add('wl-modal--open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeWlModal() {
+    wlModal.classList.remove('wl-modal--open');
+    document.body.style.overflow = '';
+    setTimeout(function() {
+      if (wlModalIframe && !wlModal.classList.contains('wl-modal--open')) {
+        wlModalIframe.src = '';
+      }
+    }, 300);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && wlModal && wlModal.classList.contains('wl-modal--open')) {
+      closeWlModal();
+    }
+  });
+
+  document.querySelectorAll('.wl-video').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var vid = this.getAttribute('data-video');
+      if (vid) openWlModal(vid);
+    });
+  });
+
+  // Live Audio
+  var wlAudio = document.getElementById('wlAudio');
+  var wlAudioPlay = document.getElementById('wlAudioPlay');
+  var wlAudioStop = document.getElementById('wlAudioStop');
+
+  if (wlAudioPlay && wlAudioStop && wlAudio) {
+    wlAudioPlay.addEventListener('click', function() {
+      wlAudio.classList.add('wl-audio--playing');
+    });
+    wlAudioStop.addEventListener('click', function() {
+      wlAudio.classList.remove('wl-audio--playing');
+    });
+  }
+</script>
+
 </body>
 </html>

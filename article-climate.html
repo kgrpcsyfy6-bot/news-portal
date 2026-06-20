@@ -152,7 +152,7 @@ body {
   max-width: 1100px;
   margin: 0 auto 0;
 }
-.article-hero-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-hero-caption {
   max-width: 720px;
   margin: 12px auto 48px;
@@ -169,7 +169,7 @@ body {
   max-width: 720px;
   margin: 32px auto 0;
 }
-.article-inline-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-inline-caption {
   max-width: 640px;
   margin: 10px auto 32px;
@@ -404,6 +404,11 @@ body {
   .related-grid { grid-template-columns: 1fr 1fr 1fr; }
   .related-item:last-child:nth-child(odd) { grid-column: auto; }
 }
+/* Content reveal on scroll */
+.article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.article-reveal--visible { opacity: 1; transform: translateY(0); }
+/* Image fade-in */
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -454,7 +459,7 @@ body {
 
 <main>
   <div class="wrap">
-    <header class="article-masthead" data-od-id="masthead">
+    <header class="article-masthead article-reveal" data-od-id="masthead">
       <span class="article-kicker">Climate & Environment · IPCC</span>
       <h1 class="article-headline">UN Climate Report Warns of Accelerating Sea Level Rise Across Coastal Cities</h1>
       <div class="article-byline-row">
@@ -472,12 +477,12 @@ body {
   <figure class="article-hero-img" data-od-id="hero-image">
     <img src="images/news/photo-1611273426858-450d8e3c9fce.jpg" alt="Flooded street in coastal community after sea level rise" loading="eager">
   </figure>
-  <figcaption class="article-hero-caption">
+  <figcaption class="article-hero-caption article-reveal">
     Flooding in a coastal community — the UN climate report warns that more than fifty major cities face chronic inundation within three decades without dramatic emissions cuts. (Image source, Unsplash)
   </figcaption>
 
   <div class="wrap">
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>PARIS — The United Nations Intergovernmental Panel on Climate Change has issued its starkest warning yet on sea level rise, publishing a special report on Friday that revises global projections sharply upward and identifies more than fifty major coastal cities at risk of chronic flooding within the next three decades unless greenhouse gas emissions are cut dramatically. The report, compiled by 234 scientists from 67 countries and drawing on new satellite observations and ice sheet modelling, concludes that global mean sea level could rise by as much as 1.2 metres by 2100 under current emissions trajectories — nearly double the upper estimate from the panel's previous assessment in 2021.</p>
 
       <p>The acceleration is primarily driven by what glaciologists describe as "unstoppable but variable" ice loss from the Greenland and West Antarctic ice sheets. New data from the European Space Agency's CryoSat-3 mission and NASA's ICESat-3 have revealed that the grounding lines of several major Antarctic glaciers are retreating at rates up to three times faster than previously measured, exposing thicker inland ice to warming ocean waters.</p>
@@ -492,14 +497,14 @@ body {
     </aside>
 
     <!-- Inline Image -->
-    <figure class="article-inline-img" data-od-id="inline-image">
+    <figure class="article-inline-img article-reveal" data-od-id="inline-image">
       <img src="images/news/photo-1562089727-90aa996a6f18.jpg" alt="Arctic iceberg melting — accelerating climate change impact on polar regions" loading="lazy">
     </figure>
-    <figcaption class="article-inline-caption">
+    <figcaption class="article-inline-caption article-reveal">
       An iceberg calves from the Greenland ice sheet — the UN report finds that ice loss from Greenland and Antarctica has accelerated 40% faster than previous projections, contributing to accelerating sea level rise. (Melissa Bradley / Unsplash)
     </figcaption>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The report singles out several cities as acutely vulnerable. Shanghai, with a population of over 29 million people and critical infrastructure built on low-lying alluvial plain in the Yangtze Delta, faces what the report calls a "high confidence" risk of routine storm-surge inundation by 2050. Mumbai, where millions live in informal settlements on land reclaimed from the Arabian Sea, is listed alongside Miami, whose porous limestone geology renders traditional sea walls largely ineffective against groundwater rise. Jakarta — already sinking at rates of up to 25 centimetres per year in some districts due to groundwater extraction — appears in the report as a case study of compound risk, where sea level rise combined with land subsidence could render much of the city uninhabitable well before the end of the century.</p>
 
       <p>The economic implications are staggering. The report estimates that the total value of assets exposed to a one-metre sea level rise exceeds US$14 trillion globally, with Asia accounting for more than half of that figure. Port infrastructure, which handles over 80% of global trade by volume, is particularly vulnerable: the ports of Shanghai, Rotterdam, Houston, and Singapore all lie within zones projected to experience flooding at least annually by 2070 under the report's intermediate scenario. Supply chain disruptions from port closures, the authors note, would cascade through the global economy within days.</p>
@@ -511,7 +516,7 @@ body {
       <p class="pull-quote__attr">— Amina Al Khaja, UN Secretary-General</p>
     </aside>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>UN Secretary-General Amina Al Khaja responded to the report by calling for an emergency session of the General Assembly on climate adaptation financing. "This is not a distant problem for future generations to solve," she said in a video address from UN headquarters. "This is a present danger that demands immediate investment in coastal defences, managed retreat where necessary, and, above all, accelerated decarbonisation." The Secretary-General urged wealthy nations to fulfil the long-delayed commitment of US$100 billion annually in climate finance for developing countries.</p>
 
       <p>Climate scientists who were not involved in the report's authorship broadly endorsed its methodology while noting the inherent uncertainty in long-range ice sheet projections. Professor Kenji Matsumoto of the University of Tokyo described the report as "rigorous and appropriately cautious," but warned that even these elevated projections may prove conservative if certain tipping points — such as the collapse of the Thwaites Glacier ice shelf in West Antarctica — are triggered sooner than modelled. "The ice sheets do not care about our confidence intervals," he said. "They respond to physics, and the physics is increasingly telling us that we have underestimated the pace of change."</p>
@@ -519,7 +524,7 @@ body {
       <p>Governments are being urged to revise their national adaptation plans within twelve months, and the report provides a framework for city-level vulnerability assessments that account for local subsidence rates, tidal ranges, and storm surge frequencies. For the millions of people living in the shadow of this projection — from street vendors in the flood-prone wards of Mumbai to homeowners in the hurricane corridors of the American Gulf Coast — the report offers a sobering message: the water is rising faster than we thought, and the time to prepare is running short.</p>
     </div>
 
-    <div class="author-bio" data-od-id="author-bio">
+    <div class="author-bio article-reveal" data-od-id="author-bio">
       <div class="author-bio__avatar"><img src="images/news/photo-1580489944761-15a19d654956.jpg" alt="Dr. Elena Rossi"></div>
       <div>
         <p class="author-bio__name">Dr. Elena Rossi</p>
@@ -536,7 +541,7 @@ body {
 
     <section class="related-posts" data-od-id="related-posts">
       <h2 class="related-posts__title">More in Climate</h2>
-      <div class="related-grid">
+      <div class="related-grid article-reveal">
         <a href="#" class="related-item">
           <div class="related-item__img"><img src="images/news/photo-1470071459604-3b5ec3a7fe05.jpg" alt="Climate nature" loading="lazy"></div>
           <span class="related-item__kicker">COP Summit</span>
@@ -558,7 +563,7 @@ body {
       </div>
     </section>
 
-    <section class="comments-section" id="comments" data-od-id="comments">
+    <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
@@ -660,6 +665,36 @@ body {
       }
     });
   });
+  /* Image fade-in on load */
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+    if (img.complete) { img.style.opacity = "1"; }
+    else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
+  });
+  /* Broken image fallback */
+  document.querySelectorAll("img").forEach(function(img){
+    img.addEventListener("error", function(){
+      this.style.display = "none";
+      var p = this.parentElement;
+      p.style.background = "#e8e8e8";
+      p.style.display = "flex";
+      p.style.alignItems = "center";
+      p.style.justifyContent = "center";
+      var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","32"); svg.setAttribute("height","32");
+      svg.setAttribute("viewBox","0 0 24 24");
+      svg.setAttribute("fill","none"); svg.setAttribute("stroke","#999");
+      svg.setAttribute("stroke-width","1.5");
+      svg.innerHTML = "<path d=\"M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/>";
+      p.appendChild(svg);
+    });
+  });
+  /* Scroll reveal */
+  (function(){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("article-reveal--visible"); ro.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
+  })();
 })();
 </script>
 </body>

@@ -152,7 +152,7 @@ body {
   max-width: 1100px;
   margin: 0 auto 0;
 }
-.article-hero-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-hero-caption {
   max-width: 720px;
   margin: 12px auto 48px;
@@ -169,7 +169,7 @@ body {
   max-width: 720px;
   margin: 32px auto 0;
 }
-.article-inline-img img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: var(--c-bg-grey); }
+.article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-inline-caption {
   max-width: 640px;
   margin: 10px auto 32px;
@@ -421,6 +421,11 @@ body {
   .related-grid { grid-template-columns: 1fr 1fr 1fr; }
   .related-item:last-child:nth-child(odd) { grid-column: auto; }
 }
+/* Content reveal on scroll */
+.article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.article-reveal--visible { opacity: 1; transform: translateY(0); }
+/* Image fade-in */
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -473,7 +478,7 @@ body {
 <main>
   <!-- ===== MASTHEAD ===== -->
   <div class="wrap">
-    <header class="article-masthead" data-od-id="masthead">
+    <header class="article-masthead article-reveal" data-od-id="masthead">
       <span class="article-kicker">Football · World Cup Qualifiers</span>
       <h1 class="article-headline">World Cup Qualifiers: Underdog Squad Stuns Defending Champions in 3-2 Thriller</h1>
       <div class="article-byline-row">
@@ -492,13 +497,13 @@ body {
   <figure class="article-hero-img" data-od-id="hero-image">
     <img src="images/news/photo-1489944440615-453fc2b6a9a9.jpg" alt="Football stadium aerial view on match day" loading="eager">
   </figure>
-  <figcaption class="article-hero-caption">
+  <figcaption class="article-hero-caption article-reveal">
     The Volksparkstadion in Hamburg on match day — Morocco stunned Argentina in front of a similar capacity crowd of 67,000 at the Stade Mohammed V in Casablanca. (Mario Klassen / Unsplash)
   </figcaption>
 
   <!-- ===== ARTICLE BODY ===== -->
   <div class="wrap">
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>CASABLANCA — Morocco produced one of the greatest shocks in recent World Cup qualifying history on Thursday night, defeating defending world champions Argentina 3-2 in front of a delirious capacity crowd of 67,000 at the Stade Mohammed V. A stunning 93rd-minute volley from midfielder Ilyas El Khannous, making only his fourth international start, sealed a victory that reshapes the CAF-CONMEBOL intercontinental qualifying pathway and sends a thunderous message ahead of the 2026 World Cup.</p>
 
       <p>The match began as many had predicted, with Argentina dominating possession and creating the better chances in the opening twenty minutes. Lionel Messi, now 38 and serving as captain in what is widely expected to be his final World Cup qualifying campaign, orchestrated the Argentine attack with his customary elegance. It was Messi who unlocked the Moroccan defence in the 23rd minute, threading a pass through three defenders to Julian Alvarez, who finished clinically into the bottom corner to give the visitors a 1-0 lead. The Argentine contingent in the stadium erupted, and for a spell it appeared that the world champions would cruise to a routine victory.</p>
@@ -514,14 +519,14 @@ body {
     </aside>
 
     <!-- Inline Image -->
-    <figure class="article-inline-img" data-od-id="inline-image">
+    <figure class="article-inline-img article-reveal" data-od-id="inline-image">
       <img src="images/news/photo-1553778263-73a83bab9b0c.jpg" alt="Football players in action during World Cup qualifying match" loading="lazy">
     </figure>
-    <figcaption class="article-inline-caption">
+    <figcaption class="article-inline-caption article-reveal">
       Morocco's players celebrate after Ilyas El Khannous scored the winning goal in stoppage time against Argentina at the Stade Mohammed V. (Jannik / Unsplash)
     </figcaption>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The second half was a spectacle of end-to-end football that will be replayed in highlight reels for years. Morocco took the lead in the 61st minute when striker Youssef En-Nesyri rose above the Argentine central defenders to head home a pinpoint cross from Achraf Hakimi, sending the home support into a state of near-delirium. Argentina, stung by the prospect of a humiliating defeat, threw everything forward. Their pressure told in the 78th minute when a deflected shot from Enzo Fernandez fell kindly to Lautaro Martinez, who tapped in from close range to level the contest at 2-2. At that stage, with Argentina pushing for a winner and Morocco clinging on, a draw seemed the most likely outcome.</p>
 
       <p>Then came the moment that will be etched into Moroccan football folklore. In the third minute of stoppage time, a partially cleared corner fell to El Khannous on the edge of the area. The 22-year-old Racing Genk midfielder struck the dropping ball with the purest of volleys, catching it on the half-volley and sending it screaming past a motionless Martinez into the top-right corner. The stadium's roof — metaphorically at least — lifted off its hinges. El Khannous was buried under a pile of teammates as the Moroccan bench sprinted onto the pitch in celebration.</p>
@@ -534,14 +539,14 @@ body {
       <p class="pull-quote__attr">— Lionel Scaloni, Argentina manager</p>
     </aside>
 
-    <div class="article-body">
+    <div class="article-body article-reveal">
       <p>The result throws the CAF-CONMEBOL intercontinental qualifying playoff wide open. Morocco now sit top of their five-team group with seven points from three matches, two points clear of Argentina, who drop to second place. With three matches remaining, including a return fixture in Buenos Aires in September, the Atlas Lions have placed themselves in a commanding position to secure direct qualification.</p>
 
       <p>For the thousands of Moroccan fans who stayed in the stadium long after the final whistle, waving flags and singing the name of their new hero El Khannous, this was more than a football match. It was a declaration that the balance of power in world football is shifting, one stunning volley at a time.</p>
     </div>
 
     <!-- Author Bio -->
-    <div class="author-bio" data-od-id="author-bio">
+    <div class="author-bio article-reveal" data-od-id="author-bio">
       <div class="author-bio__avatar"><img src="images/news/photo-1500648767791-00dcc994a43e.jpg" alt="Carlos Mendez"></div>
       <div>
         <p class="author-bio__name">Carlos Mendez</p>
@@ -560,7 +565,7 @@ body {
     <!-- Related Posts -->
     <section class="related-posts" data-od-id="related-posts">
       <h2 class="related-posts__title">More in Sports</h2>
-      <div class="related-grid">
+      <div class="related-grid article-reveal">
         <a href="#" class="related-item">
           <div class="related-item__img"><img src="images/news/photo-1554068865-24cecd4e34b8.jpg" alt="Tennis court" loading="lazy"></div>
           <span class="related-item__kicker">Tennis</span>
@@ -583,7 +588,7 @@ body {
     </section>
 
     <!-- Comments -->
-    <section class="comments-section" id="comments" data-od-id="comments">
+    <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
@@ -686,6 +691,36 @@ body {
       }
     });
   });
+  /* Image fade-in on load */
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+    if (img.complete) { img.style.opacity = "1"; }
+    else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
+  });
+  /* Broken image fallback */
+  document.querySelectorAll("img").forEach(function(img){
+    img.addEventListener("error", function(){
+      this.style.display = "none";
+      var p = this.parentElement;
+      p.style.background = "#e8e8e8";
+      p.style.display = "flex";
+      p.style.alignItems = "center";
+      p.style.justifyContent = "center";
+      var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","32"); svg.setAttribute("height","32");
+      svg.setAttribute("viewBox","0 0 24 24");
+      svg.setAttribute("fill","none"); svg.setAttribute("stroke","#999");
+      svg.setAttribute("stroke-width","1.5");
+      svg.innerHTML = "<path d=\"M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/>";
+      p.appendChild(svg);
+    });
+  });
+  /* Scroll reveal */
+  (function(){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("article-reveal--visible"); ro.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
+  })();
 })();
 </script>
 </body>

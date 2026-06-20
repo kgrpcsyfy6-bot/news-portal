@@ -3,3 +3,16 @@
 .claude/
 .DS_Store
 Thumbs.db
+
+# Backups
+*.bak
+
+# Screenshots & debug images
+*.png
+*.txt
+
+# Playwright MCP temp
+.playwright-mcp/
+
+# Node (if ever added)
+node_modules/
