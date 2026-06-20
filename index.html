@@ -22,7 +22,7 @@ body {
   overflow-x: hidden;
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.375;
   color: var(--c-text);
   background: var(--c-bg);
   -webkit-font-smoothing: antialiased;
@@ -99,7 +99,7 @@ input, textarea { font: inherit; }
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.01em;
   color: #fff;
 }
 .top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
@@ -280,7 +280,7 @@ input, textarea { font: inherit; }
   font-size: 22px;
   font-weight: 700;
   color: var(--c-red);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.01em;
 }
 .signin-modal__title { font-size: 20px; font-weight: 700; color: var(--c-text); margin: 12px 0 4px; }
 .signin-modal__subtitle { font-size: 13px; color: var(--c-text-soft); }
@@ -872,19 +872,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
 }
 .wl-video {
   display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 10px;
+  grid-template-columns: 100px 1fr;
+  gap: 12px;
   align-items: start;
-  padding: 10px 0;
+  padding: 12px 0;
   cursor: pointer;
   border-bottom: 1px solid var(--c-border);
   transition: background .15s;
 }
 .wl-video:last-of-type { border-bottom: none; }
-.wl-video:hover .wl-video__overlay { background: rgba(184,0,0,0.55); }
+.wl-video:hover .wl-video__overlay { background: rgba(184,0,0,0.6); }
+.wl-video:hover .wl-video__play-ring { transform: scale(1.12); border-color: #fff; }
 .wl-video__thumb {
   position: relative;
-  width: 80px; height: 54px;
+  width: 100px; height: 66px;
   overflow: hidden;
   background: var(--c-bg-grey);
   flex-shrink: 0;
@@ -900,22 +901,29 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.3);
-  transition: background .2s;
+  background: rgba(0,0,0,0.25);
+  transition: background .25s;
 }
-.wl-video__overlay svg {
-  width: 22px; height: 22px;
+.wl-video__play-ring {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.85);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .25s, border-color .25s;
+}
+.wl-video__play-ring svg {
+  width: 14px; height: 14px;
   color: #fff;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+  margin-left: 2px;
 }
 .wl-video__text {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
 }
 .wl-video__label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--c-text);
   line-height: 1.35;
@@ -925,6 +933,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   color: var(--c-text-soft);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  font-weight: 500;
 }
 
 /* ==============================
@@ -1260,11 +1269,10 @@ a:hover .hero__subheadline { color: var(--c-red); }
 }
 .cat-feature:hover { opacity: 0.92; }
 .cat-feature__img {
-  aspect-ratio: 16 / 9;
-  max-height: 210px;
+  width: 100%;
+  aspect-ratio: 3 / 2;
   background: var(--c-bg-grey);
   overflow: hidden;
-  
   margin-bottom: 10px;
 }
 .cat-feature__img img {
@@ -1551,6 +1559,13 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  display: flex; align-items: center; gap: 14px;
 		  margin: 6px 0 10px;
 		}
+ 		.weather-card__icon {
+		  margin-bottom: 2px;
+		}
+		.weather-card__icon svg {
+		  width: 64px; height: 64px;
+		  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+		}
 		.weather-card__temp {
 		  font-family: var(--font-display);
 		  font-size: 68px; font-weight: 275; line-height: 0.95;
@@ -1607,71 +1622,79 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
 		/* =============================================
 		   WORLD CUP SCORES — sidebar
-		   ============================================= */
-		.wc-scores {
-		  background: var(--c-surface);
-		  border: 1px solid var(--c-border);
-		  
-		  padding: 16px;
-		}
-		.wc-scores__title {
-		  font-family: var(--font-display);
-		  font-size: 16px;
-		  font-weight: 700;
-		  margin-bottom: 10px;
-		  display: flex;
-		  align-items: center;
-		  gap: 8px;
-		}
-		.wc-scores__live {
-		  display: inline-block;
-		  width: 8px;
-		  height: 8px;
-		  background: #00c853;
-		  border-radius: 50%;
-		  animation: pulse-live 2s infinite;
-		}
-		@keyframes pulse-live {
-		  0%, 100% { opacity: 1; }
-		  50% { opacity: 0.3; }
-		}
-		.wc-match {
-		  display: flex;
-		  align-items: center;
-		  gap: 8px;
-		  padding: 8px 0;
-		  border-bottom: 1px solid var(--c-border);
-		}
-		.wc-match:last-child { border-bottom: none; }
-		.wc-match__group {
-		  font-size: 9px;
-		  font-weight: 700;
-		  color: #B80000;
-		  background: rgba(184,0,0,0.08);
-		  padding: 2px 5px;
-		  border-radius: 3px;
-		  letter-spacing: 0.04em;
-		  flex-shrink: 0;
-		}
-		.wc-match__teams {
-		  flex: 1;
-		  font-size: 12px;
-		  font-weight: 500;
-		  color: var(--c-text);
-		}
-		.wc-match__score {
-		  font-size: 14px;
-		  font-weight: 700;
-		  color: var(--c-text);
-		  font-variant-numeric: tabular-nums;
-		  font-family: var(--font-mono, monospace);
-		}
-		.wc-match__time {
-		  font-size: 10px;
-		  color: var(--c-text-soft);
-		  min-width: 24px;
-		  text-align: right;
-		}
+/* =============================================
+   WORLD CUP SCORES — sidebar
+   ============================================= */
+.wc-scores {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  padding: 16px;
+}
+.wc-scores__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wc-scores__live {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #00c853;
+  border-radius: 50%;
+  animation: pulse-live 2s infinite;
+}
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,200,83,0.4); }
+  50% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(0,200,83,0); }
+}
+.wc-match {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 1px 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.wc-match:last-child { border-bottom: none; }
+.wc-match__group {
+  grid-row: 1 / 3; grid-column: 1;
+  font-size: 9px; font-weight: 700;
+  color: #B80000;
+  background: rgba(184,0,0,0.06);
+  padding: 4px 3px; border-radius: 3px;
+  letter-spacing: 0.04em;
+  text-align: center; line-height: 1.2;
+  writing-mode: vertical-rl;
+}
+.wc-match__teams {
+  grid-row: 1; grid-column: 2;
+  font-size: 12px; font-weight: 600;
+  color: var(--c-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.wc-match__score {
+  grid-row: 1; grid-column: 3;
+  font-size: 15px; font-weight: 700;
+  color: var(--c-text);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.02em;
+  background: var(--c-bg-grey);
+  padding: 2px 8px; border-radius: 4px;
+  text-align: center; min-width: 42px;
+}
+.wc-match__time {
+  grid-row: 2; grid-column: 2 / 4;
+  font-size: 10px; color: var(--c-text-soft);
+  font-weight: 500;
+}
+.wc-match__time--live { color: #00c853; font-weight: 600; }
+.wc-match__time--ft { color: var(--c-text-soft); }
 
 		/* =============================================
 		   PAGE VIEWS — footer
@@ -1808,43 +1831,54 @@ a:hover .hero__subheadline { color: var(--c-red); }
 /* ==============================
    VIDEO MODAL - fullscreen overlay
    ============================== */
+/* ==============================
+   VIDEO MODAL — cinematic overlay
+   ============================== */
 .wl-modal {
   position: fixed; inset: 0; z-index: 600;
   display: flex; align-items: center; justify-content: center;
   opacity: 0; visibility: hidden;
-  transition: opacity .25s, visibility .25s;
+  transition: opacity .3s, visibility .3s;
 }
 .wl-modal--open { opacity: 1; visibility: visible; }
 .wl-modal__backdrop {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .wl-modal__frame {
   position: relative; z-index: 1;
-  width: 90vw; max-width: 960px;
+  width: 92vw; max-width: 960px;
   aspect-ratio: 16 / 9;
   background: #000;
-  border-radius: 6px; overflow: hidden;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-  transform: scale(0.92);
-  transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 8px; overflow: visible;
+  box-shadow: 0 32px 96px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
+  transform: scale(0.9) translateY(20px);
+  transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.wl-modal--open .wl-modal__frame { transform: scale(1); }
+.wl-modal--open .wl-modal__frame { transform: scale(1) translateY(0); }
+.wl-modal__frame-inner {
+  width: 100%; height: 100%;
+  border-radius: 8px; overflow: hidden;
+  background: #000;
+}
 .wl-modal__frame iframe { width: 100%; height: 100%; border: none; }
 .wl-modal__close {
-  position: absolute; top: -36px; right: 0; z-index: 2;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff; font-size: 16px;
+  position: absolute; top: -14px; right: -14px; z-index: 3;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(15,15,15,0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-size: 18px;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: background .15s;
+  cursor: pointer; transition: all .2s;
   font-family: inherit; line-height: 1;
+  backdrop-filter: blur(4px);
 }
-.wl-modal__close:hover { background: rgba(255,255,255,0.25); }
-
-/* ===== Wallpaper Ad System ===== */
+.wl-modal__close:hover {
+  background: var(--c-red); border-color: var(--c-red);
+  transform: scale(1.08);
+}
 #wpWallpaper {
   position: fixed;
   inset: 0;
@@ -1974,12 +2008,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="wp-ad__card">
         <button class="wp-ad__close" data-close-ad="left">&times;</button>
         <span class="wp-ad__label">ADVERTISEMENT</span>
-        <img class="wp-ad__img" src="https://picsum.photos/seed/proton-suv/400/600" alt="Proton e.MAS 7" loading="lazy">
+        <img class="wp-ad__img" src="images/news/photo-1507003211169-0a1dd7228f2d.jpg" alt="Financial Times newspaper on desk" loading="lazy">
         <div class="wp-ad__body">
-          <div class="wp-ad__brand">Proton &middot; Malaysia</div>
-          <div class="wp-ad__title">e.MAS 7 — The People's EV</div>
-          <div class="wp-ad__desc">First homegrown electric SUV. Hall 3, KL Auto Show 2026.</div>
-          <a class="wp-ad__cta" href="#">Book a Drive</a>
+          <div class="wp-ad__brand">Financial Times</div>
+          <div class="wp-ad__title">Make up your own mind</div>
+          <div class="wp-ad__desc">Unrivalled global reporting, data-driven journalism, and expert analysis — trusted by leaders since 1888.</div>
+          <a class="wp-ad__cta" href="#">Subscribe &mdash; &euro;1 per week</a>
         </div>
       </div>
     </div>
@@ -1987,12 +2021,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
       <div class="wp-ad__card">
         <button class="wp-ad__close" data-close-ad="right">&times;</button>
         <span class="wp-ad__label">ADVERTISEMENT</span>
-        <img class="wp-ad__img" src="https://picsum.photos/seed/bmw-sedan/400/600" alt="BMW i5" loading="lazy">
+        <img class="wp-ad__img" src="images/news/photo-1495020689067-958852a7765e.jpg" alt="The Economist magazine covers" loading="lazy">
         <div class="wp-ad__body">
-          <div class="wp-ad__brand">BMW &middot; Germany</div>
-          <div class="wp-ad__title">The i5 — Electric, Perfected</div>
-          <div class="wp-ad__desc">Executive sedan, zero emissions. Experience the future of driving.</div>
-          <a class="wp-ad__cta" href="#">Explore</a>
+          <div class="wp-ad__brand">The Economist</div>
+          <div class="wp-ad__title">The world deserves an upgrade</div>
+          <div class="wp-ad__desc">Sharp takes on politics, business, science and culture. For the relentlessly curious.</div>
+          <a class="wp-ad__cta" href="#">Student offer &mdash; 50% off</a>
         </div>
       </div>
     </div>
@@ -2235,7 +2269,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	          <span class="weather-card__city" id="wxCity">Kuala Lumpur</span>
 	          <span class="weather-card__datetime" id="wxDatetime">--</span>
 	        </div>
-	        <div class="weather-card__main">
+	        <div class="weather-card__icon" id="wxMainIcon"></div>
+        <div class="weather-card__main">
 	          <span class="weather-card__temp" id="wxTemp">--°</span>
 	          <div>
 	            <div class="weather-card__condition" id="wxDesc">Loading…</div>
@@ -2328,7 +2363,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
           <div class="wl-video" data-video="dIc_rUkrP6c">
             <div class="wl-video__thumb">
               <img src="images/news/youtube-dIc_rUkrP6c.jpg" alt="BBC News report" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='var(--c-bg-grey)'">
-              <div class="wl-video__overlay"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div>
+              <div class="wl-video__overlay"><div class="wl-video__play-ring"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div></div>
             </div>
             <div class="wl-video__text">
               <span class="wl-video__label">Iran and US agree deal to end war</span>
@@ -2338,7 +2373,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
           <div class="wl-video" data-video="gU8KXivuzc4">
             <div class="wl-video__thumb">
               <img src="images/news/youtube-gU8KXivuzc4.jpg" alt="Reuters report" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='var(--c-bg-grey)'">
-              <div class="wl-video__overlay"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div>
+              <div class="wl-video__overlay"><div class="wl-video__play-ring"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div></div>
             </div>
             <div class="wl-video__text">
               <span class="wl-video__label">Oil tumbles, stocks mixed</span>
@@ -3293,34 +3328,75 @@ a:hover .hero__subheadline { color: var(--c-red); }
     else card.classList.add('weather-card--cloudy');
   }
 
-  /* ---- Hourly icon SVG ---- */
+  /* ---- Hourly icon SVG — Apple Weather style ---- */
   function wxHrIcon(code) {
     var S='<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">';
     var E='</svg>';
-    // sun
-    var sun='<circle cx="12" cy="14" r="7" fill="#FFD54F"/><g stroke="#FFD54F" stroke-width="2" stroke-linecap="round" opacity="0.6"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="23" x2="12" y2="26"/><line x1="2" y1="14" x2="5" y2="14"/><line x1="19" y1="14" x2="22" y2="14"/><line x1="5" y1="7" x2="7" y2="9"/><line x1="17" y1="19" x2="19" y2="21"/></g>';
-    // cloud layers
-    var c1='<ellipse cx="18" cy="20" rx="11" ry="6" fill="rgba(255,255,255,0.5)"/><ellipse cx="22" cy="18" rx="8" ry="5" fill="rgba(255,255,255,0.55)"/><ellipse cx="16" cy="19" rx="9" ry="4.5" fill="rgba(255,255,255,0.45)"/>';
-    var c2='<ellipse cx="18" cy="20" rx="11" ry="6" fill="rgba(255,255,255,0.4)"/><ellipse cx="22" cy="18" rx="8" ry="5" fill="rgba(255,255,255,0.45)"/><ellipse cx="16" cy="19" rx="9" ry="4.5" fill="rgba(255,255,255,0.35)"/>';
-    // rain lines
-    var rain='<g stroke="rgba(200,220,255,0.7)" stroke-width="1.2" stroke-linecap="round"><line x1="14" y1="23" x2="12" y2="28"/><line x1="19" y1="23" x2="17" y2="28"/><line x1="24" y1="23" x2="22" y2="28"/></g>';
-    // snow dots
-    var snowD='<g fill="rgba(255,255,255,0.8)"><circle cx="14" cy="27" r="1.2"/><circle cx="20" cy="26" r="1.2"/><circle cx="24" cy="28" r="1.2"/></g>';
-    // lightning
-    var bolt='<polygon points="18,12 14,20 19,20 16,28 22,18 17,18" fill="#FFD54F"/>';
+    // Refined sun — warm yellow core + soft outer glow + 8 tapered rays
+    var sun='<defs><radialGradient id="sg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE082"/><stop offset="55%" stop-color="#FFD54F"/><stop offset="100%" stop-color="#FFB300"/></radialGradient></defs>'
+           +'<circle cx="12" cy="14" r="9" fill="url(#sg)" opacity="0.95"/>'
+           +'<circle cx="12" cy="14" r="12" fill="none" stroke="#FFD54F" stroke-width="0.6" opacity="0.25"/>'
+           +'<circle cx="12" cy="14" r="15" fill="none" stroke="#FFD54F" stroke-width="0.4" opacity="0.12"/>'
+           +'<g stroke="#FFD54F" stroke-width="1.8" stroke-linecap="round" opacity="0.55">'
+           +'<line x1="12" y1="1"  x2="12" y2="4"/><line x1="12" y1="24" x2="12" y2="27"/>'
+           +'<line x1="1"  y1="14" x2="4"  y2="14"/><line x1="20" y1="14" x2="23" y2="14"/>'
+           +'<line x1="4.2" y1="6.2" x2="6.3" y2="8.3"/><line x1="17.7" y1="19.7" x2="19.8" y2="21.8"/>'
+           +'<line x1="4.2" y1="21.8" x2="6.3" y2="19.7"/><line x1="17.7" y1="8.3" x2="19.8" y2="6.2"/>'
+           +'</g>';
+    // Moon crescent for night-clear
+    var moon='<defs><radialGradient id="mg" cx="40%" cy="40%" r="55%"><stop offset="0%" stop-color="#E8EAF6"/><stop offset="100%" stop-color="#B0BEC5"/></radialGradient></defs>'
+            +'<circle cx="11" cy="12" r="8" fill="url(#mg)"/>'
+            +'<circle cx="14" cy="10" r="6.5" fill="#1a1c2e"/>';
+    // Refined cloud — multi-lobe path for organic shape
+    var cloudPath='<path d="M8,19 C4.5,19 2,16.8 2,14 C2,11.3 4.3,9.5 7,9.5 C7.2,8 8,6.5 9.2,5.5 C10.8,4.2 12.8,4 14.5,4.8 C16.2,5.6 17.2,7.5 17.2,9.3 C17.2,9.4 17.2,9.5 17.1,9.6 C20,9.8 22.5,11.8 22.5,14.7 C22.5,17.8 19.8,19.5 17,19.5 Z" fill="rgba(255,255,255,0.55)"/>';
+    var cloudPathDark='<path d="M8,19 C4.5,19 2,16.8 2,14 C2,11.3 4.3,9.5 7,9.5 C7.2,8 8,6.5 9.2,5.5 C10.8,4.2 12.8,4 14.5,4.8 C16.2,5.6 17.2,7.5 17.2,9.3 C17.2,9.4 17.2,9.5 17.1,9.6 C20,9.8 22.5,11.8 22.5,14.7 C22.5,17.8 19.8,19.5 17,19.5 Z" fill="rgba(255,255,255,0.38)"/>';
+    // Rain — 5 angled droplets
+    var rain='<g stroke="rgba(180,210,255,0.75)" stroke-width="1.4" stroke-linecap="round">'
+           +'<line x1="10" y1="21" x2="8"  y2="28"/><line x1="15" y1="21" x2="13" y2="28"/>'
+           +'<line x1="20" y1="21" x2="18" y2="28"/><line x1="25" y1="21" x2="23" y2="28"/>'
+           +'<line x1="12.5" y1="20" x2="10.5" y2="26"/></g>';
+    // Heavy rain — 7 droplets
+    var heavyRain='<g stroke="rgba(160,200,240,0.8)" stroke-width="1.6" stroke-linecap="round">'
+                 +'<line x1="8"  y1="21" x2="6"  y2="29"/><line x1="12" y1="21" x2="10" y2="29"/>'
+                 +'<line x1="16" y1="21" x2="14" y2="29"/><line x1="20" y1="21" x2="18" y2="29"/>'
+                 +'<line x1="24" y1="21" x2="22" y2="29"/><line x1="10" y1="20" x2="8"  y2="27"/>'
+                 +'<line x1="18" y1="20" x2="16" y2="27"/></g>';
+    // Snow — 4-pointed star flakes
+    var snowF='<g fill="rgba(255,255,255,0.85)">'
+             +'<circle cx="10" cy="27" r="1.5"/><circle cx="16" cy="25.5" r="1.5"/>'
+             +'<circle cx="22" cy="26.5" r="1.5"/><circle cx="14" cy="28.5" r="1.2"/>'
+             +'<circle cx="20" cy="28" r="1.3"/></g>';
+    // Lightning bolt — sharp, dramatic
+    var bolt='<polygon points="17,9 12,18 18,18 14,28 24,15 17.5,15 21,9" fill="#FFE082"/>'
+            +'<polygon points="17,9 12,18 18,18 14,28 24,15 17.5,15 21,9" fill="#FFF9C4" opacity="0.4"/>';
+    // Fog — 4 horizontal soft bands
+    var fog='<g opacity="0.55"><rect x="4"  y="12" width="16" height="2.5" rx="1.2" fill="rgba(255,255,255,0.5)"/>'
+           +'<rect x="8"  y="16" width="18" height="2.5" rx="1.2" fill="rgba(255,255,255,0.4)"/>'
+           +'<rect x="2"  y="20" width="14" height="2.5" rx="1.2" fill="rgba(255,255,255,0.35)"/>'
+           +'<rect x="10" y="24" width="12" height="2"   rx="1"   fill="rgba(255,255,255,0.3)"/></g>';
+    // Drizzle — thin, sparse
+    var drizzle='<g stroke="rgba(180,210,255,0.55)" stroke-width="1" stroke-linecap="round">'
+               +'<line x1="12" y1="21" x2="10.5" y2="26"/><line x1="18" y1="21" x2="16.5" y2="26"/><line x1="24" y1="21" x2="22.5" y2="26"/></g>';
+    // Sleet — rain + snow mix
+    var sleet=rain+'<circle cx="22" cy="27" r="1.3" fill="rgba(255,255,255,0.7)"/><circle cx="11" cy="26" r="1.2" fill="rgba(255,255,255,0.7)"/>';
 
     if (code===0) return S+sun+E;
-    if (code===1) return S+sun+'<ellipse cx="22" cy="16" rx="7" ry="4" fill="rgba(255,255,255,0.35)"/>'+E;
-    if (code===2) return S+sun+c1+E;
-    if (code===3) return S+c2+E;
-    if (code===45||code===48) return S+'<g opacity="0.5"><line x1="6" y1="14" x2="26" y2="14" stroke="rgba(255,255,255,0.5)" stroke-width="2"/><line x1="8" y1="17" x2="22" y2="17" stroke="rgba(255,255,255,0.35)" stroke-width="2"/><line x1="4" y1="20" x2="28" y2="20" stroke="rgba(255,255,255,0.4)" stroke-width="2"/></g>'+E;
-    if (code>=51&&code<=55) return S+c1+rain+E;
-    if (code>=56&&code<=57) return S+c1+rain+snowD+E;
-    if (code>=61&&code<=67) return S+c2+rain+E;
-    if (code>=71&&code<=77) return S+c2+snowD+E;
-    if (code>=80&&code<=82) return S+c2+'<g stroke="rgba(200,220,255,0.7)" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="23" x2="10" y2="29"/><line x1="17" y1="23" x2="15" y2="29"/><line x1="22" y1="23" x2="20" y2="29"/></g>'+E;
-    if (code>=95&&code<=99) return S+c2+bolt+rain+E;
-    return S+c1+E;
+    if (code===1) return S+moon+'<circle cx="22" cy="8" r="1.1" fill="rgba(255,255,255,0.7)"/><circle cx="25" cy="12" r="0.8" fill="rgba(255,255,255,0.5)"/><circle cx="19" cy="14" r="0.9" fill="rgba(255,255,255,0.55)"/>'+E;
+    if (code===2) return S+sun+cloudPath+E;
+    if (code===3) return S+cloudPathDark+E;
+    if (code===45||code===48) return S+fog+E;
+    if (code===51||code===53) return S+cloudPath+drizzle+E;
+    if (code===55) return S+cloudPath+rain+E;
+    if (code===56||code===57) return S+cloudPath+sleet+E;
+    if (code===61||code===63) return S+cloudPathDark+rain+E;
+    if (code===65||code===67) return S+cloudPathDark+heavyRain+E;
+    if (code===71||code===73) return S+cloudPathDark+snowF+E;
+    if (code===75||code===77) return S+cloudPathDark+snowF+'<circle cx="9" cy="24" r="1.3" fill="rgba(255,255,255,0.75)"/><circle cx="23" cy="23" r="1.4" fill="rgba(255,255,255,0.75)"/>'+E;
+    if (code===80||code===81) return S+cloudPathDark+'<g stroke="rgba(180,210,255,0.7)" stroke-width="1.4" stroke-linecap="round"><line x1="10" y1="21" x2="8" y2="28"/><line x1="16" y1="21" x2="14" y2="28"/><line x1="22" y1="21" x2="20" y2="28"/></g>'+E;
+    if (code===82) return S+cloudPathDark+heavyRain+E;
+    if (code===95||code===96) return S+cloudPathDark+bolt+rain+E;
+    if (code===99) return S+cloudPathDark+bolt+heavyRain+E;
+    return S+cloudPath+E;
   }
 
   function updateWeather() {
@@ -3361,6 +3437,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     var d=document.getElementById('wxDesc');
     var labels={0:'Sunny',1:'Mostly Clear',2:'Partly Cloudy',3:'Cloudy',45:'Fog',48:'Fog',51:'Drizzle',53:'Drizzle',55:'Drizzle',61:'Rain',63:'Rain',65:'Heavy Rain',71:'Snow',73:'Snow',75:'Heavy Snow',80:'Rain Showers',81:'Showers',82:'Heavy Showers',95:'Thunderstorm',96:'T-Storm w/ Hail',99:'Severe Storm'};
     if(d)d.textContent=labels[_wx.code]||'Cloudy';
+    var mi=document.getElementById('wxMainIcon'); if(mi)mi.innerHTML=wxHrIcon(_wx.code);
     var hl=document.getElementById('wxHiLo'); if(hl)hl.textContent='H:'+_wx.hi+'°  L:'+_wx.lo+'°';
     var cty=document.getElementById('wxCity'); if(cty)cty.textContent='Kuala Lumpur';
     var hum=document.getElementById('wxHum'); if(hum)hum.textContent=_wx.hum+'%';
@@ -3396,17 +3473,20 @@ a:hover .hero__subheadline { color: var(--c-red); }
   // WORLD CUP 2026 SCORES
   // =====================
   var matches = [
-    { g:'D', h:'USA', a:'England', hs:1, as:1, t:"52'" },
-    { g:'E', h:'Brazil', a:'Germany', hs:2, as:0, t:'FT' },
-    { g:'C', h:'Argentina', a:'France', hs:1, as:1, t:"78'" },
-    { g:'B', h:'Spain', a:'Portugal', hs:0, as:0, t:"34'" }
+    { g:'D', h:'🇺🇸 USA', a:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England', hs:1, as:1, t:"52'" },
+    { g:'E', h:'🇧🇷 Brazil', a:'🇩🇪 Germany', hs:2, as:0, t:'FT' },
+    { g:'C', h:'🇦🇷 Argentina', a:'🇫🇷 France', hs:1, as:1, t:"78'" },
+    { g:'B', h:'🇪🇸 Spain', a:'🇵🇹 Portugal', hs:0, as:0, t:"34'" }
   ];
 
   function renderMatches() {
     var list = document.getElementById('wcList');
     if (!list) return;
     list.innerHTML = matches.map(function(m) {
-      return '<div class="wc-match"><span class="wc-match__group">GRP ' + m.g + '</span><span class="wc-match__teams">' + m.h + ' vs ' + m.a + '</span><span class="wc-match__score">' + m.hs + ' - ' + m.as + '</span><span class="wc-match__time">' + m.t + '</span></div>';
+      var isLive = m.t !== 'FT' && m.t !== 'HT';
+      var timeCls = m.t === 'FT' ? ' wc-match__time--ft' : (isLive ? ' wc-match__time--live' : '');
+      var timeLabel = m.t === 'FT' ? 'Full Time' : (m.t === 'HT' ? 'Half Time' : m.t + ' · LIVE');
+      return '<div class="wc-match"><span class="wc-match__group">GRP ' + m.g + '</span><span class="wc-match__teams">' + m.h + ' vs ' + m.a + '</span><span class="wc-match__score">' + m.hs + ' – ' + m.as + '</span><span class="wc-match__time' + timeCls + '">' + timeLabel + '</span></div>';
     }).join('');
   }
 
@@ -3467,7 +3547,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     wlModal = document.createElement('div');
     wlModal.id = 'wlModal';
     wlModal.className = 'wl-modal';
-    wlModal.innerHTML = '<div class="wl-modal__backdrop"></div><div class="wl-modal__frame"><button class="wl-modal__close">&times;</button><iframe id="wlModalIframe" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+    wlModal.innerHTML = '<div class="wl-modal__backdrop"></div><div class="wl-modal__frame"><button class="wl-modal__close" aria-label="Close video">&#10005;</button><div class="wl-modal__frame-inner"><iframe id="wlModalIframe" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>';
     document.body.appendChild(wlModal);
     wlModalIframe = document.getElementById('wlModalIframe');
 
