@@ -1507,66 +1507,102 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		}
 
 		/* =============================================
-		   WEATHER CARD — sidebar
+		   APPLE-STYLE WEATHER — sidebar
 		   ============================================= */
 		.weather-card {
-		  background: var(--c-surface);
-		  border: 1px solid var(--c-border);
-		  
-		  padding: 16px;
+		  position: relative;
+		  border-radius: 18px;
+		  padding: 0;
 		  margin-bottom: 16px;
-		}
-		.weather-card__header {
-		  font-size: 11px;
-		  font-weight: 700;
-		  text-transform: uppercase;
-		  letter-spacing: 0.06em;
-		  color: var(--c-text-soft);
-		  margin-bottom: 8px;
-		}
-		.weather-card__datetime {
-		  font-size: 11px;
-		  color: var(--c-text-soft);
-		  margin-bottom: 8px;
-		  padding-bottom: 8px;
-		  border-bottom: 1px solid var(--c-border);
-		}
-		.weather-card__icon {
-		  width: 56px; height: 56px;
-		  flex-shrink: 0;
-		}
-		.weather-card__icon svg { width: 100%; height: 100%; }
-		.weather-card__main {
-		  display: flex;
-		  align-items: center;
-		  gap: 10px;
-		  margin-bottom: 10px;
-		}
-		.weather-card__temp {
-		  font-family: Georgia, serif;
-		  font-size: 28px;
-		  font-weight: 700;
-		  color: var(--c-text);
-		  line-height: 1;
-		}
-		.weather-card__info {
+		  color: #fff;
+		  overflow: hidden;
+		  min-height: 420px;
 		  display: flex;
 		  flex-direction: column;
+		  transition: background 0.8s ease;
 		}
-		.weather-card__desc {
-		  font-size: 14px;
-		  font-weight: 500;
-		  color: var(--c-text);
+		.weather-card--clear  { background: linear-gradient(175deg, #2b7cd3 0%, #3988d9 25%, #5b9fe4 55%, #7db5eb 100%); }
+		.weather-card--cloudy { background: linear-gradient(175deg, #4a5c6c 0%, #5d6f7e 25%, #728594 55%, #8b9cab 100%); }
+		.weather-card--rain   { background: linear-gradient(175deg, #2d3a44 0%, #374752 25%, #465763 55%, #556978 100%); }
+		.weather-card--storm  { background: linear-gradient(175deg, #1a1c2e 0%, #222640 25%, #2a3048 55%, #323b52 100%); }
+		.weather-card--snow   { background: linear-gradient(175deg, #7e8d9e 0%, #8d9cad 25%, #9faec0 55%, #b3c1d1 100%); }
+		.weather-card--fog    { background: linear-gradient(175deg, #9ea7b0 0%, #aeb6be 25%, #bcc3ca 55%, #c8ced4 100%); }
+		.weather-card__anim {
+		  position: absolute; inset: 0; z-index: 1;
+		  pointer-events: none; opacity: 0.85;
+		}
+		.weather-card__content {
+		  position: relative; z-index: 2;
+		  padding: 20px 18px 16px;
+		  display: flex; flex-direction: column; flex: 1;
+		}
+		.weather-card__top {
+		  display: flex; justify-content: space-between; align-items: flex-start;
 		}
 		.weather-card__city {
-		  font-size: 12px;
-		  color: var(--c-text-soft);
+		  font-size: 15px; font-weight: 600;
+		  color: rgba(255,255,255,0.92); letter-spacing: 0.01em;
 		}
-		.weather-card__meta {
-		  display: flex;
-		  gap: 16px;
-		  font-size: 11px;
-		  color: var(--c-text-soft);
+		.weather-card__datetime {
+		  font-size: 11px; color: rgba(255,255,255,0.6);
+		  text-align: right; line-height: 1.45;
+		}
+		.weather-card__main {
+		  display: flex; align-items: center; gap: 14px;
+		  margin: 6px 0 10px;
+		}
+		.weather-card__temp {
+		  font-family: var(--font-display);
+		  font-size: 68px; font-weight: 275; line-height: 0.95;
+		  color: #fff; letter-spacing: -0.035em;
+		}
+		.weather-card__condition {
+		  font-size: 14px; color: rgba(255,255,255,0.82); font-weight: 500;
+		}
+		.weather-card__hilow {
+		  font-size: 13px; color: rgba(255,255,255,0.62);
+		}
+		/* Hourly strip */
+		.weather-hourly {
+		  display: flex; gap: 2px; overflow-x: auto;
+		  padding: 12px 0 8px; margin: 0 -18px;
+		  padding-left: 18px; padding-right: 18px;
+		  scrollbar-width: none;
+		}
+		.weather-hourly::-webkit-scrollbar { display: none; }
+		.weather-hour {
+		  display: flex; flex-direction: column; align-items: center;
+		  gap: 5px; min-width: 48px; flex-shrink: 0;
+		  padding: 6px 2px; border-radius: 20px;
+		  transition: background 0.2s;
+		}
+		.weather-hour__time {
+		  font-size: 11px; font-weight: 500;
+		  color: rgba(255,255,255,0.58); font-variant-numeric: tabular-nums;
+		  font-family: var(--font-mono, monospace);
+		}
+		.weather-hour__icon { width: 22px; height: 22px; }
+		.weather-hour__icon svg { width: 100%; height: 100%; }
+		.weather-hour__temp {
+		  font-size: 13px; font-weight: 600;
+		  color: rgba(255,255,255,0.9); font-variant-numeric: tabular-nums;
+		  font-family: var(--font-mono, monospace);
+		}
+		.weather-hour--now { background: rgba(255,255,255,0.13); }
+		.weather-hour--now .weather-hour__time { color: rgba(255,255,255,0.95); font-weight: 700; }
+		/* Metrics grid */
+		.weather-metrics {
+		  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px;
+		  margin-top: auto; padding-top: 14px;
+		  border-top: 1px solid rgba(255,255,255,0.13);
+		}
+		.weather-metric { display: flex; flex-direction: column; gap: 1px; }
+		.weather-metric__label {
+		  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+		  color: rgba(255,255,255,0.48); font-weight: 500;
+		}
+		.weather-metric__value {
+		  font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9);
 		}
 
 		/* =============================================
@@ -2191,19 +2227,28 @@ a:hover .hero__subheadline { color: var(--c-red); }
     </div>
 
     
-	    <!-- Weather — Kuala Lumpur -->
-	    <div class="weather-card" id="weatherCard">
-	      <div class="weather-card__datetime" id="wxDatetime">--</div>
-	      <div class="weather-card__main">
-	        <div class="weather-card__icon" id="wxIcon"></div>
-	        <div>
-	          <span class="weather-card__temp" id="wxTemp">--&deg;</span>
-	          <span class="weather-card__desc" id="wxDesc">Loading...</span>
+	    <!-- Apple-style Weather — Kuala Lumpur -->
+	    <div class="weather-card weather-card--clear" id="weatherCard">
+	      <canvas class="weather-card__anim" id="wxCanvas"></canvas>
+	      <div class="weather-card__content">
+	        <div class="weather-card__top">
+	          <span class="weather-card__city" id="wxCity">Kuala Lumpur</span>
+	          <span class="weather-card__datetime" id="wxDatetime">--</span>
 	        </div>
-	      </div>
-	      <div class="weather-card__city" id="wxCity">Kuala Lumpur</div>
-	      <div class="weather-card__meta">
-	        <span id="wxHumidity">--</span> humidity &middot; <span id="wxWind">--</span> wind
+	        <div class="weather-card__main">
+	          <span class="weather-card__temp" id="wxTemp">--°</span>
+	          <div>
+	            <div class="weather-card__condition" id="wxDesc">Loading…</div>
+	            <div class="weather-card__hilow" id="wxHiLo"></div>
+	          </div>
+	        </div>
+	        <div class="weather-hourly" id="wxHourly"></div>
+	        <div class="weather-metrics">
+	          <div class="weather-metric"><span class="weather-metric__label">Humidity</span><span class="weather-metric__value" id="wxHum">--</span></div>
+	          <div class="weather-metric"><span class="weather-metric__label">Wind</span><span class="weather-metric__value" id="wxWind">--</span></div>
+	          <div class="weather-metric"><span class="weather-metric__label">UV Index</span><span class="weather-metric__value" id="wxUV">--</span></div>
+	          <div class="weather-metric"><span class="weather-metric__label">Pressure</span><span class="weather-metric__value" id="wxPress">--</span></div>
+	        </div>
 	      </div>
 	    </div>
 
@@ -3183,62 +3228,169 @@ a:hover .hero__subheadline { color: var(--c-red); }
   });
 
   // =====================
-  // WEATHER — Kuala Lumpur hardcoded
+  // APPLE-STYLE WEATHER ENGINE
   // =====================
-  function wxIcon(code) {
-    var S = '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">';
-    var E = '</svg>';
-    var C='<g fill="#8E99A4"><ellipse cx="42" cy="42" rx="14" ry="9"/><ellipse cx="34" cy="37" rx="11" ry="8"/><ellipse cx="24" cy="42" rx="10" ry="7"/></g>';
-    var U='<g><circle cx="28" cy="28" r="12" fill="#F5A623"/><g stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" opacity="0.7"><line x1="28" y1="6" x2="28" y2="12"/><line x1="28" y1="44" x2="28" y2="50"/><line x1="8" y1="28" x2="14" y2="28"/><line x1="42" y1="28" x2="48" y2="28"/><line x1="13.5" y1="13.5" x2="17.7" y2="17.7"/><line x1="38.3" y1="38.3" x2="42.5" y2="42.5"/><line x1="42.5" y1="13.5" x2="38.3" y2="17.7"/><line x1="17.7" y1="38.3" x2="13.5" y2="42.5"/></g></g>';
-    function R(xs){var r='';for(var i=0;i<xs.length;i++)r+='<line x1="'+xs[i]+'" y1="48" x2="'+xs[i]+'" y2="56" stroke="#6BAED6" stroke-width="3" stroke-linecap="round"/>';return r;}
-    var I={0:S+U+E,1:S+U+'<ellipse cx="42" cy="36" rx="12" ry="8" fill="#B0BAC5"/>'+E,2:S+C+'<circle cx="26" cy="28" r="10" fill="#F5A623"/><g stroke="#F5A623" stroke-width="2" stroke-linecap="round" opacity="0.6"><line x1="26" y1="9" x2="26" y2="14"/><line x1="10" y1="28" x2="15" y2="28"/><line x1="42" y1="28" x2="37" y2="28"/></g>'+E,3:S+C+E,45:S+'<g opacity="0.5"><line x1="10" y1="30" x2="18" y2="30" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><line x1="23" y1="26" x2="31" y2="26" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/><line x1="36" y1="30" x2="44" y2="30" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><line x1="49" y1="26" x2="56" y2="26" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/></g><g opacity="0.35"><line x1="14" y1="37" x2="22" y2="37" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><line x1="27" y1="33" x2="35" y2="33" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="37" x2="48" y2="37" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/></g>'+E,51:S+C+R([16,24,32,40])+E,61:S+C+R([14,22,30,38,46])+E,80:S+C+R([10,18,26,34,42,50])+'<line x1="28" y1="42" x2="22" y2="52" stroke="#6BAED6" stroke-width="1.5" stroke-linecap="round"/><line x1="42" y1="44" x2="46" y2="54" stroke="#6BAED6" stroke-width="1.5" stroke-linecap="round"/>'+E,95:S+C+R([14,22,30,38])+'<polygon points="30,10 24,22 32,18 28,32 38,20 30,14" fill="#F5A623"/>'+E};
-    return I[code]||I[3];
-  }
-  function updateWeather() {
-    var tempEl = document.getElementById('wxTemp');
-    var descEl = document.getElementById('wxDesc');
-    var cityEl = document.getElementById('wxCity');
-    var humEl  = document.getElementById('wxHumidity');
-    var windEl = document.getElementById('wxWind');
-    if (!tempEl) return;
+  var _wx = { code:0, temp:24, hi:26, lo:22, hum:75, wind:8, windDir:'NE', uv:3, press:1012, vis:10, hrs:[] };
+  /* ---- Canvas particle animations ---- */
+  var _wxAnim = null;
+  function wxStartAnim(code) {
+    var cv = document.getElementById('wxCanvas'); if (!cv) return;
+    var rect = cv.parentElement.getBoundingClientRect();
+    cv.width = rect.width * 2; cv.height = rect.height * 2;
+    cv.style.width = rect.width + 'px'; cv.style.height = rect.height + 'px';
+    var ctx = cv.getContext('2d'); ctx.scale(2,2);
+    if (_wxAnim) cancelAnimationFrame(_wxAnim);
+    var W = rect.width, H = rect.height;
+    var drops=[], flakes=[], rays=[], flashes=[];
 
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=3.139&longitude=101.6869&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Asia/Kuala_Lumpur')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var c = data.current;
-        var codes = {0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',51:'Drizzle',61:'Rain',80:'Showers',95:'Thunderstorm'};
-        tempEl.innerHTML = c.temperature_2m + '&deg;';
-        descEl.textContent = codes[c.weather_code] || 'Cloudy';
-        cityEl.textContent = 'Kuala Lumpur';
-        var icEl = document.getElementById('wxIcon');
-        if (icEl) icEl.innerHTML = wxIcon(c.weather_code);
-        humEl.textContent = c.relative_humidity_2m + '%';
-        windEl.textContent = Math.round(c.wind_speed_10m) + ' km/h';
+    if (code===0||code===1) { // Clear — sun rays
+      for (var i=0;i<5;i++) rays.push({a:Math.random()*Math.PI*2, r:28+Math.random()*14, s:0.3+Math.random()*0.7, o:0});
+    }
+    if (code>=51&&code<=67||code>=80&&code<=82) { // Rain
+      for (var i=0;i<120;i++) drops.push({x:Math.random()*W, y:Math.random()*H, s:1+Math.random()*2, v:8+Math.random()*12, o:0.15+Math.random()*0.4});
+    }
+    if (code>=71&&code<=77) { // Snow
+      for (var i=0;i<80;i++) flakes.push({x:Math.random()*W, y:Math.random()*H, r:1+Math.random()*2.5, v:0.4+Math.random()*0.8, w:0.3+Math.random()*1.2, o:0.5+Math.random()*0.5});
+    }
+    if (code>=95&&code<=99) { // Storm — rain + lightning
+      for (var i=0;i<130;i++) drops.push({x:Math.random()*W, y:Math.random()*H, s:1.5+Math.random()*2.5, v:10+Math.random()*14, o:0.2+Math.random()*0.5});
+    }
+    if (code===45||code===48) { // Fog — drifting haze strips
+      for (var i=0;i<10;i++) flakes.push({x:Math.random()*W, y:10+Math.random()*(H-60), r:30+Math.random()*60, v:0.15+Math.random()*0.35, w:0, o:0.06+Math.random()*0.08});
+    }
+
+    function tick() {
+      ctx.clearRect(0,0,W,H);
+      // Sun rays
+      for (var i=0;i<rays.length;i++) { var r=rays[i]; r.o+=0.012; if(r.o>1)r.o=0; ctx.save(); ctx.globalAlpha=0.06*Math.sin(r.o*Math.PI); ctx.strokeStyle='#fff'; ctx.lineWidth=1; ctx.translate(38,32); ctx.rotate(r.a); ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r.r,0); ctx.stroke(); ctx.restore(); }
+      if (rays.length) { ctx.save(); ctx.globalAlpha=0.3; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(38,32,10,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+      // Rain drops
+      for (var i=0;i<drops.length;i++) { var d=drops[i]; d.y+=d.v; d.x-=1.5; if(d.y>H+10){d.y=-10;d.x=Math.random()*W;} ctx.save(); ctx.globalAlpha=d.o; ctx.strokeStyle='rgba(255,255,255,0.7)'; ctx.lineWidth=d.s; ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(d.x+2,d.y+8); ctx.stroke(); ctx.restore(); }
+      // Lightning
+      if (code>=95&&code<=99&&Math.random()<0.04) { flashes.push({o:1}); }
+      for (var i=0;i<flashes.length;i++) { var f=flashes[i]; f.o-=0.06; if(f.o<=0){flashes.splice(i,1);i--;continue;} ctx.save(); ctx.globalAlpha=f.o*0.25; ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H); ctx.restore(); }
+      // Snow flakes
+      for (var i=0;i<flakes.length;i++) { var fk=flakes[i]; fk.y+=fk.v; fk.x+=Math.sin(fk.y*0.02)*fk.w; if(fk.y>H+10){fk.y=-10;fk.x=Math.random()*W;} ctx.save(); ctx.globalAlpha=fk.o; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(fk.x,fk.y,fk.r,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+      // Fog strips (horizontal drifting)
+      if (code===45||code===48) { for (var i=0;i<flakes.length;i++){var f=flakes[i]; f.x+=f.v; if(f.x>W+80)f.x=-80; ctx.save(); ctx.globalAlpha=f.o; ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.filter='blur('+f.r+'px)'; ctx.fillRect(f.x-60,f.y-8,120,16); ctx.filter='none'; ctx.restore();} }
+
+      _wxAnim = requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  function wxApplyTheme(code) {
+    var card = document.getElementById('weatherCard'); if (!card) return;
+    card.className = 'weather-card';
+    if (code===0||code===1) card.classList.add('weather-card--clear');
+    else if (code===2) card.classList.add('weather-card--clear');
+    else if (code===3) card.classList.add('weather-card--cloudy');
+    else if (code===45||code===48) card.classList.add('weather-card--fog');
+    else if (code>=51&&code<=67) card.classList.add('weather-card--rain');
+    else if (code>=71&&code<=77) card.classList.add('weather-card--snow');
+    else if (code>=80&&code<=82) card.classList.add('weather-card--rain');
+    else if (code>=95&&code<=99) card.classList.add('weather-card--storm');
+    else card.classList.add('weather-card--cloudy');
+  }
+
+  /* ---- Hourly icon SVG ---- */
+  function wxHrIcon(code) {
+    var S='<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">';
+    var E='</svg>';
+    // sun
+    var sun='<circle cx="12" cy="14" r="7" fill="#FFD54F"/><g stroke="#FFD54F" stroke-width="2" stroke-linecap="round" opacity="0.6"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="23" x2="12" y2="26"/><line x1="2" y1="14" x2="5" y2="14"/><line x1="19" y1="14" x2="22" y2="14"/><line x1="5" y1="7" x2="7" y2="9"/><line x1="17" y1="19" x2="19" y2="21"/></g>';
+    // cloud layers
+    var c1='<ellipse cx="18" cy="20" rx="11" ry="6" fill="rgba(255,255,255,0.5)"/><ellipse cx="22" cy="18" rx="8" ry="5" fill="rgba(255,255,255,0.55)"/><ellipse cx="16" cy="19" rx="9" ry="4.5" fill="rgba(255,255,255,0.45)"/>';
+    var c2='<ellipse cx="18" cy="20" rx="11" ry="6" fill="rgba(255,255,255,0.4)"/><ellipse cx="22" cy="18" rx="8" ry="5" fill="rgba(255,255,255,0.45)"/><ellipse cx="16" cy="19" rx="9" ry="4.5" fill="rgba(255,255,255,0.35)"/>';
+    // rain lines
+    var rain='<g stroke="rgba(200,220,255,0.7)" stroke-width="1.2" stroke-linecap="round"><line x1="14" y1="23" x2="12" y2="28"/><line x1="19" y1="23" x2="17" y2="28"/><line x1="24" y1="23" x2="22" y2="28"/></g>';
+    // snow dots
+    var snowD='<g fill="rgba(255,255,255,0.8)"><circle cx="14" cy="27" r="1.2"/><circle cx="20" cy="26" r="1.2"/><circle cx="24" cy="28" r="1.2"/></g>';
+    // lightning
+    var bolt='<polygon points="18,12 14,20 19,20 16,28 22,18 17,18" fill="#FFD54F"/>';
+
+    if (code===0) return S+sun+E;
+    if (code===1) return S+sun+'<ellipse cx="22" cy="16" rx="7" ry="4" fill="rgba(255,255,255,0.35)"/>'+E;
+    if (code===2) return S+sun+c1+E;
+    if (code===3) return S+c2+E;
+    if (code===45||code===48) return S+'<g opacity="0.5"><line x1="6" y1="14" x2="26" y2="14" stroke="rgba(255,255,255,0.5)" stroke-width="2"/><line x1="8" y1="17" x2="22" y2="17" stroke="rgba(255,255,255,0.35)" stroke-width="2"/><line x1="4" y1="20" x2="28" y2="20" stroke="rgba(255,255,255,0.4)" stroke-width="2"/></g>'+E;
+    if (code>=51&&code<=55) return S+c1+rain+E;
+    if (code>=56&&code<=57) return S+c1+rain+snowD+E;
+    if (code>=61&&code<=67) return S+c2+rain+E;
+    if (code>=71&&code<=77) return S+c2+snowD+E;
+    if (code>=80&&code<=82) return S+c2+'<g stroke="rgba(200,220,255,0.7)" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="23" x2="10" y2="29"/><line x1="17" y1="23" x2="15" y2="29"/><line x1="22" y1="23" x2="20" y2="29"/></g>'+E;
+    if (code>=95&&code<=99) return S+c2+bolt+rain+E;
+    return S+c1+E;
+  }
+
+  function updateWeather() {
+    var card = document.getElementById('weatherCard'); if (!card) return;
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=3.139&longitude=101.6869&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m,apparent_temperature,pressure_msl,uv_index&hourly=temperature_2m,weather_code&timezone=Asia/Kuala_Lumpur&forecast_days=2')
+      .then(function(r){return r.json();})
+      .then(function(d){
+        var c=d.current, code=c.weather_code, temp=Math.round(c.temperature_2m);
+        _wx.code=code; _wx.temp=temp; _wx.hum=c.relative_humidity_2m; _wx.wind=Math.round(c.wind_speed_10m);
+        _wx.press=Math.round(c.pressure_msl); _wx.uv=Math.round(c.uv_index);
+        // wind direction
+        var dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+        _wx.windDir=dirs[Math.round(c.wind_direction_10m/22.5)%16]||'N';
+
+        // hourly: next 12 hours
+        _wx.hrs=[];
+        var now=new Date(d.current_units.time==='iso8601'?(d.hourly.time[0]||''):''); now=Date.now();
+        for (var i=0;i<d.hourly.time.length;i++){
+          var ht=new Date(d.hourly.time[i]); if(ht.getTime()<now-3600000) continue;
+          _wx.hrs.push({h:ht.getHours(), t:Math.round(d.hourly.temperature_2m[i]), c:d.hourly.weather_code[i]});
+          if(_wx.hrs.length>=18) break;
+        }
+        // hi/lo from hourly
+        var ts=_wx.hrs.map(function(h){return h.t;});
+        _wx.hi=Math.max.apply(null,ts); _wx.lo=Math.min.apply(null,ts);
+
+        wxApplyTheme(code); wxStartAnim(code); wxRender();
       })
-      .catch(function() {
-        tempEl.innerHTML = '24&deg;';
-        descEl.textContent = 'Partly cloudy';
-        humEl.textContent = '78%';
-        windEl.textContent = '8 km/h';
-        var icEl2 = document.getElementById('wxIcon');
-        if (icEl2) icEl2.innerHTML = wxIcon(2);
+      .catch(function(){
+        _wx.code=2; _wx.temp=31; _wx.hi=33; _wx.lo=25; _wx.hum=72; _wx.wind=9; _wx.windDir='NE'; _wx.uv=8; _wx.press=1010;
+        _wx.hrs=[]; for(var i=0;i<12;i++){var hh=(new Date().getHours()+i)%24; _wx.hrs.push({h:hh,t:26+Math.round(Math.sin(i*0.6)*3),c:i<6?2:0});}
+        wxApplyTheme(2); wxStartAnim(2); wxRender();
       });
   }
-  function updateClock() {
-    var now = new Date();
-    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var h = now.getHours(); var m = now.getMinutes();
-    var ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12; if (h === 0) h = 12;
-    m = m < 10 ? '0' + m : m;
-    var dtEl = document.getElementById('wxDatetime');
-    if (dtEl) dtEl.textContent = days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' · ' + h + ':' + m + ' ' + ampm;
+
+  function wxRender() {
+    var t=document.getElementById('wxTemp'); if(t)t.textContent=_wx.temp+'°';
+    var d=document.getElementById('wxDesc');
+    var labels={0:'Sunny',1:'Mostly Clear',2:'Partly Cloudy',3:'Cloudy',45:'Fog',48:'Fog',51:'Drizzle',53:'Drizzle',55:'Drizzle',61:'Rain',63:'Rain',65:'Heavy Rain',71:'Snow',73:'Snow',75:'Heavy Snow',80:'Rain Showers',81:'Showers',82:'Heavy Showers',95:'Thunderstorm',96:'T-Storm w/ Hail',99:'Severe Storm'};
+    if(d)d.textContent=labels[_wx.code]||'Cloudy';
+    var hl=document.getElementById('wxHiLo'); if(hl)hl.textContent='H:'+_wx.hi+'°  L:'+_wx.lo+'°';
+    var cty=document.getElementById('wxCity'); if(cty)cty.textContent='Kuala Lumpur';
+    var hum=document.getElementById('wxHum'); if(hum)hum.textContent=_wx.hum+'%';
+    var w=document.getElementById('wxWind'); if(w)w.textContent=_wx.windDir+' '+_wx.wind+' km/h';
+    var uv=document.getElementById('wxUV'); if(uv){var uvl=_wx.uv<=2?'Low':_wx.uv<=5?'Moderate':_wx.uv<=7?'High':_wx.uv<=10?'Very High':'Extreme'; uv.textContent=_wx.uv+' '+uvl;}
+    var pr=document.getElementById('wxPress'); if(pr)pr.textContent=_wx.press+' hPa';
+
+    // Hourly strip
+    var hr=document.getElementById('wxHourly'); if(!hr)return;
+    var nowH=new Date().getHours();
+    hr.innerHTML=_wx.hrs.map(function(h,i){
+      var label=i===0?'Now':(h.h===0?'12a':h.h<12?h.h+'a':(h.h-12||12)+'p');
+      var nowCls=i===0?' weather-hour--now':'';
+      return '<div class="weather-hour'+nowCls+'"><span class="weather-hour__time">'+label+'</span><span class="weather-hour__icon">'+wxHrIcon(h.c)+'</span><span class="weather-hour__temp">'+h.t+'°</span></div>';
+    }).join('');
   }
-  updateWeather();
-  updateClock();
+
+  function updateClock() {
+    var now=new Date();
+    var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var h=now.getHours(),m=now.getMinutes(),ampm=h>=12?'PM':'AM';
+    h=h%12;if(h===0)h=12;m=m<10?'0'+m:m;
+    var dt=document.getElementById('wxDatetime');
+    if(dt)dt.textContent=days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' · '+h+':'+m+' '+ampm;
+  }
+
+  updateWeather(); updateClock();
   setInterval(updateClock, 10000);
-  setInterval(updateWeather, 1800000); // every 30 min
+  setInterval(updateWeather, 1800000);
 
   // =====================
   // WORLD CUP 2026 SCORES
