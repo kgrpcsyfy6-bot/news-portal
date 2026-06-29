@@ -164,6 +164,13 @@ body {
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 0;
+  background: #0a0a0a;
+}
+/* Premium player frame — wraps the iframe for a native feel */
+.article-hero-video__frame {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  padding: 2px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 24px rgba(0,0,0,0.18);
 }
 .article-hero-video__caption {
   margin: 12px 0 0;
@@ -762,13 +769,16 @@ body {
   window.loadVideo = function(){
     var poster = document.getElementById('video-poster');
     if (!poster) return;
+    var frame = document.createElement('div');
+    frame.className = 'article-hero-video__frame';
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube-nocookie.com/embed/Kq8Ot5ghe6g?autoplay=1&rel=0&modestbranding=1';
+    iframe.src = 'https://www.youtube-nocookie.com/embed/Kq8Ot5ghe6g?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white';
     iframe.title = 'KLIMS 2026 Highlights';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
     iframe.setAttribute('loading', 'lazy');
-    poster.parentNode.replaceChild(iframe, poster);
+    frame.appendChild(iframe);
+    poster.parentNode.replaceChild(frame, poster);
   };
 
   function escapeHTML(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
