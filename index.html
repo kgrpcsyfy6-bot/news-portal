@@ -2064,24 +2064,22 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
 /* ===== 3D Interaction Effects ===== */
 
-/* Effect 5 — Top Stories cards: breathing scale + glow */
+/* Effect 5 — Top Stories cards: cursor-driven micro-vibration + glow */
 .story-item {
   position: relative; overflow: hidden;
-  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
-              box-shadow 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: box-shadow 0.35s ease, transform 0.12s ease-out;
 }
 .story-item:hover {
-  transform: scale(1.018);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.03);
 }
 .story-item::after {
   content: ''; position: absolute; inset: -1px;
   opacity: 0; pointer-events: none; z-index: 0;
   background: radial-gradient(
     500px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(184, 0, 0, 0.05), transparent 40%
+    rgba(184, 0, 0, 0.06), transparent 40%
   );
-  transition: opacity .35s ease;
+  transition: opacity .2s ease;
 }
 .story-item:hover::after { opacity: 1; }
 .story-item > * { position: relative; z-index: 1; }
@@ -3720,14 +3718,29 @@ function wxApplyTheme(code) {
 /* ===== 3D Interaction Effects ===== */
 (function() {
   document.querySelectorAll('.story-item').forEach(function(card) {
-    card.addEventListener('mousemove', function(e) {
+    card.addEventListener('mouseenter', function(e) {
       var rect = card.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width * 100;
       var y = (e.clientY - rect.top) / rect.height * 100;
       card.style.setProperty('--mx', x + '%');
       card.style.setProperty('--my', y + '%');
+      card.style.transition = 'transform 0.08s ease-out, box-shadow 0.35s ease';
+    });
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var dx = (e.clientX - rect.left) / rect.width - 0.5;
+      var dy = (e.clientY - rect.top) / rect.height - 0.5;
+      var tx = dx * 5;
+      var ty = dy * 5;
+      card.style.transform = 'translate(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px)';
+      var x = (dx + 0.5) * 100;
+      var y = (dy + 0.5) * 100;
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
     });
     card.addEventListener('mouseleave', function() {
+      card.style.transform = 'translate(0, 0)';
+      card.style.transition = 'transform 0.35s ease-out, box-shadow 0.35s ease';
       card.style.removeProperty('--mx');
       card.style.removeProperty('--my');
     });
