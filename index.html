@@ -215,6 +215,16 @@ input, textarea { font: inherit; }
   transition: all .15s;
 }
 .search-panel__trending a:hover { background: var(--c-red-light); color: var(--c-red); }
+.search-panel__results { margin-top: 12px; border-top: 1px solid var(--c-border); padding-top: 10px; max-height: 320px; overflow-y: auto; display: none; }
+.search-panel__results--visible { display: block; }
+.search-panel__results-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-text-soft); margin-bottom: 8px; }
+.search-panel__result-item { display: block; padding: 8px 0; border-bottom: 1px solid var(--c-border); text-decoration: none; color: var(--c-text); transition: padding-left .15s; }
+.search-panel__result-item:hover { padding-left: 6px; }
+.search-panel__result-item:last-child { border-bottom: none; }
+.search-panel__result-title { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 2px; }
+.search-panel__result-kicker { font-size: 10px; color: var(--c-red); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
+.search-panel__result-snippet { font-size: 11px; color: var(--c-text-light); line-height: 1.4; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-panel__no-results { font-size: 13px; color: var(--c-text-light); padding: 8px 0; text-align: center; }
 .search-panel__backdrop {
   display: none;
   position: fixed;
@@ -2179,7 +2189,11 @@ a:hover .hero__subheadline { color: var(--c-red); }
             <input class="search-panel__input" type="search" id="searchInput" placeholder="Search news, topics, locations..." autocomplete="off" aria-label="Search">
             <button type="button" class="search-panel__close" id="searchClose" aria-label="Close search">&times;</button>
           </form>
-          <div class="search-panel__trending">
+          <div class="search-panel__results" id="searchResults">
+            <div class="search-panel__results-label">Results</div>
+            <div id="searchResultsList"></div>
+          </div>
+          <div class="search-panel__trending" id="searchTrending">
             <span class="search-panel__trending-label">Trending</span>
             <a href="#sec-politics">Housing reform</a>
             <a href="#sec-climate">Sea level rise</a>
@@ -2880,14 +2894,85 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
   searchClose.addEventListener('click', closeSearch);
   searchBackdrop.addEventListener('click', closeSearch);
+
+  // --- Search index: all 9 articles ---
+  var searchIndex = [
+    {title:'KLIMS 2026: Perodua C2 Concept, XPeng Flying Car Steal the Show',kicker:'Tech & AI',path:'article-headline.html',snippet:'Almost 20 car makers from Malaysia, Japan and China presented their latest models at the Kuala Lumpur International Mobility Show 2026, including Perodua C2 EV concept and XPeng flying car.'},
+    {title:'Parliament Passes Landmark Housing Reform Bill After Marathon Debate',kicker:'Politics',path:'article-politics.html',snippet:'Parliament approved the government flagship Housing Reform Bill in the early hours of Sunday morning, following a gruelling sixteen-hour debate over rent caps and construction targets.'},
+    {title:'Global Trade Rebounds as Supply Chains Stabilise, WTO Report Confirms',kicker:'Business',path:'article-business.html',snippet:'Global trade volumes rose 3.8% in the first quarter of 2026, according to the latest WTO World Trade Barometer, driven by recovering container shipping and easing of Red Sea disruptions.'},
+    {title:'UN General Assembly Adopts Landmark Resolution on Artificial Intelligence Governance',kicker:'World',path:'article-world.html',snippet:'The United Nations General Assembly adopted the first globally binding framework for AI oversight, establishing mandatory human oversight for high-risk systems and a permanent UN Office for AI in Geneva.'},
+    {title:'Arctic Ice Hits Record Low, Scientists Warn of Accelerated Global Warming',kicker:'Climate',path:'article-climate.html',snippet:'Arctic sea ice has shrunk to its lowest winter maximum ever recorded, with scientists warning that the region is warming nearly four times faster than the global average.'},
+    {title:'WHO Declares End to Mpox Global Health Emergency',kicker:'Health',path:'article-health.html',snippet:'The World Health Organization declared an end to the mpox global health emergency, marking a turning point in the outbreak that affected over 100,000 people across 120 countries.'},
+    {title:'Global Tech Leaders Sign Open Letter Calling for AI Governance Standards',kicker:'Tech & AI',path:'article-tech-ai.html',snippet:'More than 350 technology executives and researchers signed an open letter urging governments to establish binding international standards for artificial intelligence governance.'},
+    {title:'Champions League Final: Real Madrid Beat Manchester City in Penalty Thriller',kicker:'Sports',path:'article-sports.html',snippet:'Real Madrid claimed their 16th Champions League title after a dramatic penalty shootout victory over Manchester City following a 2-2 draw at the Stade de France.'},
+    {title:'Venice Biennale 2026 Opens with Record African and Asian Participation',kicker:'Culture',path:'article-culture.html',snippet:'The 61st Venice Biennale opened with a record 88 national pavilions including debut entries from Ghana, Uzbekistan, and Bangladesh, curated under the theme Strangers Everywhere.'}
+  ];
+
+  function doSearch(query) {
+    var q = query.toLowerCase().trim();
+    var resultsList = document.getElementById('searchResultsList');
+    var resultsDiv = document.getElementById('searchResults');
+    var trendingDiv = document.getElementById('searchTrending');
+    resultsList.innerHTML = '';
+
+    if (!q) {
+      resultsDiv.classList.remove('search-panel__results--visible');
+      trendingDiv.style.display = '';
+      return;
+    }
+
+    var matches = [];
+    searchIndex.forEach(function(art) {
+      var score = 0;
+      var t = art.title.toLowerCase();
+      var k = art.kicker.toLowerCase();
+      var s = art.snippet.toLowerCase();
+      if (t.includes(q)) score += 10;
+      if (k.includes(q)) score += 5;
+      if (s.includes(q)) score += 3;
+      // Split query into words, check each
+      q.split(/\s+/).forEach(function(w) {
+        if (t.includes(w)) score += 8;
+        if (k.includes(w)) score += 4;
+        if (s.includes(w)) score += 2;
+      });
+      if (score > 0) matches.push({art: art, score: score});
+    });
+
+    matches.sort(function(a, b) { return b.score - a.score; });
+
+    if (matches.length === 0) {
+      resultsList.innerHTML = '<div class="search-panel__no-results">No results found for "' + escapeHTML(query) + '"</div>';
+      resultsDiv.classList.add('search-panel__results--visible');
+      trendingDiv.style.display = 'none';
+      return;
+    }
+
+    trendingDiv.style.display = 'none';
+    resultsDiv.classList.add('search-panel__results--visible');
+
+    matches.forEach(function(m) {
+      var a = document.createElement('a');
+      a.className = 'search-panel__result-item';
+      a.href = m.art.path;
+      a.innerHTML = '<div class="search-panel__result-kicker">' + escapeHTML(m.art.kicker) + '</div>' +
+        '<div class="search-panel__result-title">' + escapeHTML(m.art.title) + '</div>' +
+        '<div class="search-panel__result-snippet">' + escapeHTML(m.art.snippet) + '</div>';
+      resultsList.appendChild(a);
+    });
+  }
+
+  var searchTimeout = null;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(function() {
+      doSearch(searchInput.value);
+    }, 200);
+  });
+
   searchForm.addEventListener('submit', function(e){
     e.preventDefault();
-    var query = searchInput.value.trim();
-    if (query) {
-      toast('Searching for "' + query + '" — results coming soon');
-      searchInput.value = '';
-      closeSearch();
-    }
+    doSearch(searchInput.value);
   });
 
   // =====================
