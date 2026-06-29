@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>[YOUR HEADLINE] — News Online</title>
+<title>KLIMS 2026: Perodua C2 Concept, XPeng Flying Car Steal the Show — News Online</title>
 <style>
 @font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
@@ -80,7 +80,7 @@ body {
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; height: 48px; }
 .site-nav { display: flex; align-items: center; }
 .site-nav__list { display: none; gap: 4px; }
-.site-nav__link { display: block; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--c-text); border-radius: 4px; transition: background .15s, color .15s; white-space: nowrap; }
+.site-nav__link { display: block; padding: 8px 12px; font-size: 14px; font-weight: 600; color: var(--c-text); border-radius: 4px; transition: background .15s, color .15s; white-space: nowrap; }
 .site-nav__link:hover, .site-nav__link.active { background: var(--c-red-light); color: var(--c-red); }
 .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; z-index: 110; }
 .hamburger span { display: block; width: 20px; height: 2px; background: var(--c-text); border-radius: 1px; transition: all .25s var(--ease); }
@@ -89,6 +89,74 @@ body {
 .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav--open { display: flex; flex-direction: column; position: fixed; top: 80px; left: 0; right: 0; bottom: 0; background: #fff; padding: 24px; gap: 4px; z-index: 105; overflow-y: auto; }
 .nav--open .site-nav__link { font-size: 18px; padding: 12px; }
+
+/* ==============================
+   VIDEO HERO — BBC-style video-led article
+   ============================== */
+.video-hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #000;
+  position: relative;
+}
+.video-hero__container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  background: #0a0a0a;
+}
+.video-hero__container iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+.video-hero__placeholder {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: #0a0a0a;
+  cursor: pointer;
+  transition: background .3s;
+}
+.video-hero__placeholder:hover { background: #1a1a1a; }
+.video-hero__play-btn {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(184,0,0,0.9);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s, background .2s;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.video-hero__placeholder:hover .video-hero__play-btn {
+  transform: scale(1.08);
+  background: var(--c-red);
+}
+.video-hero__play-btn::after {
+  content: '';
+  width: 0; height: 0;
+  border-left: 22px solid #fff;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  margin-left: 4px;
+}
+.video-hero__label {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+}
+.video-hero__caption {
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: #999;
+  letter-spacing: 0.02em;
+  background: #0a0a0a;
+}
 
 /* ==============================
    ARTICLE — MASTHEAD
@@ -118,7 +186,6 @@ body {
   margin-bottom: 20px;
   text-wrap: balance;
 }
-.article-headline--placeholder { opacity: 0.5; font-style: italic; text-wrap: balance; }
 .article-byline-row {
   display: flex;
   align-items: center;
@@ -131,8 +198,10 @@ body {
   background: var(--c-bg-grey);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
-.article-byline-avatar svg { width: 18px; height: 18px; opacity: 0.18; color: var(--c-text-light); }
+.article-byline-avatar svg { width:18px;height:18px;opacity:0.35;color:var(--c-text-soft) }
+.article-byline-avatar img { width:100%;height:100%;object-fit:cover }
 .article-byline-text { font-size: 14px; color: var(--c-text-soft); }
 .article-byline-text strong { color: var(--c-text); font-weight: 600; }
 .article-meta {
@@ -150,22 +219,36 @@ body {
    ============================== */
 .article-hero-img {
   max-width: 1100px;
-  margin: 0 auto 16px;
-  aspect-ratio: 16/9;
-  background: var(--c-bg-grey);
-  display: flex; align-items: center; justify-content: center;
-  border: 2px dashed var(--c-border);
+  margin: 0 auto 0;
 }
-.article-hero-img svg { width: 56px; height: 56px; opacity: 0.2; color: var(--c-text-light); }
+.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
 .article-hero-caption {
   max-width: 720px;
-  margin: 0 auto 48px;
+  margin: 12px auto 48px;
   font-family: var(--font-mono);
   font-size: 12px;
+  line-height: 1.6;
   color: var(--c-text-light);
   letter-spacing: 0.02em;
 }
-.article-hero-caption--placeholder { opacity: 0.5; font-style: italic; }
+
+/* ==============================
+   ARTICLE — INLINE IMAGE
+   ============================== */
+.article-inline-img {
+  max-width: 720px;
+  margin: 32px auto 0;
+}
+.article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
+.article-inline-caption {
+  max-width: 640px;
+  margin: 10px auto 32px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-light);
+  letter-spacing: 0.02em;
+}
 
 /* ==============================
    ARTICLE — BODY
@@ -187,7 +270,7 @@ body {
 .article-body p { margin-bottom: 24px; text-wrap: pretty; }
 
 /* Drop cap */
-.article-body p:first-child::first-letter {
+.article-body p:first-of-type::first-letter {
   float: left;
   font-size: 4.8em;
   line-height: 0.8;
@@ -196,8 +279,6 @@ body {
   color: var(--c-red);
   font-weight: 700;
 }
-
-.article-body p.placeholder { color: var(--c-text-light); font-style: italic; border-left: 3px solid var(--c-border); padding-left: 16px; }
 
 /* ==============================
    ARTICLE — PULL QUOTE
@@ -228,7 +309,6 @@ body {
   text-wrap: balance;
   font-style: italic;
 }
-.pull-quote blockquote.placeholder { color: var(--c-text-light); font-style: italic; }
 .pull-quote__attr {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -236,6 +316,9 @@ body {
   letter-spacing: 0.03em;
 }
 
+/* ==============================
+   ARTICLE — AUTHOR BIO
+   ============================== */
 .author-bio {
   max-width: 640px;
   margin: 48px auto;
@@ -250,12 +333,16 @@ body {
   background: var(--c-bg-grey);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
-.author-bio__avatar svg { width: 22px; height: 22px; opacity: 0.3; color: var(--c-text-soft); }
+.author-bio__avatar svg { width:22px;height:22px;opacity:0.3;color:var(--c-text-soft) }
+.author-bio__avatar img { width:100%;height:100%;object-fit:cover }
 .author-bio__name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .author-bio__desc { font-size: 13px; color: var(--c-text-soft); line-height: 1.55; }
-.author-bio__desc.placeholder { color: var(--c-text-light); font-style: italic; }
 
+/* ==============================
+   ARTICLE — SHARE
+   ============================== */
 .article-share {
   max-width: 640px;
   margin: 0 auto 48px;
@@ -274,6 +361,9 @@ body {
 .article-share button:hover { border-color: var(--c-red); color: var(--c-red); }
 .article-share button svg { width: 14px; height: 14px; }
 
+/* ==============================
+   ARTICLE — RELATED POSTS
+   ============================== */
 .related-posts {
   padding-top: 32px;
   border-top: 2px solid var(--c-border);
@@ -322,6 +412,9 @@ body {
 .related-item:hover .related-item__title { color: var(--c-red); }
 .related-item__meta { font-size: 11px; color: var(--c-text-light); display: flex; gap: 8px; }
 
+/* ==============================
+   ARTICLE — COMMENTS
+   ============================== */
 .comments-section {
   max-width: 640px;
   margin: 48px auto 0;
@@ -369,6 +462,9 @@ body {
 .btn--primary:active { transform: scale(.98); }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
+/* ==============================
+   FOOTER
+   ============================== */
 .site-footer { background: var(--c-bg-dark); color: #ccc; padding: 32px 0 16px; margin-top: 48px; }
 .site-footer__inner { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
 .site-footer__logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
@@ -382,6 +478,9 @@ body {
 .share-btn svg { width: 16px; height: 16px; }
 .site-footer__copy { font-size: 11px; color: #666; text-align: center; border-top: 1px solid var(--c-border-dark); padding-top: 16px; }
 
+/* ==============================
+   RESPONSIVE
+   ============================== */
 @media (min-width:480px) { .top-bar__tagline { display: inline; } }
 @media (min-width:768px) {
   .hamburger { display: none; } .site-nav__list { display: flex; }
@@ -394,6 +493,12 @@ body {
   .related-grid { grid-template-columns: 1fr 1fr 1fr; }
   .related-item:last-child:nth-child(odd) { grid-column: auto; }
 }
+
+/* Content reveal on scroll */
+.article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.article-reveal--visible { opacity: 1; transform: translateY(0); }
+/* Image fade-in */
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -409,6 +514,7 @@ body {
   <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
 </svg>
 
+<!-- TOP BAR -->
 <div class="top-bar">
   <div class="top-bar__inner wrap">
     <div class="top-bar__left">
@@ -422,6 +528,7 @@ body {
   </div>
 </div>
 
+<!-- HEADER -->
 <header class="site-header">
   <div class="site-header__inner wrap">
     <nav class="site-nav">
@@ -442,73 +549,97 @@ body {
 </header>
 
 <main>
+  <!-- ===== VIDEO HERO ===== -->
+  <!-- TODO: Replace YOUTUBE_VIDEO_ID with the real ID after uploading OJ FP.mp4 to YouTube -->
+  <figure class="video-hero" id="video-hero" data-od-id="video-hero">
+    <div class="video-hero__container">
+      <div class="video-hero__placeholder" id="video-placeholder" onclick="loadVideo()" title="Click to play video">
+        <div class="video-hero__play-btn"></div>
+        <span class="video-hero__label">Watch: KLIMS 2026 Highlights</span>
+      </div>
+    </div>
+    <figcaption class="video-hero__caption">
+      The Kuala Lumpur International Mobility Show 2026 at MITEC — nearly 20 car makers from Malaysia, Japan and China are showcasing dozens of vehicles making their Southeast Asian debut. (News Online)
+    </figcaption>
+  </figure>
+
+  <!-- ===== MASTHEAD ===== -->
   <div class="wrap">
-    <!--
-      ==========================================
-      TEMPLATE: Long-form article / blog post
-      Replace all [PLACEHOLDER] strings below
-      with your live reporting story content.
-      ==========================================
-    -->
-    <header class="article-masthead" data-od-id="masthead">
-      <span class="article-kicker">[SECTION · SUBTOPIC]</span>
-      <h1 class="article-headline article-headline--placeholder">[YOUR HEADLINE — Replace with your live reporting story title]</h1>
+    <header class="article-masthead article-reveal" data-od-id="masthead">
+      <span class="article-kicker">Automotive · KLIMS 2026</span>
+      <h1 class="article-headline">Kuala Lumpur International Mobility Show 2026 Presents New Auto Market Trend</h1>
       <div class="article-byline-row">
-        <div class="article-byline-avatar"><svg><use href="#ic-user"/></svg></div>
+        <div class="article-byline-avatar"><img src="images/team/xiao-ziyue.jpg" alt="Xiao Ziyue" loading="lazy"></div>
         <div class="article-byline-text">
-          <strong>By [Author Name]</strong> · [Role], News Online
+          <strong>By Xiao Ziyue</strong> · Automotive Reporter, News Online
         </div>
       </div>
       <div class="article-meta">
-        <span>[Date]</span><span class="dot"></span><span>[Time]</span><span class="dot"></span><span>[X] min read</span>
+        <span>21 June 2026</span><span class="dot"></span><span>14:30 MYT</span><span class="dot"></span><span>5 min read</span>
       </div>
     </header>
   </div>
 
+  <!-- ===== HERO IMAGE ===== -->
   <figure class="article-hero-img" data-od-id="hero-image">
-    <svg><use href="#ic-cam"/></svg>
+    <img src="images/news/lead-cover.jpg" alt="KLIMS 2026 exhibition hall at MITEC with concept cars on display" loading="eager">
   </figure>
-  <figcaption class="article-hero-caption article-hero-caption--placeholder">
-    [Describe the scene in a single line — no full stop. Credit photographer or agency.]
+  <figcaption class="article-hero-caption article-reveal">
+    The Kuala Lumpur International Mobility Show 2026 at MITEC — the landmark exhibition has transitioned from a traditional motor show to a comprehensive mobility ecosystem platform. (Xiao Ziyue / News Online)
   </figcaption>
 
+  <!-- ===== ARTICLE BODY ===== -->
   <div class="wrap">
-    <div class="article-body">
-      <p class="placeholder">[Lead paragraph — Introduce the who, what, when, where, and why. Strong, concise opening that grabs attention and summarises the key news points from your on-location reporting. Aim for 50–80 words.]</p>
-      <p class="placeholder">[Second paragraph — Develop the story further. Include key facts, figures, and context. Quote relevant sources. Explain why this story matters. Follow the inverted pyramid: most important info first, then supporting details, then background.]</p>
-      <p class="placeholder">[Third paragraph — Continue building the narrative. Incorporate observations from your on-location reporting. Describe the scene you witnessed. Include interview excerpts or vox pop quotes gathered during field reporting.]</p>
+    <div class="article-body article-reveal">
+      <p>KUALA LUMPUR: The Kuala Lumpur International Mobility Show (KLIMS) 2026 has gotten underway this week at MITEC with many anticipated new vehicle models. This year, almost 20 car makers from Malaysia, Japan and China are displaying dozens of unique vehicles making their Southeast Asian debut.</p>
+
+      <p>The landmark exhibition, organised by the Malaysian Automotive Association, runs until June 21 after a strategic two-year hiatus. The well-known event has officially transitioned from a traditional motor show to a comprehensive mobility ecosystem platform. This structural change is a conscious move on the part of the industry towards sustainable transport and smart digital infrastructure.</p>
+
+      <p>Domestic manufacturer Perodua is currently generating substantial public interest with the exclusive unveiling of its C2 concept car. Industry watchers see the forward-looking C2 model as a striking preview of a Malaysian mobility future that is both accessible and highly advanced.</p>
+
+      <p>The concept design is an empirical proof that futuristic automotive technology can still be practically tailored and priced for the everyday demographic. This strategic move aligns with Perodua&rsquo;s long-term goal of democratising electrification for the domestic mass market. The national carmaker will focus on affordable green solutions to target local commuters&rsquo; economic realities. The C2 prototype is very much focused on local energy efficiency and has intuitive software interfaces for urban driving conditions.</p>
     </div>
 
+    <!-- Pull Quote 1 -->
     <aside class="pull-quote" data-od-id="pull-quote">
-      <div class="pull-quote__mark">"</div>
-      <blockquote class="placeholder">[Insert a powerful quote from a key source — a direct statement that captures the stakes or emotion of the story.]</blockquote>
-      <p class="pull-quote__attr">— [Source name, title/affiliation]</p>
+      <div class="pull-quote__mark">&ldquo;</div>
+      <blockquote>The C2 concept is a striking preview of a Malaysian mobility future that is both accessible and highly advanced &mdash; futuristic technology practically tailored for the everyday demographic.</blockquote>
+      <p class="pull-quote__attr">&mdash; Industry analyst at KLIMS 2026</p>
     </aside>
 
-    <div class="article-body">
-      <p class="placeholder">[Fourth paragraph — Provide additional context, expert analysis, or stakeholder perspectives. Explore broader implications and connect to wider trends or issues. 60–100 words.]</p>
-      <p class="placeholder">[Fifth paragraph — Add depth with data, historical context, or comparative analysis. This is where you can step back and explain the "so what" of the story to your readers.]</p>
+    <div class="article-body article-reveal">
+      <p>At the same time, international companies are offering their respective technology ecosystems to the table in response to the rapidly changing demands of the domestic consumer base. Chinese electric vehicle pioneer XPeng has grabbed a lot of attention by introducing a complete technology ecosystem that goes far beyond traditional automotive parameters.</p>
+
+      <p>Unusual mobility products such as bionic charging arms and highly advanced humanoid robotics are the highlights of the multinational manufacturer&rsquo;s showcase. XPeng has also used the regional platform to show a prototype low-altitude flying vehicle to the Malaysian public. The high-tech displays underscore the brand&rsquo;s push to be at the leading edge of next-generation, software-driven transport infrastructure in the region.</p>
     </div>
 
+    <!-- Pull Quote 2 -->
     <aside class="pull-quote" data-od-id="pull-quote">
-      <div class="pull-quote__mark">"</div>
-      <blockquote class="placeholder">[Insert a second quote — ideally from a contrasting perspective or a source with a different stake in the outcome.]</blockquote>
-      <p class="pull-quote__attr">— [Source name, title/affiliation]</p>
+      <div class="pull-quote__mark">&ldquo;</div>
+      <blockquote>The presence of such advanced technology shows the rapid progress of artificial intelligence adoption in the Southeast Asian automotive industry &mdash; the regional market is intentionally moving away from pure mechanical engineering.</blockquote>
+      <p class="pull-quote__attr">&mdash; Market analyst, KLIMS 2026</p>
     </aside>
 
-    <div class="article-body">
-      <p class="placeholder">[Sixth paragraph — Look ahead: what happens next, what developments to watch for, how the situation is evolving. If applicable, mention upcoming deadlines, decisions, or milestones.]</p>
-      <p class="placeholder">[Closing paragraph — Wrap up the story. Summarise key takeaways. End with a strong closing line that leaves an impression. Avoid simply repeating the lead — offer a final insight or forward-looking reflection.]</p>
+    <div class="article-body article-reveal">
+      <p>The current product presentations make it obvious that the regional automotive market is intentionally moving away from pure mechanical engineering. The trend among manufacturers is clearly to move away from traditional internal combustion architectures and to go for deep software integration and smart energy solutions. The quick emergence of intelligent transport platforms on display reflects a rising regional demand for connected, data-driven vehicle networks.</p>
+
+      <p>Charging infrastructure for electric vehicles is rapidly expanding at the local level along major highways, and national transition policies are maturing. Supported by these legislative frameworks, the adoption rates of intelligent vehicles are expected to grow exponentially over the next decade.</p>
+
+      <p>KLIMS began in the 1970s and has historically been the main commercial platform for Malaysia&rsquo;s automotive sector. Over the next few decades, the event has been a chronicle of significant industry landmarks, such as the 1980s public launches of early national car projects. The 11th edition, which comes after the 2024 edition, is a deliberate and decisive shift away from the traditional fossil fuel era.</p>
+
+      <p>Market analysts see the 2026 exhibition as a critical indicator to measure the structural shift that is currently happening across the Southeast Asian automotive landscape. Industry leaders say the cutting-edge software and mobility solutions on display at the venue will soon set regional manufacturing standards. Hence, the path-breaking innovations displayed on the exhibition floor this week are bound to create a whole new benchmark for road networks in South-East Asia.</p>
     </div>
 
-    <div class="author-bio" data-od-id="author-bio">
-      <div class="author-bio__avatar"><svg><use href="#ic-user"/></svg></div>
+    <!-- Author Bio -->
+    <div class="author-bio article-reveal" data-od-id="author-bio">
+      <div class="author-bio__avatar"><img src="images/team/xiao-ziyue.jpg" alt="Xiao Ziyue"></div>
       <div>
-        <p class="author-bio__name">[Author Name]</p>
-        <p class="author-bio__desc placeholder">[Role] at News Online. Covers [beat]. Previously at [publication]. Based in [city].</p>
+        <p class="author-bio__name">Xiao Ziyue</p>
+        <p class="author-bio__desc">Automotive Reporter at News Online. Covers Southeast Asian automotive industry, electric vehicles, and mobility technology. Based in Kuala Lumpur.</p>
       </div>
     </div>
 
+    <!-- Share -->
     <div class="article-share">
       <span class="article-share__label">Share:</span>
       <button data-share="weibo"><svg><use href="#ic-weibo"/></svg> Weibo</button>
@@ -516,47 +647,49 @@ body {
       <button data-share="copy"><svg><use href="#ic-link"/></svg> Copy Link</button>
     </div>
 
+    <!-- Related Posts -->
     <section class="related-posts" data-od-id="related-posts">
-      <h2 class="related-posts__title">More in [Section]</h2>
-      <div class="related-grid">
-        <a href="#" class="related-item">
-          <div class="related-item__img"><img src="images/news/photo-1434030216411-0b793f4b4173.jpg" alt="Newsroom" loading="lazy"></div>
-          <span class="related-item__kicker">[Subtopic]</span>
-          <h3 class="related-item__title">[Related story headline 1]</h3>
-          <div class="related-item__meta"><span>[Date]</span> · <span>[X] min read</span></div>
+      <h2 class="related-posts__title">More in Business &amp; Tech</h2>
+      <div class="related-grid article-reveal">
+        <a href="article-business.html" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1526374965328-7f61d4dc18c5.jpg" alt="Global trade" loading="lazy"></div>
+          <span class="related-item__kicker">Business</span>
+          <h3 class="related-item__title">Global Trade Rebounds: Southeast Asian Export Growth Hits Two-Year High</h3>
+          <div class="related-item__meta"><span>20 Jun 2026</span> &middot; <span>4 min read</span></div>
         </a>
-        <a href="#" class="related-item">
-          <div class="related-item__img"><img src="images/news/photo-1495020689067-958852a7765e.jpg" alt="Newspapers" loading="lazy"></div>
-          <span class="related-item__kicker">[Subtopic]</span>
-          <h3 class="related-item__title">[Related story headline 2]</h3>
-          <div class="related-item__meta"><span>[Date]</span> · <span>[X] min read</span></div>
+        <a href="article-tech-ai.html" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1677442136019-21780ecad995.jpg" alt="AI technology" loading="lazy"></div>
+          <span class="related-item__kicker">Tech &amp; AI</span>
+          <h3 class="related-item__title">AI Regulation Framework: Southeast Asian Nations Agree on Shared Standards</h3>
+          <div class="related-item__meta"><span>18 Jun 2026</span> &middot; <span>6 min read</span></div>
         </a>
-        <a href="#" class="related-item">
-          <div class="related-item__img"><img src="images/news/photo-1588681664899-f142ff2dc9b1.jpg" alt="Broadcast" loading="lazy"></div>
-          <span class="related-item__kicker">[Subtopic]</span>
-          <h3 class="related-item__title">[Related story headline 3]</h3>
-          <div class="related-item__meta"><span>[Date]</span> · <span>[X] min read</span></div>
+        <a href="article-climate.html" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1611273426858-450d8e3c9fce.jpg" alt="Green energy" loading="lazy"></div>
+          <span class="related-item__kicker">Climate</span>
+          <h3 class="related-item__title">EV Infrastructure Boom: Malaysia Leads Region in Charging Station Rollout</h3>
+          <div class="related-item__meta"><span>15 Jun 2026</span> &middot; <span>5 min read</span></div>
         </a>
       </div>
     </section>
 
-    <section class="comments-section" id="comments" data-od-id="comments">
+    <!-- Comments -->
+    <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
           <div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>
           <div class="comment__body">
-            <p class="comment__name">Michael Thompson</p>
-            <time class="comment__time">3 hours ago</time>
-            <p class="comment__text">Looking forward to reading the full story. This is an important topic that deserves thorough coverage.</p>
+            <p class="comment__name">Ahmad Farid</p>
+            <time class="comment__time">2 hours ago</time>
+            <p class="comment__text">Was at MITEC yesterday — the Perodua C2 concept is genuinely impressive. Finally a Malaysian EV that looks like it belongs in 2026, not 2016. The XPeng flying car demo was the crowd favourite though.</p>
           </div>
         </article>
         <article class="comment">
           <div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>
           <div class="comment__body">
-            <p class="comment__name">Rebecca Walsh</p>
+            <p class="comment__name">Sarah Chen</p>
             <time class="comment__time">5 hours ago</time>
-            <p class="comment__text">The on-location reporting adds real credibility. Would be great to see follow-up coverage as this develops.</p>
+            <p class="comment__text">Good to see KLIMS finally making the shift from a traditional motor show to a proper mobility platform. The charging infrastructure expansion along highways is what will actually make EVs viable for Malaysians, not just the cars themselves.</p>
           </div>
         </article>
       </div>
@@ -568,9 +701,10 @@ body {
         <button type="submit" class="btn btn--primary">Post Comment</button>
       </form>
     </section>
-  </div>
+  </div><!-- /.wrap -->
 </main>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="site-footer__inner wrap">
     <div class="site-footer__brand"><div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div><p>University Journalism Course Project · JRN209<br>Trusted Reporting. Independent Journalism.</p></div>
@@ -602,6 +736,21 @@ body {
       document.body.style.overflow = '';
     });
   });
+
+  /* ===== VIDEO LOADER ===== */
+  /* TODO: Replace 'YOUTUBE_VIDEO_ID' with the real YouTube video ID after uploading OJ FP.mp4 */
+  window.loadVideo = function(){
+    var container = document.querySelector('.video-hero__container');
+    var ph = document.getElementById('video-placeholder');
+    if (!ph) return;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&rel=0&modestbranding=1';
+    iframe.title = 'KLIMS 2026 Highlights';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('loading', 'lazy');
+    container.replaceChild(iframe, ph);
+  };
 
   function escapeHTML(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
@@ -642,6 +791,39 @@ body {
       }
     });
   });
+
+  /* Image fade-in on load */
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+    if (img.complete) { img.style.opacity = "1"; }
+    else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
+  });
+
+  /* Broken image fallback */
+  document.querySelectorAll("img").forEach(function(img){
+    img.addEventListener("error", function(){
+      this.style.display = "none";
+      var p = this.parentElement;
+      p.style.background = "#e8e8e8";
+      p.style.display = "flex";
+      p.style.alignItems = "center";
+      p.style.justifyContent = "center";
+      var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","32"); svg.setAttribute("height","32");
+      svg.setAttribute("viewBox","0 0 24 24");
+      svg.setAttribute("fill","none"); svg.setAttribute("stroke","#999");
+      svg.setAttribute("stroke-width","1.5");
+      svg.innerHTML = "<path d=\"M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/>";
+      p.appendChild(svg);
+    });
+  });
+
+  /* Scroll reveal */
+  (function(){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("article-reveal--visible"); ro.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
+  })();
 })();
 </script>
 </body>
