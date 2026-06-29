@@ -422,9 +422,13 @@ body {
 /* Image fade-in */
 .article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* Reading progress bar */
+.reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--c-red, #B80000); z-index: 200; width: 0%; transition: width 0.15s linear; pointer-events: none; }
 </style>
 </head>
 <body>
+<div class="reading-progress"></div>
 
 <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <symbol id="ic-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
@@ -723,6 +727,17 @@ body {
     setTimeout(function(){ document.querySelectorAll(".article-reveal").forEach(function(el){ ro.observe(el); }); }, 100);
   })();
 })();
+
+/* Reading progress bar */
+(function(){
+  const bar = document.querySelector('.reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = h > 0 ? Math.min(100, (window.scrollY / h) * 100) + '%' : '0%';
+  }, {passive: true});
+})();
+
 </script>
 </body>
 </html>
