@@ -65,7 +65,7 @@ input, textarea { font: inherit; }
 }
 
 
-body {
+body { overflow-x: hidden; 
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
@@ -221,7 +221,7 @@ body {
   gap: 48px;
   padding-bottom: 48px;
 }
-.article-body {
+.article-body { overflow-x: hidden; 
   max-width: 720px;
   margin: 0 auto;
   font-family: var(--font-display);
@@ -399,7 +399,7 @@ body {
   align-items: center; justify-content: center; flex-shrink: 0;
 }
 .comment__avatar svg { width: 20px; height: 20px; opacity: .3; }
-.comment__body { flex: 1; min-width: 0; }
+.comment__body { overflow-x: hidden;  flex: 1; min-width: 0; }
 .comment__name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
 .comment__time { font-size: 11px; color: var(--c-text-light); margin-bottom: 6px; }
 .comment__text { font-size: 14px; line-height: 1.6; }
