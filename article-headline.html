@@ -567,9 +567,11 @@ body {
     </header>
   </div>
 
-  <!-- ===== ARTICLE HERO IMAGE ===== -->
-  <figure class="article-hero-img" data-od-id="hero-image">
-    <img src="images/news/lead-cover.jpg" alt="KLIMS 2026 exhibition hall at MITEC with concept cars on display" loading="eager">
+  <!-- ===== ARTICLE HERO VIDEO ===== -->
+  <figure class="article-hero-img" data-od-id="hero-video">
+    <video controls poster="images/news/lead-cover.jpg" preload="metadata" style="width:100%;display:block;border-radius:2px">
+      <source src="images/news/klms-2026.mp4" type="video/mp4">
+    </video>
     <figcaption class="article-reveal">
       The Kuala Lumpur International Mobility Show 2026 at MITEC — the landmark exhibition has transitioned from a traditional motor show to a comprehensive mobility ecosystem platform. (Xiao Ziyue / News Online)
     </figcaption>
@@ -744,16 +746,6 @@ body {
     });
   });
 
-    var poster = document.getElementById('video-poster');
-    if (!poster) return;
-    var frame = document.createElement('div');
-    var iframe = document.createElement('iframe');
-    iframe.title = 'KLIMS 2026 Highlights';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    iframe.allowFullscreen = true;
-    iframe.setAttribute('loading', 'lazy');
-    frame.appendChild(iframe);
-    poster.parentNode.replaceChild(frame, poster);
   };
 
   function escapeHTML(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
