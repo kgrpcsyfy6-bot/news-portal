@@ -2057,7 +2057,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   background: var(--c-red); border-color: var(--c-red);
   transform: scale(1.08);
 }
-/* Wallpaper Ads — fluid responsive, no hard breakpoints */
+/* Wallpaper Ads — fluid responsive, clean hide below 1100px */
 #wpWallpaper {
   position: fixed;
   inset: 0;
@@ -2065,9 +2065,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   pointer-events: none;
   display: flex;
   justify-content: center;
-  /* fluid opacity: full above 1300px, fading 1100→900, hidden <900 */
   opacity: 1;
-  transition: opacity 0.35s;
 }
 .wp-wallpaper__track {
   position: relative;
@@ -2084,14 +2082,15 @@ a:hover .hero__subheadline { color: var(--c-red); }
   width: clamp(90px, 8vw, 160px);
   pointer-events: auto;
   z-index: 1;
-  transition: opacity 0.35s, transform 0.35s;
+  transition: transform 0.35s;
 }
 .wp-ad--left  { left: 0; }
 .wp-ad--right { right: 0; }
 .wp-ad__card {
   background: var(--c-surface);
+  border: 1px solid var(--c-border);
   border-radius: clamp(4px, 0.5vw, 6px);
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -2120,17 +2119,21 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .wp-ad__close:hover { background: rgba(0,0,0,0.65); }
 .wp-ad__label {
   position: absolute;
-  top: clamp(6px, 0.6vw, 8px);
-  left: clamp(6px, 0.6vw, 8px);
-  font-size: clamp(7px, 0.7vw, 8px);
+  top: clamp(8px, 0.9vw, 10px);
+  left: 0; right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  font-size: clamp(9px, 0.9vw, 10px);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  color: #fff;
-  background: rgba(0,0,0,0.5);
-  padding: clamp(1px, 0.2vw, 2px) clamp(4px, 0.5vw, 6px);
-  border-radius: 2px;
+  letter-spacing: 0.12em;
+  color: var(--c-text-light);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  padding: 3px 8px;
+  border-radius: 3px;
   z-index: 2;
   text-transform: uppercase;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 .wp-ad__img {
   width: 100%;
@@ -2181,14 +2184,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 }
 .wp-ad__cta:hover { background: #8B0000; transform: translateY(-1px); }
 
-/* Progressive hide: fade below 1300px, fully hidden below 900px */
-@media (max-width: 1300px) {
-  #wpWallpaper { opacity: 0.6; }
-}
+/* Clean hide below 1100px — no fading; ads are either visible or hidden (IAB standard) */
 @media (max-width: 1100px) {
-  #wpWallpaper { opacity: 0.35; }
-}
-@media (max-width: 900px) {
   #wpWallpaper { display: none; }
 }
 
