@@ -124,76 +124,18 @@ body {
 .nav--open .site-nav__link { font-size: 18px; padding: 12px; }
 
 /* ==============================
-   ARTICLE — INTEGRATED VIDEO HERO
+   ARTICLE — HERO IMAGE
    ============================== */
-.article-hero-video {
-  max-width: 720px;
-  margin: 0 auto 0;
-  position: relative;
+.article-hero-img {
+  margin: 0 0 8px;
 }
-.article-hero-video__poster {
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-}
-.article-hero-video__poster img {
+.article-hero-img img {
   display: block;
   width: 100%;
   height: auto;
   background: var(--c-bg-grey);
 }
-.article-hero-video__play {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 72px; height: 72px;
-  border-radius: 50%;
-  background: rgba(184,0,0,0.88);
-  display: flex; align-items: center; justify-content: center;
-  transition: transform .2s, background .2s;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-  pointer-events: none;
-}
-.article-hero-video__poster:hover .article-hero-video__play {
-  transform: translate(-50%, -50%) scale(1.08);
-  background: var(--c-red);
-}
-.article-hero-video__play::after {
-  content: '';
-  width: 0; height: 0;
-  border-left: 20px solid #fff;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  margin-left: 4px;
-}
-.article-hero-video__label {
-  position: absolute;
-  bottom: 12px; left: 12px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(0,0,0,0.55);
-  padding: 4px 10px;
-  border-radius: 2px;
-  pointer-events: none;
-}
-.article-hero-video iframe {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border: 0;
-  background: #0a0a0a;
-}
-/* Premium player frame — wraps the iframe for a native feel */
-.article-hero-video__frame {
-  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-  padding: 2px;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 24px rgba(0,0,0,0.18);
-}
-.article-hero-video__caption {
+.article-hero-img figcaption {
   margin: 12px 0 28px;
   font-family: var(--font-mono);
   font-size: 12px;
@@ -258,7 +200,6 @@ body {
 }
 .article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--c-text-light); }
 
-/* Hero image styles removed — replaced by .article-hero-video above */
 
 /* ==============================
    ARTICLE — INLINE IMAGE
@@ -534,7 +475,7 @@ body {
 .article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .article-reveal--visible { opacity: 1; transform: translateY(0); }
 /* Image fade-in */
-.article-hero-video__poster img, .article-inline-img img { transition: opacity 0.3s ease; }
+.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
 /* Reading progress bar */
@@ -626,14 +567,10 @@ body {
     </header>
   </div>
 
-  <!-- ===== INTEGRATED VIDEO HERO ===== -->
-  <figure class="article-hero-video" id="article-hero-video" data-od-id="hero-video">
-    <div class="article-hero-video__poster" id="video-poster" onclick="loadVideo()" title="Click to play KLIMS 2026 video">
-      <img src="images/news/lead-cover.jpg" alt="KLIMS 2026 exhibition hall at MITEC with concept cars on display" loading="eager">
-      <div class="article-hero-video__play"></div>
-      <span class="article-hero-video__label">▶ Watch Video</span>
-    </div>
-    <figcaption class="article-hero-video__caption article-reveal">
+  <!-- ===== ARTICLE HERO IMAGE ===== -->
+  <figure class="article-hero-img" data-od-id="hero-image">
+    <img src="images/news/lead-cover.jpg" alt="KLIMS 2026 exhibition hall at MITEC with concept cars on display" loading="eager">
+    <figcaption class="article-reveal">
       The Kuala Lumpur International Mobility Show 2026 at MITEC — the landmark exhibition has transitioned from a traditional motor show to a comprehensive mobility ecosystem platform. (Xiao Ziyue / News Online)
     </figcaption>
   </figure>
@@ -684,17 +621,6 @@ body {
 
     <div class="article-body article-reveal">
       <p>International brands are also following to response to rapid market change, such as Chinese EV pioneer XPENG firstly bringing out its latest &ldquo;Iron&rdquo; humanoid robots, bionic charging arms and XPeng X2 conceptual flying car in Southeast Asian market.</p>
-
-      <p>The high-tech displays underscore the brand&rsquo;s push to be at the leading edge of next-generation, software-driven transport infrastructure in the region.</p>
-
-      <p>TQ Wuling is another Chinese car brand which just entered Malaysian market in 2025, and they appeared in KLIMS 2026 with distinguished products as electric SUVs, vans and mobility scooters.</p>
-
-      <p>&ldquo;We&rsquo;re just entering SEA market less than one year, and the brand aims at bringing high-cost performance of Chinese Wuling to Malaysian customers with eye-catching products,&rdquo; a TQ Wuling salesman explained.</p>
-
-      <p>Long before becoming a global stage for these modern electric contenders, KLIMS begun in the late 1970s and early 1980s, which has historically been the main commercial platform for Malaysia&rsquo;s automotive sector.</p>
-
-      <p>With more than 40 years of history, it has already held 11 editions of events until today and released countless classical vehicle models, such as Proton Saga Megavalve 1990 and Perodua Buddyz 2013, witnessing the development of national and international automotives.</p>
-
       <p>The 11th edition, which comes after the 2024 edition, is a deliberate and decisive shift away from the traditional fossil fuel era.</p>
 
       <p>Industry leaders say the cutting-edge software and mobility solutions on display at the venue will soon set regional manufacturing standards.</p>
@@ -818,14 +744,10 @@ body {
     });
   });
 
-  /* ===== VIDEO LOADER ===== */
-  window.loadVideo = function(){
     var poster = document.getElementById('video-poster');
     if (!poster) return;
     var frame = document.createElement('div');
-    frame.className = 'article-hero-video__frame';
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube-nocookie.com/embed/Kq8Ot5ghe6g?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white';
     iframe.title = 'KLIMS 2026 Highlights';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
@@ -880,21 +802,6 @@ body {
 
   commentForm.addEventListener('submit', function(e){
     e.preventDefault();
-    commentError.style.display = 'none';
-    var text = commentTextarea.value.trim();
-    if (!text) { commentError.style.display = 'block'; commentTextarea.focus(); return; }
-    var now = new Date();
-    var ts = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) + ' at ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
-    var name = 'Reader';
-    var saved = loadComments();
-    saved.push({ name: name, time: ts, text: text });
-    saveComments(saved);
-    var art = document.createElement('article');
-    art.className = 'comment comment--new';
-    art.setAttribute('data-cid', saved.length - 1);
-    art.innerHTML = '<div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>' +
-      '<div class="comment__body"><p class="comment__name">' + name + '</p>' +
-      '<time class="comment__time">' + ts + '</time>' +
       '<p class="comment__text">' + escapeHTML(text) + '</p>' +
       '<button class="comment__delete" data-cid="' + (saved.length - 1) + '" title="Delete comment" aria-label="Delete comment">' +
       '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>' +
@@ -923,7 +830,7 @@ body {
   });
 
   /* Image fade-in on load */
-  document.querySelectorAll(".article-hero-video__poster img, .article-inline-img img").forEach(function(img){
+  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
     if (img.complete) { img.style.opacity = "1"; }
     else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
   });
