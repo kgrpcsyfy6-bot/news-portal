@@ -2051,6 +2051,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   background: var(--c-red); border-color: var(--c-red);
   transform: scale(1.08);
 }
+/* Wallpaper Ads — fluid responsive, no hard breakpoints */
 #wpWallpaper {
   position: fixed;
   inset: 0;
@@ -2058,10 +2059,14 @@ a:hover .hero__subheadline { color: var(--c-red); }
   pointer-events: none;
   display: flex;
   justify-content: center;
+  /* fluid opacity: full above 1300px, fading 1100→900, hidden <900 */
+  opacity: 1;
+  transition: opacity 0.35s;
 }
 .wp-wallpaper__track {
   position: relative;
-  width: 1520px;
+  /* track width fluid: 800px→1520px, always ~90vw */
+  width: clamp(800px, 90vw, 1520px);
   max-width: 100vw;
   pointer-events: none;
 }
@@ -2069,32 +2074,35 @@ a:hover .hero__subheadline { color: var(--c-red); }
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 160px;
+  /* ad card width fluid: 90px→160px */
+  width: clamp(90px, 8vw, 160px);
   pointer-events: auto;
   z-index: 1;
+  transition: opacity 0.35s, transform 0.35s;
 }
 .wp-ad--left  { left: 0; }
 .wp-ad--right { right: 0; }
 .wp-ad__card {
   background: var(--c-surface);
-  border-radius: 6px;
+  border-radius: clamp(4px, 0.5vw, 6px);
   box-shadow: 0 2px 16px rgba(0,0,0,0.12);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 500px;
+  /* fluid min-height: 280px→500px */
+  min-height: clamp(280px, 40vw, 500px);
 }
 .wp-ad__close {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 22px;
-  height: 22px;
+  top: clamp(4px, 0.5vw, 6px);
+  right: clamp(4px, 0.5vw, 6px);
+  width: clamp(18px, 2vw, 22px);
+  height: clamp(18px, 2vw, 22px);
   border-radius: 50%;
   border: none;
   background: rgba(0,0,0,0.35);
   color: #fff;
-  font-size: 14px;
+  font-size: clamp(11px, 1.2vw, 14px);
   line-height: 1;
   cursor: pointer;
   z-index: 2;
@@ -2106,32 +2114,34 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .wp-ad__close:hover { background: rgba(0,0,0,0.65); }
 .wp-ad__label {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  font-size: 8px;
+  top: clamp(6px, 0.6vw, 8px);
+  left: clamp(6px, 0.6vw, 8px);
+  font-size: clamp(7px, 0.7vw, 8px);
   font-weight: 600;
   letter-spacing: 0.1em;
   color: #fff;
   background: rgba(0,0,0,0.5);
-  padding: 2px 6px;
+  padding: clamp(1px, 0.2vw, 2px) clamp(4px, 0.5vw, 6px);
   border-radius: 2px;
   z-index: 2;
   text-transform: uppercase;
 }
 .wp-ad__img {
   width: 100%;
-  height: 180px;
+  /* fluid image height: 100px→180px */
+  height: clamp(100px, 12vw, 180px);
   object-fit: cover;
   display: block;
 }
 .wp-ad__body {
-  padding: 14px 12px 16px;
+  /* fluid padding */
+  padding: clamp(10px, 1.2vw, 14px) clamp(8px, 1vw, 12px) clamp(12px, 1.4vw, 16px);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: clamp(4px, 0.5vw, 6px);
 }
 .wp-ad__brand {
-  font-size: 9px;
+  font-size: clamp(8px, 0.8vw, 9px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2139,33 +2149,40 @@ a:hover .hero__subheadline { color: var(--c-red); }
 }
 .wp-ad__title {
   font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 15px;
+  font-size: clamp(13px, 1.3vw, 15px);
   font-weight: 700;
   line-height: 1.25;
-  color: #141414;
+  color: var(--c-text);
 }
 .wp-ad__desc {
-  font-size: 11px;
-  color: #545658;
+  font-size: clamp(10px, 1vw, 11px);
+  color: var(--c-muted);
   line-height: 1.5;
 }
 .wp-ad__cta {
   display: block;
-  margin-top: 4px;
-  padding: 10px 0;
+  margin-top: clamp(2px, 0.3vw, 4px);
+  padding: clamp(7px, 0.9vw, 10px) 0;
   text-align: center;
-  font-size: 12px;
+  font-size: clamp(10px, 1vw, 12px);
   font-weight: 600;
   color: #fff;
   background: #B80000;
-
+  border-radius: 3px;
   text-decoration: none;
   letter-spacing: 0.03em;
   transition: background .15s, transform .15s;
 }
 .wp-ad__cta:hover { background: #8B0000; transform: translateY(-1px); }
 
+/* Progressive hide: fade below 1300px, fully hidden below 900px */
 @media (max-width: 1300px) {
+  #wpWallpaper { opacity: 0.6; }
+}
+@media (max-width: 1100px) {
+  #wpWallpaper { opacity: 0.35; }
+}
+@media (max-width: 900px) {
   #wpWallpaper { display: none; }
 }
 
