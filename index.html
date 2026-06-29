@@ -2933,7 +2933,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   var searchInput = document.getElementById('searchInput');
   var searchClose = document.getElementById('searchClose');
   var searchForm = document.getElementById('searchForm');
-  var searchBtn = document.querySelector('.top-bar__btn:first-child'); // Search button
+  var searchBtn = document.querySelectorAll('.top-bar__btn')[0]; // Search button (first of the two .top-bar__btn)
 
   function openSearch() {
     searchPanel.classList.add('search-panel--open');
@@ -2963,16 +2963,22 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
   // --- Search index: all 9 articles ---
   var searchIndex = [
-    {title:'KLIMS 2026: Perodua C2 Concept, XPeng Flying Car Steal the Show',kicker:'Tech & AI',path:'article-headline.html',snippet:'Almost 20 car makers from Malaysia, Japan and China presented their latest models at the Kuala Lumpur International Mobility Show 2026, including Perodua C2 EV concept and XPeng flying car.'},
+    {title:'KLIMS 2026: Perodua C2 Concept, XPeng Flying Car Steal the Show',kicker:'Tech',path:'article-headline.html',snippet:'Almost 20 car makers from Malaysia, Japan and China presented their latest models at the Kuala Lumpur International Mobility Show 2026, including Perodua C2 EV concept and XPeng flying car.'},
     {title:'Parliament Passes Landmark Housing Reform Bill After Marathon Debate',kicker:'Politics',path:'article-politics.html',snippet:'Parliament approved the government flagship Housing Reform Bill in the early hours of Sunday morning, following a gruelling sixteen-hour debate over rent caps and construction targets.'},
     {title:'Global Trade Rebounds as Supply Chains Stabilise, WTO Report Confirms',kicker:'Business',path:'article-business.html',snippet:'Global trade volumes rose 3.8% in the first quarter of 2026, according to the latest WTO World Trade Barometer, driven by recovering container shipping and easing of Red Sea disruptions.'},
     {title:'UN General Assembly Adopts Landmark Resolution on Artificial Intelligence Governance',kicker:'World',path:'article-world.html',snippet:'The United Nations General Assembly adopted the first globally binding framework for AI oversight, establishing mandatory human oversight for high-risk systems and a permanent UN Office for AI in Geneva.'},
     {title:'Arctic Ice Hits Record Low, Scientists Warn of Accelerated Global Warming',kicker:'Climate',path:'article-climate.html',snippet:'Arctic sea ice has shrunk to its lowest winter maximum ever recorded, with scientists warning that the region is warming nearly four times faster than the global average.'},
     {title:'WHO Declares End to Mpox Global Health Emergency',kicker:'Health',path:'article-health.html',snippet:'The World Health Organization declared an end to the mpox global health emergency, marking a turning point in the outbreak that affected over 100,000 people across 120 countries.'},
-    {title:'Global Tech Leaders Sign Open Letter Calling for AI Governance Standards',kicker:'Tech & AI',path:'article-tech-ai.html',snippet:'More than 350 technology executives and researchers signed an open letter urging governments to establish binding international standards for artificial intelligence governance.'},
+    {title:'Global Tech Leaders Sign Open Letter Calling for AI Governance Standards',kicker:'Tech',path:'article-tech-ai.html',snippet:'More than 350 technology executives and researchers signed an open letter urging governments to establish binding international standards for artificial intelligence governance.'},
     {title:'Champions League Final: Real Madrid Beat Manchester City in Penalty Thriller',kicker:'Sports',path:'article-sports.html',snippet:'Real Madrid claimed their 16th Champions League title after a dramatic penalty shootout victory over Manchester City following a 2-2 draw at the Stade de France.'},
     {title:'Venice Biennale 2026 Opens with Record African and Asian Participation',kicker:'Culture',path:'article-culture.html',snippet:'The 61st Venice Biennale opened with a record 88 national pavilions including debut entries from Ghana, Uzbekistan, and Bangladesh, curated under the theme Strangers Everywhere.'}
   ];
+
+  function escapeHTML(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
 
   function doSearch(query) {
     var q = query.toLowerCase().trim();
