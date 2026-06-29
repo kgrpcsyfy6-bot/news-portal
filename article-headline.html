@@ -102,71 +102,75 @@ body {
 .nav--open .site-nav__link { font-size: 18px; padding: 12px; }
 
 /* ==============================
-   VIDEO HERO — BBC-style video-led article
+   ARTICLE — INTEGRATED VIDEO HERO
    ============================== */
-.video-hero {
-  max-width: 1100px;
-  margin: 0 auto;
-  background: #000;
+.article-hero-video {
+  max-width: 720px;
+  margin: 0 auto 0;
   position: relative;
 }
-.video-hero__container {
+.article-hero-video__poster {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  background: #0a0a0a;
-}
-.video-hero__container iframe {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  border: 0;
-}
-.video-hero__placeholder {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  background: #0a0a0a;
   cursor: pointer;
-  transition: background .3s;
+  overflow: hidden;
 }
-.video-hero__placeholder:hover { background: #1a1a1a; }
-.video-hero__play-btn {
-  width: 80px; height: 80px;
+.article-hero-video__poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--c-bg-grey);
+}
+.article-hero-video__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px;
   border-radius: 50%;
-  background: rgba(184,0,0,0.9);
+  background: rgba(184,0,0,0.88);
   display: flex; align-items: center; justify-content: center;
   transition: transform .2s, background .2s;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  pointer-events: none;
 }
-.video-hero__placeholder:hover .video-hero__play-btn {
-  transform: scale(1.08);
+.article-hero-video__poster:hover .article-hero-video__play {
+  transform: translate(-50%, -50%) scale(1.08);
   background: var(--c-red);
 }
-.video-hero__play-btn::after {
+.article-hero-video__play::after {
   content: '';
   width: 0; height: 0;
-  border-left: 22px solid #fff;
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
+  border-left: 20px solid #fff;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
   margin-left: 4px;
 }
-.video-hero__label {
-  margin-top: 16px;
+.article-hero-video__label {
+  position: absolute;
+  bottom: 12px; left: 12px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #999;
+  color: #fff;
+  background: rgba(0,0,0,0.55);
+  padding: 4px 10px;
+  border-radius: 2px;
+  pointer-events: none;
 }
-.video-hero__caption {
-  padding: 12px 16px;
+.article-hero-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.article-hero-video__caption {
+  margin: 12px 0 0;
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.6;
-  color: #999;
+  color: var(--c-text-light);
   letter-spacing: 0.02em;
-  background: #0a0a0a;
 }
 
 /* ==============================
@@ -225,23 +229,7 @@ body {
 }
 .article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--c-text-light); }
 
-/* ==============================
-   ARTICLE — HERO IMAGE
-   ============================== */
-.article-hero-img {
-  max-width: 1100px;
-  margin: 0 auto 0;
-}
-.article-hero-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
-.article-hero-caption {
-  max-width: 720px;
-  margin: 12px auto 48px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--c-text-light);
-  letter-spacing: 0.02em;
-}
+/* Hero image styles removed — replaced by .article-hero-video above */
 
 /* ==============================
    ARTICLE — INLINE IMAGE
@@ -509,7 +497,7 @@ body {
 .article-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .article-reveal--visible { opacity: 1; transform: translateY(0); }
 /* Image fade-in */
-.article-hero-img img, .article-inline-img img { transition: opacity 0.3s ease; }
+.article-hero-video__poster img, .article-inline-img img { transition: opacity 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -567,19 +555,6 @@ body {
 </header>
 
 <main>
-  <!-- ===== VIDEO HERO ===== -->
-  <figure class="video-hero" id="video-hero" data-od-id="video-hero">
-    <div class="video-hero__container">
-      <div class="video-hero__placeholder" id="video-placeholder" onclick="loadVideo()" title="Click to play video">
-        <div class="video-hero__play-btn"></div>
-        <span class="video-hero__label">Watch: KLIMS 2026 Highlights</span>
-      </div>
-    </div>
-    <figcaption class="video-hero__caption">
-      The Kuala Lumpur International Mobility Show 2026 at MITEC — nearly 20 car makers from Malaysia, Japan and China are showcasing dozens of vehicles making their Southeast Asian debut. (News Online)
-    </figcaption>
-  </figure>
-
   <!-- ===== MASTHEAD ===== -->
   <div class="wrap">
     <header class="article-masthead article-reveal" data-od-id="masthead">
@@ -597,13 +572,17 @@ body {
     </header>
   </div>
 
-  <!-- ===== HERO IMAGE ===== -->
-  <figure class="article-hero-img" data-od-id="hero-image">
-    <img src="images/news/lead-cover.jpg" alt="KLIMS 2026 exhibition hall at MITEC with concept cars on display" loading="eager">
+  <!-- ===== INTEGRATED VIDEO HERO ===== -->
+  <figure class="article-hero-video" id="article-hero-video" data-od-id="hero-video">
+    <div class="article-hero-video__poster" id="video-poster" onclick="loadVideo()" title="Click to play KLIMS 2026 video">
+      <img src="images/news/lead-cover.jpg" alt="KLIMS 2026 exhibition hall at MITEC with concept cars on display" loading="eager">
+      <div class="article-hero-video__play"></div>
+      <span class="article-hero-video__label">▶ Watch Video</span>
+    </div>
+    <figcaption class="article-hero-video__caption article-reveal">
+      The Kuala Lumpur International Mobility Show 2026 at MITEC — the landmark exhibition has transitioned from a traditional motor show to a comprehensive mobility ecosystem platform. (Xiao Ziyue / News Online)
+    </figcaption>
   </figure>
-  <figcaption class="article-hero-caption article-reveal">
-    The Kuala Lumpur International Mobility Show 2026 at MITEC — the landmark exhibition has transitioned from a traditional motor show to a comprehensive mobility ecosystem platform. (Xiao Ziyue / News Online)
-  </figcaption>
 
   <!-- ===== ARTICLE BODY ===== -->
   <div class="wrap">
@@ -763,16 +742,15 @@ body {
 
   /* ===== VIDEO LOADER ===== */
   window.loadVideo = function(){
-    var container = document.querySelector('.video-hero__container');
-    var ph = document.getElementById('video-placeholder');
-    if (!ph) return;
+    var poster = document.getElementById('video-poster');
+    if (!poster) return;
     var iframe = document.createElement('iframe');
     iframe.src = 'https://www.youtube-nocookie.com/embed/Kq8Ot5ghe6g?autoplay=1&rel=0&modestbranding=1';
     iframe.title = 'KLIMS 2026 Highlights';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
     iframe.setAttribute('loading', 'lazy');
-    container.replaceChild(iframe, ph);
+    poster.parentNode.replaceChild(iframe, poster);
   };
 
   function escapeHTML(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -816,7 +794,7 @@ body {
   });
 
   /* Image fade-in on load */
-  document.querySelectorAll(".article-hero-img img, .article-inline-img img").forEach(function(img){
+  document.querySelectorAll(".article-hero-video__poster img, .article-inline-img img").forEach(function(img){
     if (img.complete) { img.style.opacity = "1"; }
     else { img.style.opacity = "0"; img.addEventListener("load", function(){ this.style.opacity = "1"; }); }
   });
