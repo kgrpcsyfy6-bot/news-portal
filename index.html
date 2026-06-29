@@ -141,6 +141,7 @@ input, textarea { font: inherit; }
   display: flex; align-items: center; gap: 4px;
 }
 .top-bar__btn:hover { background: rgba(255,255,255,0.15); }
+.top-bar__btn:active { transform: scale(0.95); }
 .top-bar__btn svg { width: 14px; height: 14px; }
 .top-bar__btn--active { background: rgba(255,255,255,0.2); }
 
@@ -433,6 +434,7 @@ input, textarea { font: inherit; }
   white-space: nowrap;
 }
 .site-nav__link:hover { color: var(--c-text); border-bottom-color: var(--c-border); }
+.site-nav__link:active { transform: scale(0.97); }
 .site-nav__link.active { color: var(--c-text); font-weight: 600; border-bottom-color: var(--c-red); }
 
 /* Hamburger */
@@ -1506,7 +1508,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	  visibility: visible;
 	  transform: translateY(0);
 	}
-	.back-to-top:hover {
+	.back-to-top:active { transform: scale(0.92); }
+.back-to-top:hover {
 	  background: var(--c-red);
 	  border-color: var(--c-red);
 	  color: #fff;
@@ -2163,6 +2166,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 .theme-icon--moon { display: none; }
 .top-bar__theme-btn { background: none; border: none; color: inherit; cursor: pointer; padding: 2px 4px; display: flex; align-items: center; opacity: 0.8; transition: opacity .15s; }
 .top-bar__theme-btn:hover { opacity: 1; }
+.top-bar__theme-btn:active { transform: scale(0.9); }
 </style>
 </head>
 <body id="top">
