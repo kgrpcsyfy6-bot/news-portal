@@ -2064,13 +2064,14 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
 /* ===== 3D Interaction Effects ===== */
 
-/* Effect 5 — Top Stories cards: cursor-driven micro-vibration + glow */
+/* Effect 5 — Top Stories cards: breathing scale + glow */
 .story-item {
   position: relative; overflow: hidden;
-  transition: box-shadow 0.35s ease, transform 0.12s ease-out;
+  transition: box-shadow 0.35s ease, transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .story-item:hover {
-  box-shadow: 0 6px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.03);
+  transform: scale(1.012);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
 }
 .story-item::after {
   content: ''; position: absolute; inset: -1px;
@@ -3715,47 +3716,30 @@ function wxApplyTheme(code) {
 	})();
 </script>
 <script>
-/* ===== 3D Interaction Effects ===== */
-(function() {
-  document.querySelectorAll('.story-item').forEach(function(card) {
-    card.addEventListener('mouseenter', function(e) {
-      var rect = card.getBoundingClientRect();
-      var x = (e.clientX - rect.left) / rect.width * 100;
-      var y = (e.clientY - rect.top) / rect.height * 100;
-      card.style.setProperty('--mx', x + '%');
-      card.style.setProperty('--my', y + '%');
-      card.style.transition = 'transform 0.08s ease-out, box-shadow 0.35s ease';
-    });
-    card.addEventListener('mousemove', function(e) {
-      var rect = card.getBoundingClientRect();
-      var dx = (e.clientX - rect.left) / rect.width - 0.5;
-      var dy = (e.clientY - rect.top) / rect.height - 0.5;
-      var tx = dx * 5;
-      var ty = dy * 5;
-      card.style.transform = 'translate(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px)';
-      var x = (dx + 0.5) * 100;
-      var y = (dy + 0.5) * 100;
-      card.style.setProperty('--mx', x + '%');
-      card.style.setProperty('--my', y + '%');
-    });
-    card.addEventListener('mouseleave', function() {
-      card.style.transform = 'translate(0, 0)';
-      card.style.transition = 'transform 0.35s ease-out, box-shadow 0.35s ease';
-      card.style.removeProperty('--mx');
-      card.style.removeProperty('--my');
-    });
-  });
-  var glowCards = document.querySelectorAll('.cat-feature, .cat-headline, .sidebar-card, .most-read__item');
-  glowCards.forEach(function(card) {
-    card.addEventListener('mousemove', function(e) {
-      var rect = card.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width) * 100;
-      var y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mx', x + '%');
-      card.style.setProperty('--my', y + '%');
-    });
-  });
-})();
+	/* ===== Hover Glow Effects ===== */
+	(function() {
+	  /* Top Stories: glow follows mouse, CSS handles breathing scale */
+	  document.querySelectorAll('.story-item').forEach(function(card) {
+	    card.addEventListener('mousemove', function(e) {
+	      var rect = card.getBoundingClientRect();
+	      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+	      card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+	    });
+	    card.addEventListener('mouseleave', function() {
+	      card.style.removeProperty('--mx');
+	      card.style.removeProperty('--my');
+	    });
+	  });
+	  /* Category + sidebar cards: glow only */
+	  var glowCards = document.querySelectorAll('.cat-feature, .cat-headline, .sidebar-card, .most-read__item');
+	  glowCards.forEach(function(card) {
+	    card.addEventListener('mousemove', function(e) {
+	      var rect = card.getBoundingClientRect();
+	      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+	      card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+	    });
+	  });
+	})();
 </script>
 
 </body>
