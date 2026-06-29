@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>News Online — Home</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>XU News Online — Home</title>
 <style>
 /* Self-hosted Geist — no external CDN, works offline + in China */
 @font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
@@ -97,11 +98,15 @@ input, textarea { font: inherit; }
 }
 .top-bar__left { display: flex; align-items: center; gap: 12px; }
 .top-bar__logo {
+  display: flex; align-items: center; gap: 8px;
+  color: #fff; text-decoration: none;
+}
+.top-bar__logo-mark { width: 28px; height: 28px; flex-shrink: 0; }
+.top-bar__logo-text {
   font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
   letter-spacing: -0.01em;
-  color: #fff;
 }
 .top-bar__tagline { font-size: 11px; opacity: 0.8; display: none; }
 .top-bar__actions { display: flex; align-items: center; gap: 8px; }
@@ -567,8 +572,7 @@ input, textarea { font: inherit; }
 }
 .hero__img img { width: 100%; height: 100%; object-fit: cover; }
 .hero__img svg { width: 40px; height: 40px; opacity: 0.3; color: var(--c-text-light); }
-.hero__img--placeholder { border: none; background: #e8e8e8; }
-.hero__img--placeholder:hover { background: #d0d0d0; }
+
 .hero__kicker {
   display: inline-block;
   font-family: var(--font-body);
@@ -589,7 +593,7 @@ input, textarea { font: inherit; }
   transition: color .15s;
 }
 a:hover .hero__headline { color: var(--c-red); }
-.hero__headline--placeholder { color: var(--c-text-light); font-style: italic; }
+
 .hero__summary {
   font-size: 14px;
   color: var(--c-text-soft);
@@ -597,7 +601,7 @@ a:hover .hero__headline { color: var(--c-red); }
   margin-bottom: 8px;
   max-width: 65ch;
 }
-.hero__summary--placeholder { color: var(--c-text-light); font-style: italic; }
+
 .hero__meta {
   font-size: 12px;
   color: var(--c-text-light);
@@ -2113,7 +2117,14 @@ a:hover .hero__subheadline { color: var(--c-red); }
 <div class="top-bar">
   <div class="top-bar__inner wrap">
     <div class="top-bar__left">
-      <a href="index.html" class="top-bar__logo">NEWS<span style="font-weight:300">ONLINE</span></a>
+      <a href="index.html" class="top-bar__logo">
+        <svg class="top-bar__logo-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <line x1="7" y1="7" x2="23" y2="29" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="23" y1="7" x2="7" y2="29" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M29 8 V27 A7 7 0 0 0 43 27 V8" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="top-bar__logo-text">News Online</span>
+      </a>
       <span class="top-bar__tagline">Trusted Reporting. Independent Journalism.</span>
     </div>
     <div class="top-bar__actions">
@@ -2701,7 +2712,14 @@ a:hover .hero__subheadline { color: var(--c-red); }
 <footer class="site-footer">
   <div class="site-footer__inner wrap">
     <div class="site-footer__brand">
-      <div class="site-footer__logo">NEWS<span style="font-weight:300">ONLINE</span></div>
+      <div class="site-footer__logo">
+        <svg viewBox="0 0 48 48" width="24" height="24" fill="none" aria-hidden="true" style="vertical-align:middle;margin-right:6px">
+          <line x1="7" y1="7" x2="23" y2="29" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="23" y1="7" x2="7" y2="29" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M29 8 V27 A7 7 0 0 0 43 27 V8" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        XU<span style="font-weight:300"> News Online</span>
+      </div>
       <p>University Journalism Course Project &middot; JRN209<br>Trusted Reporting. Independent Journalism.</p>
     </div>
     <nav class="site-footer__nav">
@@ -2741,7 +2759,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   <div class="signin-modal" role="dialog" aria-modal="true" aria-label="Sign in to News Online">
     <button class="signin-modal__close" id="signinClose" aria-label="Close sign in">&times;</button>
     <div class="signin-modal__brand">
-      <span class="signin-modal__logo">NEWS<span style="font-weight:300">ONLINE</span></span>
+      <span class="signin-modal__logo">XU<span style="font-weight:300"> News Online</span></span>
       <h2 class="signin-modal__title">Welcome back</h2>
       <p class="signin-modal__subtitle">Sign in to access your bookmarks, reading history, and personalised news feed.</p>
     </div>
