@@ -3318,8 +3318,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
   function formatNum(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
   // voted before?
-  if (_ls('jrn209_poll_key')) {
-    pollUserVote = _ls('jrn209_poll_key');
+  if (_ls.get('jrn209_poll_key')) {
+    pollUserVote = _ls.get('jrn209_poll_key');
     showResults(true);
   }
 
@@ -3473,7 +3473,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     setTimeout(function(){
       pollBase[sel.value]++; // user's vote added to base
       pollUserVote = sel.value;
-      _ls('jrn209_poll_key', sel.value);
+      _ls.set('jrn209_poll_key', sel.value);
       showResults(false);
     }, 400);
   });
@@ -3977,17 +3977,11 @@ function wxApplyTheme(code) {
 	  });
 	})();
 
-  // Safe localStorage wrapper (privacy-mode / quota safe)
-  function _ls(key, val) {
-    try {
-      if (val === undefined) return localStorage.getItem(key);
-      localStorage.setItem(key, val);
-    } catch (e) { /* privacy mode or quota exceeded */ }
-  }
   // Theme toggle
   (function(){
     var html = document.documentElement;
-    var saved = _ls('xu-theme');
+    var saved;
+    try { saved = localStorage.getItem('xu-theme'); } catch(e) {}
     if (saved === 'dark') {
       html.setAttribute('data-theme', 'dark');
     }
@@ -3996,7 +3990,7 @@ function wxApplyTheme(code) {
       toggle.addEventListener('click', function(){
         var isDark = html.getAttribute('data-theme') === 'dark';
         html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        _ls('xu-theme', isDark ? 'light' : 'dark');
+        try { localStorage.setItem('xu-theme', isDark ? 'light' : 'dark'); } catch(e) {}
       });
     }
     // Default is always light — only respect explicit user choice

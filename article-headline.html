@@ -801,8 +801,26 @@ body { overflow-x: hidden;
 
   if (commentForm) commentForm.addEventListener('submit', function(e){
     e.preventDefault();
-      '<p class="comment__text">' + escapeHTML(text) + '</p>' +
-      '<button class="comment__delete" data-cid="' + (saved.length - 1) + '" title="Delete comment" aria-label="Delete comment">' +
+    var text = commentTextarea.value.trim();
+    if (!text) { commentError.style.display = 'block'; return; }
+    commentError.style.display = 'none';
+    var now = new Date();
+    var comment = {
+      name: 'Reader',
+      time: now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+      text: text
+    };
+    var saved = loadComments();
+    saved.unshift(comment);
+    saveComments(saved);
+    // Render the new comment
+    var art = document.createElement('article');
+    art.className = 'comment comment--new';
+    art.innerHTML = '<div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>' +
+      '<div class="comment__body"><p class="comment__name">' + escapeHTML(comment.name) + '</p>' +
+      '<time class="comment__time">' + escapeHTML(comment.time) + '</time>' +
+      '<p class="comment__text">' + escapeHTML(comment.text) + '</p>' +
+      '<button class="comment__delete" data-cid="0" title="Delete comment" aria-label="Delete comment">' +
       '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>' +
       '</button></div>';
     commentsList.insertBefore(art, commentsList.firstChild);
