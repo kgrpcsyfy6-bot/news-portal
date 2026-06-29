@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<title>UN Climate Report Warns of Accelerating Sea Level Rise Across Coastal Cities — XU News Online</title>
+<title>UN General Assembly Adopts Landmark Resolution on Artificial Intelligence Governance — XU News Online</title>
 <style>
 @font-face { font-family: 'Geist'; src: url('fonts/Geist-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Geist'; src: url('fonts/Geist-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
@@ -257,7 +257,9 @@ body {
   letter-spacing: 0.03em;
 }
 
-/* Consistent block styles shared across all articles */
+/* ==============================
+   ARTICLE — AUTHOR BIO
+   ============================== */
 .author-bio {
   max-width: 720px;
   margin: 48px auto;
@@ -278,6 +280,9 @@ body {
 .author-bio__name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .author-bio__desc { font-size: 13px; color: var(--c-text-soft); line-height: 1.55; }
 
+/* ==============================
+   ARTICLE — SHARE
+   ============================== */
 .article-share {
   max-width: 720px;
   margin: 0 auto 48px;
@@ -296,6 +301,9 @@ body {
 .article-share button:hover { border-color: var(--c-red); color: var(--c-red); }
 .article-share button svg { width: 14px; height: 14px; }
 
+/* ==============================
+   ARTICLE — RELATED POSTS
+   ============================== */
 .related-posts {
   padding-top: 32px;
   border-top: 2px solid var(--c-border);
@@ -344,6 +352,9 @@ body {
 .related-item:hover .related-item__title { color: var(--c-red); }
 .related-item__meta { font-size: 11px; color: var(--c-text-light); display: flex; gap: 8px; }
 
+/* ==============================
+   ARTICLE — COMMENTS
+   ============================== */
 .comments-section {
   max-width: 720px;
   margin: 48px auto 0;
@@ -391,6 +402,9 @@ body {
 .btn--primary:active { transform: scale(.98); }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
+/* ==============================
+   FOOTER
+   ============================== */
 .site-footer { background: var(--c-bg-dark); color: #ccc; padding: 32px 0 16px; margin-top: 48px; }
 .site-footer__inner { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
 .site-footer__logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
@@ -404,6 +418,9 @@ body {
 .share-btn svg { width: 16px; height: 16px; }
 .site-footer__copy { font-size: 11px; color: #666; text-align: center; border-top: 1px solid var(--c-border-dark); padding-top: 16px; }
 
+/* ==============================
+   RESPONSIVE
+   ============================== */
 @media (min-width:480px) { .top-bar__tagline { display: inline; } }
 @media (min-width:768px) {
   .hamburger { display: none; } .site-nav__list { display: flex; }
@@ -440,6 +457,7 @@ body {
   <symbol id="ic-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
 </svg>
 
+<!-- TOP BAR -->
 <div class="top-bar">
   <div class="top-bar__inner wrap">
     <div class="top-bar__left">
@@ -461,6 +479,7 @@ body {
   </div>
 </div>
 
+<!-- HEADER -->
 <header class="site-header">
   <div class="site-header__inner wrap">
     <nav class="site-nav">
@@ -468,10 +487,9 @@ body {
       <ul class="site-nav__list" id="nav-list">
         <li><a href="index.html" class="site-nav__link">Home</a></li>
         <li><a href="article-world.html" class="site-nav__link">World</a></li>
-        <li><a href="index.html#sec-politics" class="site-nav__link">Politics</a></li>
+        <li><a href="index.html#sec-politics" class="site-nav__link site-nav__link active">World</a></li>
         <li><a href="index.html#sec-business" class="site-nav__link">Business</a></li>
         <li><a href="index.html#sec-tech" class="site-nav__link">Tech</a></li>
-        <li><a href="index.html#section-climate" class="site-nav__link site-nav__link active">Climate</a></li>
         <li><a href="index.html#sec-health" class="site-nav__link">Health</a></li>
         <li><a href="index.html#sec-sports" class="site-nav__link">Sports</a></li>
         <li><a href="index.html#sec-culture" class="site-nav__link">Culture</a></li>
@@ -482,80 +500,85 @@ body {
 </header>
 
 <main>
+  <!-- ===== MASTHEAD ===== -->
   <div class="wrap">
     <header class="article-masthead article-reveal" data-od-id="masthead">
-      <span class="article-kicker">Climate & Environment · IPCC</span>
-      <h1 class="article-headline">UN Climate Report Warns of Accelerating Sea Level Rise Across Coastal Cities</h1>
+      <span class="article-kicker">World · United Nations</span>
+      <h1 class="article-headline">UN General Assembly Adopts Landmark Resolution on Artificial Intelligence Governance</h1>
       <div class="article-byline-row">
-        <div class="article-byline-avatar"><img src="images/news/photo-1580489944761-15a19d654956.jpg" alt="Dr. Elena Rossi" loading="lazy"></div>
+        <div class="article-byline-avatar"><img src="images/team/wang-haoxin.jpg" alt="Wang Haoxin" loading="lazy"></div>
         <div class="article-byline-text">
-          <strong>By Dr. Elena Rossi</strong> · Climate &amp; Environment Editor, News Online
+          <strong>By Wang Haoxin</strong> · International Affairs Correspondent, XU News Online
         </div>
       </div>
       <div class="article-meta">
-        <span>13 June 2026</span><span class="dot"></span><span>11:00 BST</span><span class="dot"></span><span>8 min read</span>
+        <span>14 June 2026</span><span class="dot"></span><span>02:30 BST</span><span class="dot"></span><span>8 min read</span>
       </div>
     </header>
   </div>
 
+  <!-- ===== HERO IMAGE ===== -->
   <figure class="article-hero-img" data-od-id="hero-image">
-    <img src="images/news/photo-1611273426858-450d8e3c9fce.jpg" alt="Flooded street in coastal community after sea level rise" loading="eager">
+    <img src="images/news/photo-1519999482648-25049ddd37b1.jpg" alt="United Nations General Assembly chamber during vote on AI governance resolution" loading="eager">
   </figure>
   <figcaption class="article-hero-caption article-reveal">
-    Flooding in a coastal community — the UN climate report warns that more than fifty major cities face chronic inundation within three decades without dramatic emissions cuts. (Image source, Unsplash)
+    The United Nations General Assembly chamber during the historic vote on Resolution A/80/L.67 — the first comprehensive international framework for artificial intelligence governance, adopted with 152 votes in favour, 4 against, and 27 abstentions. (UN Photo / Unsplash)
   </figcaption>
 
+  <!-- ===== ARTICLE BODY ===== -->
   <div class="wrap">
     <div class="article-body article-reveal">
-      <p>PARIS — The United Nations Intergovernmental Panel on Climate Change has issued its starkest warning yet on sea level rise, publishing a special report on Friday that revises global projections sharply upward and identifies more than fifty major coastal cities at risk of chronic flooding within the next three decades unless greenhouse gas emissions are cut dramatically. The report, compiled by 234 scientists from 67 countries and drawing on new satellite observations and ice sheet modelling, concludes that global mean sea level could rise by as much as 1.2 metres by 2100 under current emissions trajectories — nearly double the upper estimate from the panel's previous assessment in 2021.</p>
+      <p>NEW YORK — The United Nations General Assembly adopted a landmark resolution on the governance of artificial intelligence late Thursday, establishing the first globally binding framework for the oversight of AI systems in what diplomats are calling the most significant international technology agreement since the Outer Space Treaty of 1967. Resolution A/80/L.67, titled "Governing Artificial Intelligence for Humanity," passed with 152 votes in favour, 4 against, and 27 abstentions after six months of negotiations that pitted technology-exporting nations against a coalition of developing countries demanding equitable access to AI benefits.</p>
 
-      <p>The acceleration is primarily driven by what glaciologists describe as "unstoppable but variable" ice loss from the Greenland and West Antarctic ice sheets. New data from the European Space Agency's CryoSat-3 mission and NASA's ICESat-3 have revealed that the grounding lines of several major Antarctic glaciers are retreating at rates up to three times faster than previously measured, exposing thicker inland ice to warming ocean waters.</p>
+      <p>The resolution establishes binding international norms for AI development, including mandatory human oversight for high-risk systems deployed in criminal justice, border control, and public benefits administration. It requires algorithmic transparency for all public-sector AI deployments and creates a permanent UN Office for Artificial Intelligence based in Geneva with a mandate to monitor compliance and issue annual public reports. A late amendment proposed by the African Union — requiring technology transfer provisions to ensure developing nations are not locked out of AI advances — was adopted after a tense 48-hour negotiation session. "The Global South refused to be spectators in this conversation," said Nigerian Ambassador Chidi Okonkwo, who co-chaired the final drafting committee.</p>
 
-      <p>"We are watching the world's largest ice reservoirs begin to structurally weaken in real time," said Dr Ingrid Olaussen, a glaciologist at the Norwegian Polar Institute and a lead author of the report. "What we once considered a slow, distant threat is now unfolding on a timescale measured in decades rather than centuries."</p>
+      <p>"This is not a technology problem — it is a power problem," UN Secretary-General Amina Al-Rashid told the General Assembly moments before the vote. "Without rules, AI becomes the property of the few. With rules, it becomes the tool of the many." The four dissenting votes came from a coalition of states that argued the resolution did not go far enough in restricting autonomous weapons, while the 27 abstentions included several major technology-exporting nations concerned about compliance costs. A compromise brokered by the European Union established a phased 18-month implementation timeline for high-risk systems, with an independent audit mechanism that can be triggered by any member state. "We needed something with teeth, not another declaration that gathers dust," said EU Digital Commissioner Helena Voss. "This resolution has molars."</p>
     </div>
 
+    <!-- Pull Quote 1 -->
     <aside class="pull-quote" data-od-id="pull-quote">
       <div class="pull-quote__mark">"</div>
-      <blockquote>We are watching the world's largest ice reservoirs begin to structurally weaken in real time.</blockquote>
-      <p class="pull-quote__attr">— Dr Ingrid Olaussen, Norwegian Polar Institute</p>
+      <blockquote>This is not a technology problem — it is a power problem. Without rules, AI becomes the property of the few.</blockquote>
+      <p class="pull-quote__attr">— Amina Al-Rashid, UN Secretary-General</p>
     </aside>
 
     <!-- Inline Image -->
     <figure class="article-inline-img article-reveal" data-od-id="inline-image">
-      <img src="images/news/photo-1562089727-90aa996a6f18.jpg" alt="Arctic iceberg melting — accelerating climate change impact on polar regions" loading="lazy">
+      <img src="images/news/photo-1554068865-24cecd4e34b8.jpg" alt="AI-powered surveillance camera in smart city — one of the technologies addressed by new UN resolution" loading="lazy">
     </figure>
     <figcaption class="article-inline-caption article-reveal">
-      An iceberg calves from the Greenland ice sheet — the UN report finds that ice loss from Greenland and Antarctica has accelerated 40% faster than previous projections, contributing to accelerating sea level rise. (Melissa Bradley / Unsplash)
+      AI-powered surveillance systems deployed in public spaces — the new UN resolution establishes a binding transparency framework for government use of artificial intelligence in law enforcement and border control. (Matthew Henry / Unsplash)
     </figcaption>
 
     <div class="article-body article-reveal">
-      <p>The report singles out several cities as acutely vulnerable. Shanghai, with a population of over 29 million people and critical infrastructure built on low-lying alluvial plain in the Yangtze Delta, faces what the report calls a "high confidence" risk of routine storm-surge inundation by 2050. Mumbai, where millions live in informal settlements on land reclaimed from the Arabian Sea, is listed alongside Miami, whose porous limestone geology renders traditional sea walls largely ineffective against groundwater rise. Jakarta — already sinking at rates of up to 25 centimetres per year in some districts due to groundwater extraction — appears in the report as a case study of compound risk, where sea level rise combined with land subsidence could render much of the city uninhabitable well before the end of the century.</p>
+      <p>The resolution, formally designated A/80/L.67 and titled "Governing Artificial Intelligence for Humanity," passed with 152 votes in favour, 4 against, and 27 abstentions after six months of intense negotiations. It establishes the first binding international norms for AI development, including mandatory human oversight for high-risk systems, algorithmic transparency requirements for public-sector deployment, and a permanent UN Office for Artificial Intelligence based in Geneva with a mandate to monitor compliance and issue annual public reports. "This is not a technology problem — it is a power problem," UN Secretary-General Amina Al-Rashid told the Assembly moments before the vote. "Without rules, AI becomes the property of the few. With rules, it becomes the tool of the many." </p>
 
-      <p>The economic implications are staggering. The report estimates that the total value of assets exposed to a one-metre sea level rise exceeds US$14 trillion globally, with Asia accounting for more than half of that figure. Port infrastructure, which handles over 80% of global trade by volume, is particularly vulnerable: the ports of Shanghai, Rotterdam, Houston, and Singapore all lie within zones projected to experience flooding at least annually by 2070 under the report's intermediate scenario. Supply chain disruptions from port closures, the authors note, would cascade through the global economy within days.</p>
+      <p>Civil society groups gave the resolution a qualified welcome. Amnesty International praised the human oversight provisions as "a floor, not a ceiling," while the Electronic Frontier Foundation warned that the exemption for "national security systems" created a loophole that could be exploited for mass surveillance. Major technology companies, represented through the Global Partnership on AI, issued a joint statement supporting the resolution's transparency requirements but urging governments to "avoid fragmentation" in implementation — a signal that the industry prefers one set of global rules to dozens of competing national frameworks. Shares of major AI firms were largely unchanged in after-hours trading, suggesting markets had already priced in the regulatory direction.</p>
     </div>
 
+    <!-- Pull Quote 2 -->
     <aside class="pull-quote" data-od-id="pull-quote">
       <div class="pull-quote__mark">"</div>
-      <blockquote>Every tonne of carbon we do not emit is a cubic metre of water we do not add to the oceans.</blockquote>
-      <p class="pull-quote__attr">— Amina Al Khaja, UN Secretary-General</p>
+      <blockquote>Without rules, AI becomes the property of the few. With rules, it becomes the tool of the many.</blockquote>
+      <p class="pull-quote__attr">— Amina Al-Rashid, UN Secretary-General</p>
     </aside>
 
     <div class="article-body article-reveal">
-      <p>UN Secretary-General Amina Al Khaja responded to the report by calling for an emergency session of the General Assembly on climate adaptation financing. "This is not a distant problem for future generations to solve," she said in a video address from UN headquarters. "This is a present danger that demands immediate investment in coastal defences, managed retreat where necessary, and, above all, accelerated decarbonisation." The Secretary-General urged wealthy nations to fulfil the long-delayed commitment of US$100 billion annually in climate finance for developing countries.</p>
+      <p>The resolution also establishes a Global AI Safety Institute, modelled on the UK's pioneering AI Safety Institute, with a mandate to conduct adversarial testing of frontier models before commercial release. Any AI model trained with more than 10²⁶ floating-point operations — roughly the compute budget used to train the largest current-generation models — must undergo a pre-deployment safety evaluation and receive certification from the Institute before being made available to the public. The threshold was deliberately set high after intense lobbying from open-source AI advocates, who argued that lower limits would stifle academic research and small-company innovation. "We drew the line where the risk becomes existential, not where it becomes competitive," explained the resolution's chief scientific adviser, Professor Yuki Tanaka of the University of Tokyo.</p> </p>
 
-      <p>Climate scientists who were not involved in the report's authorship broadly endorsed its methodology while noting the inherent uncertainty in long-range ice sheet projections. Professor Kenji Matsumoto of the University of Tokyo described the report as "rigorous and appropriately cautious," but warned that even these elevated projections may prove conservative if certain tipping points — such as the collapse of the Thwaites Glacier ice shelf in West Antarctica — are triggered sooner than modelled. "The ice sheets do not care about our confidence intervals," he said. "They respond to physics, and the physics is increasingly telling us that we have underestimated the pace of change."</p>
-
-      <p>Governments are being urged to revise their national adaptation plans within twelve months, and the report provides a framework for city-level vulnerability assessments that account for local subsidence rates, tidal ranges, and storm surge frequencies. For the millions of people living in the shadow of this projection — from street vendors in the flood-prone wards of Mumbai to homeowners in the hurricane corridors of the American Gulf Coast — the report offers a sobering message: the water is rising faster than we thought, and the time to prepare is running short.</p>
+      <p>For the billions of people who will live under the rules this resolution creates — whether they know it or not — the UN vote in New York marks the end of the beginning. The age of ungoverned artificial intelligence is officially over. Whether the age of well-governed AI has truly begun depends on what happens in Geneva, in national capitals, and in the server farms where the next generation of models is already being trained. The resolution itself is 47 pages. Its legacy will be written in the decades to come.</p>
     </div>
 
+    <!-- Author Bio -->
     <div class="author-bio article-reveal" data-od-id="author-bio">
-      <div class="author-bio__avatar"><img loading="lazy" src="images/news/photo-1580489944761-15a19d654956.jpg" alt="Dr. Elena Rossi"></div>
+      <div class="author-bio__avatar"><img loading="lazy" src="images/team/wang-haoxin.jpg" alt="Wang Haoxin"></div>
       <div>
-        <p class="author-bio__name">Dr. Elena Rossi</p>
-        <p class="author-bio__desc">Climate &amp; Environment Editor at News Online. Covers climate science, environmental policy, and earth systems. Previously a research fellow at the Potsdam Institute for Climate Impact Research. Based in Berlin.</p>
+        <p class="author-bio__name">Wang Haoxin</p>
+        <p class="author-bio__desc">International Affairs Correspondent at XU News Online. Covers United Nations, global governance, and technology policy. Previously at Caixin Global and South China Morning Post. Based in New York.</p>
       </div>
     </div>
 
+    <!-- Share -->
     <div class="article-share">
       <span class="article-share__label">Share:</span>
       <button data-share="weibo"><svg><use href="#ic-weibo"/></svg> Weibo</button>
@@ -563,47 +586,49 @@ body {
       <button data-share="copy"><svg><use href="#ic-link"/></svg> Copy Link</button>
     </div>
 
+    <!-- Related Posts -->
     <section class="related-posts" data-od-id="related-posts">
-      <h2 class="related-posts__title">More in Climate</h2>
+      <h2 class="related-posts__title">More in Politics</h2>
       <div class="related-grid article-reveal">
-        <a href="article-health.html" class="related-item">
-          <div class="related-item__img"><img src="images/news/photo-1470071459604-3b5ec3a7fe05.jpg" alt="Climate nature" loading="lazy"></div>
-          <span class="related-item__kicker">COP Summit</span>
-          <h3 class="related-item__title">COP32 Draft Text Proposes Binding Fossil Fuel Phase-Out by 2050</h3>
-          <div class="related-item__meta"><span>13 Jun 2026</span> · <span>8 min read</span></div>
+        <a href="article-headline.html" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1526374965328-7f61d4dc18c5.jpg" alt="Security" loading="lazy"></div>
+          <span class="related-item__kicker">Politics</span>
+          <h3 class="related-item__title">Home Office Announces Major Overhaul of Counter-Terrorism Strategy</h3>
+          <div class="related-item__meta"><span>14 Jun 2026</span> · <span>6 min read</span></div>
         </a>
-        <a href="article-politics.html" class="related-item">
-          <div class="related-item__img"><img src="images/news/photo-1518623001395-125242310d0c.jpg" alt="Amazon rainforest" loading="lazy"></div>
-          <span class="related-item__kicker">Environment</span>
-          <h3 class="related-item__title">Amazon Deforestation Hits Record Low as New Conservation Policies Take Hold</h3>
-          <div class="related-item__meta"><span>10 Jun 2026</span> · <span>6 min read</span></div>
+        <a href="article-business.html" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1529101091764-c3526daf38fe.jpg" alt="Parliament" loading="lazy"></div>
+          <span class="related-item__kicker">Politics</span>
+          <h3 class="related-item__title">Prime Minister Faces Backbench Revolt Over Revised Migration Targets</h3>
+          <div class="related-item__meta"><span>12 Jun 2026</span> · <span>7 min read</span></div>
         </a>
-        <a href="article-tech-ai.html" class="related-item">
-          <div class="related-item__img"><img src="images/news/photo-1546026423-cc4642628d2b.jpg" alt="Coral reef" loading="lazy"></div>
-          <span class="related-item__kicker">Earth Systems</span>
-          <h3 class="related-item__title">Coral Reef Restoration Breakthrough: Lab-Grown Larvae Survive First Year</h3>
-          <div class="related-item__meta"><span>7 Jun 2026</span> · <span>5 min read</span></div>
+        <a href="article-climate.html" class="related-item">
+          <div class="related-item__img"><img src="images/news/photo-1599661046289-e31897846e41.jpg" alt="Scotland" loading="lazy"></div>
+          <span class="related-item__kicker">Politics</span>
+          <h3 class="related-item__title">Scottish Devolution Report Calls for Sweeping New Fiscal Powers</h3>
+          <div class="related-item__meta"><span>9 Jun 2026</span> · <span>5 min read</span></div>
         </a>
       </div>
     </section>
 
+    <!-- Comments -->
     <section class="comments-section article-reveal" id="comments" data-od-id="comments">
       <h2 class="comments-title">Comments</h2>
       <div id="comments-list">
         <article class="comment">
           <div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>
           <div class="comment__body">
-            <p class="comment__name">Kai Zhang</p>
+            <p class="comment__name">Maya Johansson</p>
             <time class="comment__time">3 hours ago</time>
-            <p class="comment__text">Living in Shanghai, this hits very close to home — literally. We have flood barriers along the Bund but I wonder if they will be enough if we are really looking at 1.2 metres. City planners need to take this report seriously now, not in ten years.</p>
+            <p class="comment__text">Finally a resolution with actual enforcement mechanisms. The IAEA model for compliance monitoring is smart — it has worked for nuclear non-proliferation for decades. But the national security exemption is concerning. That is exactly where the worst abuses happen.</p>
           </div>
         </article>
         <article class="comment">
           <div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>
           <div class="comment__body">
-            <p class="comment__name">Oliver West</p>
-            <time class="comment__time">5 hours ago</time>
-            <p class="comment__text">The economic figures in this report should terrify anyone in finance or insurance. Fourteen trillion dollars of exposed assets is not a "maybe" problem — it's a guaranteed market correction that most portfolios are utterly unprepared for.</p>
+            <p class="comment__name">Dr. Kwame Asante</p>
+            <time class="comment__time">6 hours ago</time>
+            <p class="comment__text">As someone who works in AI ethics, the 10²⁶ FLOP threshold is a good starting point but it will need to be revised downward as hardware efficiency improves. We should be regulating based on capability, not compute budget. Still, this is by far the most substantive AI governance framework we have seen. The African Union amendment on technology transfer was crucial.</p>
           </div>
         </article>
       </div>
@@ -615,9 +640,10 @@ body {
         <button type="submit" class="btn btn--primary">Post Comment</button>
       </form>
     </section>
-  </div>
+  </div><!-- /.wrap -->
 </main>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="site-footer__inner wrap">
     <div class="site-footer__brand"><div class="site-footer__logo">
