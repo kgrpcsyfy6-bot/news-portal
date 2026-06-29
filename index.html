@@ -592,6 +592,8 @@ input, textarea { font: inherit; }
   grid-template-columns: 1fr;
   gap: 16px;
 }
+.hero__grid > * { min-width: 0; }
+.hero__img { min-width: 0; }
 .hero__primary {
   position: relative;
   border-bottom: 1px solid var(--c-border);
@@ -666,6 +668,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   padding: 24px 0;
   align-items: start;
 }
+.main-layout > * { min-width: 0; }
 
 /* ==============================
    TOP STORIES GRID
@@ -685,6 +688,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   grid-template-columns: 1fr;
   gap: 0;
 }
+.stories-grid > * { min-width: 0; }
 .story-item {
   display: grid;
   grid-template-columns: 1fr;
@@ -692,6 +696,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   padding: 14px 0;
   border-bottom: 1px solid var(--c-border);
   transition: background .15s;
+  min-width: 0;
 }
 .story-item:hover { background: var(--c-bg-grey); }
 .story-item__img {
@@ -700,6 +705,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 12px;
   overflow: hidden;
+  min-width: 0;
 }
 .story-item__img img { width: 100%; height: 100%; object-fit: cover; }
 .story-item__img svg { width: 28px; height: 28px; opacity: 0.25; color: var(--c-text-light); }
@@ -1300,6 +1306,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
   grid-template-columns: 1fr;
   gap: 16px;
 }
+.cat-grid > * { min-width: 0; }
+.cat-feature__img { min-width: 0; }
 
 /* Feature article */
 .cat-feature {
