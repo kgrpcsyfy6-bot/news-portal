@@ -878,7 +878,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
   font-size: 8px; color: var(--c-text-soft); text-align: center;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
 }
-.poll-error { display: none; font-size: 12px; color: #d00; margin-bottom: 8px; }
+.poll-error { display: none; font-size: 12px; color: var(--c-red, #B80000); margin-bottom: 8px; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -1214,7 +1214,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 /* Toast */
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  background: #141414; color: #fff;
+  background: var(--c-bg-dark, #141414); color: var(--c-surface, #fff);
   padding: 12px 24px; border-radius: 20px;
   font-size: 13px; z-index: 500;
   animation: toastIn .3s var(--ease) forwards;
@@ -1517,7 +1517,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		   STOCK TICKER
 		   ============================================= */
 		.stock-ticker {
-		  background: #141414;
+		  background: var(--c-bg-dark, #141414);
 		  color: #fff;
 		  font-family: var(--font-body);
 		  font-size: 13px;
@@ -1543,8 +1543,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  margin-right: 6px;
 		}
 		.stock-ticker__price { margin-right: 6px; }
-		.up   { color: #00c853; }
-		.down { color: #ff1744; }
+		.up   { color: var(--c-up, #00c853); }
+		.down { color: var(--c-red, #ff1744); }
 		@keyframes stockScroll {
 		  0%   { transform: translateX(0); }
 		  100% { transform: translateX(-50%); }
@@ -1801,7 +1801,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 		  display: inline-block;
 		  width: 8px;
 		  height: 8px;
-		  background: #00c853;
+		  background: var(--c-up, #00c853);
 		  border-radius: 50%;
 		  margin-right: 6px;
 		  animation: pulse-dot 2s ease-in-out infinite;
@@ -2876,6 +2876,13 @@ a:hover .hero__subheadline { color: var(--c-red); }
 (function(){
   'use strict';
 
+  // Safe localStorage wrapper (privacy / quota-safe)
+  var _ls = {
+    get: function(k, d) { try { var v = localStorage.getItem(k); return v !== null ? v : d; } catch(e) { return d; } },
+    set: function(k, v) { try { localStorage.setItem(k, v); } catch(e) {} },
+    remove: function(k) { try { localStorage.removeItem(k); } catch(e) {} }
+  };
+
   // Toast
   function toast(msg) {
     var t = document.createElement('div');
@@ -2914,7 +2921,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     document.body.style.overflow = '';
   }
 
-  searchBtn.addEventListener('click', function(e){
+  if (searchBtn) searchBtn.addEventListener('click', function(e){
     e.stopPropagation();
     if (searchPanel.classList.contains('search-panel--open')) { closeSearch(); }
     else { openSearch(); }
@@ -3064,11 +3071,13 @@ a:hover .hero__subheadline { color: var(--c-red); }
     toast('Account creation coming soon');
   });
 
-  document.getElementById('signinGoogle').addEventListener('click', function(){
+  var signinGoogle = document.getElementById('signinGoogle');
+  if (signinGoogle) signinGoogle.addEventListener('click', function(){
     toast('Google sign-in coming soon');
   });
 
-  document.getElementById('signinApple').addEventListener('click', function(){
+  var signinApple = document.getElementById('signinApple');
+  if (signinApple) signinApple.addEventListener('click', function(){
     toast('Apple sign-in coming soon');
   });
 
