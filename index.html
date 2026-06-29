@@ -79,7 +79,7 @@ input, textarea { font: inherit; }
 .icon-sprite { display: none; }
 
 /* ==============================
-   TOP BAR (BBC-style red banner)
+   TOP BAR (red banner)
    ============================== */
 .top-bar {
   position: relative;
@@ -2064,13 +2064,15 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
 /* ===== 3D Interaction Effects ===== */
 
-/* Perspective container for Top Stories tilt */
-.stories-grid { perspective: 1000px; }
-
-/* Effect 5 — Top Stories cards: tilt + glow */
+/* Effect 5 — Top Stories cards: breathing scale + glow */
 .story-item {
   position: relative; overflow: hidden;
-  transform-style: preserve-3d; will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
+              box-shadow 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.story-item:hover {
+  transform: scale(1.018);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
 }
 .story-item::after {
   content: ''; position: absolute; inset: -1px;
@@ -2079,7 +2081,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     500px circle at var(--mx, 50%) var(--my, 50%),
     rgba(184, 0, 0, 0.05), transparent 40%
   );
-  transition: opacity .25s;
+  transition: opacity .35s ease;
 }
 .story-item:hover::after { opacity: 1; }
 .story-item > * { position: relative; z-index: 1; }
@@ -2477,12 +2479,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
 
           <div class="wl-video" data-video="dIc_rUkrP6c">
             <div class="wl-video__thumb">
-              <img src="images/news/youtube-dIc_rUkrP6c.jpg" alt="BBC News report" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='var(--c-bg-grey)'">
+              <img src="images/news/youtube-dIc_rUkrP6c.jpg" alt="News report" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='var(--c-bg-grey)'">
               <div class="wl-video__overlay"><div class="wl-video__play-ring"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></div></div>
             </div>
             <div class="wl-video__text">
               <span class="wl-video__label">Iran and US agree deal to end war</span>
-              <span class="wl-video__src">BBC News</span>
+              <span class="wl-video__src">World News</span>
             </div>
           </div>
           <div class="wl-video" data-video="gU8KXivuzc4">
@@ -2499,7 +2501,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
           <div class="wl-audio" id="wlAudio">
             <div class="wl-audio__header">
               <span class="wl-audio__dot"></span>
-              <span class="wl-audio__label">LIVE · BBC World Service</span>
+              <span class="wl-audio__label">LIVE · World Service</span>
             </div>
             <div class="wl-audio__waves">
               <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -3720,22 +3722,14 @@ function wxApplyTheme(code) {
   document.querySelectorAll('.story-item').forEach(function(card) {
     card.addEventListener('mousemove', function(e) {
       var rect = card.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      var cx = rect.width / 2;
-      var cy = rect.height / 2;
-      var rx = ((y - cy) / cy) * -5;
-      var ry = ((x - cx) / cx) * 5;
-      card.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-      card.style.setProperty('--mx', (x / rect.width * 100) + '%');
-      card.style.setProperty('--my', (y / rect.height * 100) + '%');
+      var x = (e.clientX - rect.left) / rect.width * 100;
+      var y = (e.clientY - rect.top) / rect.height * 100;
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
     });
     card.addEventListener('mouseleave', function() {
-      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-      card.style.transition = 'transform 0.3s ease';
-    });
-    card.addEventListener('mouseenter', function() {
-      card.style.transition = 'transform 0.1s ease';
+      card.style.removeProperty('--mx');
+      card.style.removeProperty('--my');
     });
   });
   var glowCards = document.querySelectorAll('.cat-feature, .cat-headline, .sidebar-card, .most-read__item');
