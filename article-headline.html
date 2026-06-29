@@ -268,9 +268,17 @@ body {
   margin: 32px auto 0;
 }
 .article-inline-img img { display: block; width: 100%; height: auto; background: var(--c-bg-grey); }
-.article-inline-caption {
+.article-inline-img figcaption {
   max-width: 720px;
   margin: 10px auto 32px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--c-text-soft);
+}
+.article-inline-caption {
+  display: block;
+  margin-top: 4px;
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.6;
@@ -642,6 +650,12 @@ body {
 
       <p>Model C2, released on June 11 at an advancing media conference and exhibited during following event days, is indicating that Perodua&rsquo;s forward-looking visions of a Malaysian mobility future is both accessible and highly advanced and tries to open a &ldquo;new chapter&rdquo; of Malaysia EVs.</p>
     </div>
+
+    <!-- Inline image — KLIMS 2026 exhibition hall -->
+    <figure class="article-inline-img article-reveal" data-od-id="inline-img">
+      <img src="images/news/klims-2026-booth.jpg" alt="KLIMS 2026 exhibition hall at MITEC Kuala Lumpur, showcasing concept cars and EV displays from Perodua, XPeng, Toyota and other automakers" loading="lazy" width="850" height="567">
+      <figcaption>The 11th edition of the Kuala Lumpur International Mobility Show drew over 205,000 visitors across 10 days at MITEC, featuring nearly 20 automakers from Malaysia, Japan and China. <span class="article-inline-caption">Image source, Paul Tan's Automotive News</span></figcaption>
+    </figure>
 
     <!-- Pull Quote 1 -->
     <aside class="pull-quote" data-od-id="pull-quote">
