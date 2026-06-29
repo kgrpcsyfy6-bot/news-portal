@@ -292,6 +292,13 @@
     .glow-grid { grid-template-columns: 1fr; }
     .combined-grid { grid-template-columns: 1fr; }
   }
+
+[data-theme="dark"] .theme-icon--sun { display: block; }
+[data-theme="dark"] .theme-icon--moon { display: none; }
+.theme-icon--sun { display: none; }
+.theme-icon--moon { display: block; }
+.top-bar__theme-btn { background: none; border: none; color: inherit; cursor: pointer; padding: 2px 4px; display: flex; align-items: center; opacity: 0.8; transition: opacity .15s; }
+.top-bar__theme-btn:hover { opacity: 1; }
 </style>
 </head>
 <body>
@@ -697,6 +704,30 @@
     });
   });
 })();
+
+  // Theme toggle
+  (function(){
+    var html = document.documentElement;
+    var saved = localStorage.getItem('xu-theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.setAttribute('data-theme', 'dark');
+    }
+    var toggle = document.getElementById('themeToggle');
+    if (toggle) {
+      toggle.addEventListener('click', function(){
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('xu-theme', isDark ? 'light' : 'dark');
+      });
+    }
+    // Listen for system changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e){
+      if (!localStorage.getItem('xu-theme')) {
+        html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      }
+    });
+  })();
+
 </script>
 </body>
 </html>
