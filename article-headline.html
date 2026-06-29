@@ -550,7 +550,6 @@ body {
 
 <main>
   <!-- ===== VIDEO HERO ===== -->
-  <!-- TODO: Replace YOUTUBE_VIDEO_ID with the real ID after uploading OJ FP.mp4 to YouTube -->
   <figure class="video-hero" id="video-hero" data-od-id="video-hero">
     <div class="video-hero__container">
       <div class="video-hero__placeholder" id="video-placeholder" onclick="loadVideo()" title="Click to play video">
@@ -738,13 +737,12 @@ body {
   });
 
   /* ===== VIDEO LOADER ===== */
-  /* TODO: Replace 'YOUTUBE_VIDEO_ID' with the real YouTube video ID after uploading OJ FP.mp4 */
   window.loadVideo = function(){
     var container = document.querySelector('.video-hero__container');
     var ph = document.getElementById('video-placeholder');
     if (!ph) return;
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube-nocookie.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&rel=0&modestbranding=1';
+    iframe.src = 'https://www.youtube-nocookie.com/embed/Kq8Ot5ghe6g?autoplay=1&rel=0&modestbranding=1';
     iframe.title = 'KLIMS 2026 Highlights';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
