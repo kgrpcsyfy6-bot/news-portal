@@ -690,16 +690,64 @@ body {
   var commentsList = document.getElementById('comments-list');
   var commentError = document.getElementById('comment-error');
 
+  // --- Comments with localStorage persistence ---
+  var COMMENT_KEY = 'xu-comments-' + (location.pathname.split('/').pop().replace('.html','') || 'page');
+
+  function saveComments(comments) {
+    try { localStorage.setItem(COMMENT_KEY, JSON.stringify(comments)); } catch(e) {}
+  }
+  function loadComments() {
+    try { return JSON.parse(localStorage.getItem(COMMENT_KEY)) || []; } catch(e) { return []; }
+  }
+  function renderSavedComments() {
+    var saved = loadComments();
+    saved.forEach(function(c, idx) {
+      var art = document.createElement('article');
+      art.className = 'comment';
+      art.setAttribute('data-cid', idx);
+      art.innerHTML = '<div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>' +
+        '<div class="comment__body"><p class="comment__name">' + escapeHTML(c.name || 'Reader') + '</p>' +
+        '<time class="comment__time">' + escapeHTML(c.time) + '</time>' +
+        '<p class="comment__text">' + escapeHTML(c.text) + '</p>' +
+        '<button class="comment__delete" data-cid="' + idx + '" title="Delete comment" aria-label="Delete comment">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>' +
+        '</button></div>';
+      commentsList.insertBefore(art, commentsList.firstChild);
+    });
+  }
+  renderSavedComments();
+
+  commentsList.addEventListener('click', function(e) {
+    var del = e.target.closest('.comment__delete');
+    if (!del) return;
+    var cid = parseInt(del.getAttribute('data-cid'), 10);
+    var saved = loadComments();
+    saved.splice(cid, 1);
+    saveComments(saved);
+    del.closest('.comment').remove();
+  });
+
   commentForm.addEventListener('submit', function(e){
     e.preventDefault();
     commentError.style.display = 'none';
     var text = commentTextarea.value.trim();
     if (!text) { commentError.style.display = 'block'; commentTextarea.focus(); return; }
     var now = new Date();
-    var ts = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0') + ' Just now';
+    var ts = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) + ' at ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+    var name = 'Reader';
+    var saved = loadComments();
+    saved.push({ name: name, time: ts, text: text });
+    saveComments(saved);
     var art = document.createElement('article');
     art.className = 'comment comment--new';
-    art.innerHTML = '<div class="comment__avatar"><svg><use href="#ic-user"/></svg></div><div class="comment__body"><p class="comment__name">Reader</p><time class="comment__time">' + ts + '</time><p class="comment__text">' + escapeHTML(text) + '</p></div>';
+    art.setAttribute('data-cid', saved.length - 1);
+    art.innerHTML = '<div class="comment__avatar"><svg><use href="#ic-user"/></svg></div>' +
+      '<div class="comment__body"><p class="comment__name">' + name + '</p>' +
+      '<time class="comment__time">' + ts + '</time>' +
+      '<p class="comment__text">' + escapeHTML(text) + '</p>' +
+      '<button class="comment__delete" data-cid="' + (saved.length - 1) + '" title="Delete comment" aria-label="Delete comment">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>' +
+      '</button></div>';
     commentsList.insertBefore(art, commentsList.firstChild);
     commentTextarea.value = '';
     setTimeout(function(){ art.classList.remove('comment--new'); }, 350);
