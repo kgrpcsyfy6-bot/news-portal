@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Effects Demo — XU News</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body {
+    background: #f8f8f8;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: #1a1a1a;
+    padding: 40px;
+  }
+  h1 {
+    font-family: Georgia, 'Iowan Old Style', serif;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+  .subtitle { color: #8A8C8E; margin-bottom: 40px; font-size: 14px; }
+
+  .demo-section {
+    margin-bottom: 60px;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e6e8ea;
+    border-radius: 6px;
+  }
+  .demo-section h2 {
+    font-family: Georgia, serif;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .demo-section .desc {
+    color: #8A8C8E;
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  /* ========== DEMO 1: 3D Card Tilt ========== */
+  .tilt-container {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    perspective: 1200px;
+  }
+  .tilt-card {
+    width: 260px;
+    background: #fff;
+    border: 1px solid #e6e8ea;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .tilt-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+  .tilt-card__img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    transform: translateZ(20px);
+  }
+  .tilt-card:nth-child(2) .tilt-card__img { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+  .tilt-card:nth-child(3) .tilt-card__img { background: linear-gradient(135deg, #0f3460 0%, #533483 100%); }
+  .tilt-card:nth-child(4) .tilt-card__img { background: linear-gradient(135deg, #243949 0%, #517fa4 100%); }
+  .tilt-card__body {
+    padding: 16px;
+    transform: translateZ(30px);
+  }
+  .tilt-card__kicker {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #B80000;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .tilt-card__title {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .tilt-card__meta {
+    font-size: 11px;
+    color: #8A8C8E;
+  }
+  /* Gloss overlay */
+  .tilt-card__gloss {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 2;
+  }
+  .tilt-card:hover .tilt-card__gloss { opacity: 1; }
+
+  /* ========== DEMO 2: Mouse Trail Particles ========== */
+  .trail-demo {
+    position: relative;
+    height: 320px;
+    background: #1a1a2e;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .trail-demo__label {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1;
+    font-family: Georgia, serif;
+  }
+  .trail-demo canvas {
+    position: absolute;
+    inset: 0;
+  }
+  .trail-demo__cursor {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(184,0,0,0.3);
+    transition: left 0.05s linear, top 0.05s linear;
+  }
+
+  /* ========== DEMO 3: Card Glow Follow ========== */
+  .glow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+  }
+  .glow-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid #e6e8ea;
+    border-radius: 4px;
+    padding: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      600px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(184, 0, 0, 0.08),
+      transparent 40%
+    );
+  }
+  .glow-card:hover::before { opacity: 1; }
+  .glow-card:hover {
+    border-color: rgba(184,0,0,0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+  .glow-card > * { position: relative; z-index: 1; }
+  .glow-card__title {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .glow-card__text {
+    font-size: 13px;
+    color: #8A8C8E;
+    line-height: 1.5;
+  }
+
+  /* ========== DEMO 4: 3D Globe (Three.js) ========== */
+  .globe-demo {
+    position: relative;
+    height: 400px;
+    background: #0a0a1a;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .globe-demo canvas {
+    display: block;
+  }
+  .globe-demo__label {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    pointer-events: none;
+    z-index: 1;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========== DEMO 5: News cards with tilt + glow combined ========== */
+  .combined-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 680px;
+    perspective: 1000px;
+  }
+  .combined-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid #e6e8ea;
+    border-radius: 4px;
+    padding: 20px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    will-change: transform;
+    overflow: hidden;
+  }
+  .combined-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 5px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      500px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(184, 0, 0, 0.06),
+      transparent 40%
+    );
+    transition: opacity 0.2s;
+  }
+  .combined-card:hover::after { opacity: 1; }
+  .combined-card > * { position: relative; z-index: 1; }
+  .combined-card__kicker {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #B80000;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .combined-card__title {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .combined-card__meta {
+    font-size: 11px;
+    color: #8A8C8E;
+  }
+
+  /* Selection highlight */
+  .pick-btn {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 20px;
+    background: #B80000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .pick-btn:hover { background: #9a0000; }
+
+  @media (max-width: 768px) {
+    body { padding: 20px; }
+    .tilt-container { flex-direction: column; align-items: center; }
+    .glow-grid { grid-template-columns: 1fr; }
+    .combined-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<h1>🎨 3D &amp; Interaction Effects — Mockup Gallery</h1>
+<p class="subtitle">Each demo shows a different visual interaction style. Hover over cards, move your mouse in the dark areas. Pick what you like.</p>
+
+<!-- DEMO 1: 3D Card Tilt -->
+<section class="demo-section" id="demo1">
+  <h2>1. 3D Card Tilt — Perspective + Depth</h2>
+  <p class="desc">Cards tilt toward your cursor like a physical card on a table. Uses CSS <code>perspective</code> + <code>transform: rotateX/Y</code>. No Three.js — pure CSS/JS, ~2KB. Works on all modern browsers. Subtle gloss overlay follows light angle.</p>
+  <div class="tilt-container" id="tiltContainer">
+    <div class="tilt-card">
+      <div class="tilt-card__img">Global Trade</div>
+      <div class="tilt-card__body">
+        <div class="tilt-card__kicker">Business</div>
+        <div class="tilt-card__title">Global Trade Rebounds as Supply Chains Stabilize</div>
+        <div class="tilt-card__meta">6h ago &middot; By Wang Haoxin</div>
+      </div>
+      <div class="tilt-card__gloss"></div>
+    </div>
+    <div class="tilt-card">
+      <div class="tilt-card__img">Climate Summit</div>
+      <div class="tilt-card__body">
+        <div class="tilt-card__kicker">Climate</div>
+        <div class="tilt-card__title">Pacific Nations Demand Stronger Emission Targets</div>
+        <div class="tilt-card__meta">8h ago &middot; By Lin Xiang</div>
+      </div>
+      <div class="tilt-card__gloss"></div>
+    </div>
+    <div class="tilt-card">
+      <div class="tilt-card__img">AI Breakthrough</div>
+      <div class="tilt-card__body">
+        <div class="tilt-card__kicker">Tech &amp; AI</div>
+        <div class="tilt-card__title">New Chip Architecture Promises 10× Efficiency Gain</div>
+        <div class="tilt-card__meta">12h ago &middot; By Wu Qixiang</div>
+      </div>
+      <div class="tilt-card__gloss"></div>
+    </div>
+    <div class="tilt-card">
+      <div class="tilt-card__img">World Cup</div>
+      <div class="tilt-card__body">
+        <div class="tilt-card__kicker">Sports</div>
+        <div class="tilt-card__title">Semi-Finalists Set After Dramatic Quarter-Final Clashes</div>
+        <div class="tilt-card__meta">3h ago &middot; By Xiao Ziyue</div>
+      </div>
+      <div class="tilt-card__gloss"></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO 2: Mouse Trail Particles -->
+<section class="demo-section" id="demo2">
+  <h2>2. Mouse Trail — Particle Cursor Effect</h2>
+  <p class="desc">A trail of glowing particles follows the cursor on dark backgrounds. Canvas-based. Works as a subtle "data flow" or "connection" metaphor for tech/business sections. Could also work on the hero area or as a page-wide subtle effect.</p>
+  <div class="trail-demo" id="trailDemo">
+    <div class="trail-demo__label">Move your mouse here → particles follow</div>
+    <canvas id="trailCanvas"></canvas>
+  </div>
+</section>
+
+<!-- DEMO 3: Glow Follow -->
+<section class="demo-section" id="demo3">
+  <h2>3. Card Glow Follow — Radial Gradient on Mouse Position</h2>
+  <p class="desc">A subtle red glow follows your cursor position inside each card. No 3D math — just a radial gradient positioned at the mouse. Very lightweight, very subtle. Good for "this is interactive" without being distracting.</p>
+  <div class="glow-grid" id="glowGrid">
+    <div class="glow-card">
+      <div class="glow-card__title">Kuala Lumpur International Mobility Show 2026</div>
+      <div class="glow-card__text">Almost 20 car makers from Malaysia, Japan and China presented their latest models at the biggest auto show in Southeast Asia.</div>
+    </div>
+    <div class="glow-card">
+      <div class="glow-card__title">Pacific Nations Demand Stronger Emission Targets</div>
+      <div class="glow-card__text">Leaders from twelve Pacific island nations issued a joint declaration calling for legally binding emission reduction targets by 2030.</div>
+    </div>
+    <div class="glow-card">
+      <div class="glow-card__title">Global Trade Rebounds as Supply Chains Stabilize</div>
+      <div class="glow-card__text">International shipping costs have dropped 40% from their peak, signalling a return to pre-disruption trade volumes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO 4: 3D Globe -->
+<section class="demo-section" id="demo4">
+  <h2>4. Three.js 3D Globe — Interactive Earth</h2>
+  <p class="desc">A rotating globe built with Three.js (~140KB gzipped CDN). Drag to rotate, scroll to zoom. Glowing dots mark news hotspots. This could be a hero background or a sidebar widget. Matches the new XU globe logo concept perfectly.</p>
+  <div class="globe-demo" id="globeDemo">
+    <div class="globe-demo__label">Drag to rotate &middot; Scroll to zoom</div>
+  </div>
+</section>
+
+<!-- DEMO 5: Combined -->
+<section class="demo-section" id="demo5">
+  <h2>5. Combined: Tilt + Glow Follow (Recommended)</h2>
+  <p class="desc">Cards have subtle 3D tilt AND a soft red accent glow that follows your cursor. Best of both worlds — the physicality of 3D with the elegance of the glow. This is the recommendation for production.</p>
+  <div class="combined-grid" id="combinedGrid">
+    <div class="combined-card">
+      <div class="combined-card__kicker">Automotive</div>
+      <div class="combined-card__title">KLIMS 2026: Perodua C2 Concept Steals the Show</div>
+      <div class="combined-card__meta">Jun 30 &middot; By Xiao Ziyue &middot; 8 min read</div>
+    </div>
+    <div class="combined-card">
+      <div class="combined-card__kicker">Technology</div>
+      <div class="combined-card__title">New Chip Architecture Promises 10× Efficiency Gain</div>
+      <div class="combined-card__meta">Jun 29 &middot; By Wu Qixiang &middot; 5 min read</div>
+    </div>
+    <div class="combined-card">
+      <div class="combined-card__kicker">Climate</div>
+      <div class="combined-card__title">Pacific Nations Demand Stronger Emission Targets by 2030</div>
+      <div class="combined-card__meta">Jun 28 &middot; By Lin Xiang &middot; 6 min read</div>
+    </div>
+    <div class="combined-card">
+      <div class="combined-card__kicker">Sports</div>
+      <div class="combined-card__title">Semi-Finalists Set After Dramatic Quarter-Final Weekend</div>
+      <div class="combined-card__meta">Jun 30 &middot; By Xiao Ziyue &middot; 4 min read</div>
+    </div>
+  </div>
+</section>
+
+<script>
+// ====== DEMO 1: 3D Card Tilt ======
+(function() {
+  const cards = document.querySelectorAll('.tilt-card');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rx = ((y - cy) / cy) * -12; // -12° to +12°
+      const ry = ((x - cx) / cx) * 12;
+      card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      // Update gloss position
+      const gloss = card.querySelector('.tilt-card__gloss');
+      if (gloss) {
+        gloss.style.background = `radial-gradient(circle at ${(x/rect.width)*100}% ${(y/rect.height)*100}%, rgba(255,255,255,0.25) 0%, transparent 70%)`;
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0)';
+      card.style.transition = 'transform 0.4s ease, box-shadow 0.3s ease';
+    });
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'transform 0.1s ease, box-shadow 0.3s ease';
+    });
+  });
+})();
+
+// ====== DEMO 2: Mouse Trail Particles ======
+(function() {
+  const container = document.getElementById('trailDemo');
+  const canvas = document.getElementById('trailCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: -100, y: -100 };
+  let raf;
+
+  function resize() {
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    // Spawn particles
+    for (let i = 0; i < 3; i++) {
+      particles.push({
+        x: mouse.x + (Math.random() - 0.5) * 10,
+        y: mouse.y + (Math.random() - 0.5) * 10,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        life: 1,
+        size: Math.random() * 2.5 + 1,
+        hue: Math.random() < 0.3 ? 0 : 210 // occasional red, mostly blue
+      });
+    }
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw cursor glow
+    if (mouse.x > 0) {
+      const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 60);
+      g.addColorStop(0, 'rgba(184,0,0,0.15)');
+      g.addColorStop(0.5, 'rgba(184,0,0,0.05)');
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.fillRect(mouse.x - 60, mouse.y - 60, 120, 120);
+    }
+
+    // Draw particles
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= 0.02;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fillStyle = p.hue === 0
+        ? `rgba(184,0,0,${p.life * 0.6})`
+        : `rgba(100,150,220,${p.life * 0.5})`;
+      ctx.fill();
+    });
+
+    // Limit particles
+    if (particles.length > 150) particles = particles.slice(-150);
+
+    raf = requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ====== DEMO 3: Glow Follow ======
+(function() {
+  document.querySelectorAll('.glow-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
+    });
+  });
+})();
+
+// ====== DEMO 4: Three.js Globe ======
+(function() {
+  const container = document.getElementById('globeDemo');
+  if (typeof THREE === 'undefined') {
+    // Load Three.js CDN dynamically
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/three@0.157.0/build/three.min.js';
+    script.onload = initGlobe;
+    document.head.appendChild(script);
+  } else {
+    initGlobe();
+  }
+
+  function initGlobe() {
+    const W = container.offsetWidth;
+    const H = container.offsetHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 1000);
+    camera.position.z = 3.5;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // Globe sphere
+    const geo = new THREE.SphereGeometry(1.2, 64, 64);
+
+    // Create a procedural earth-like texture using noise
+    const canvas2 = document.createElement('canvas');
+    canvas2.width = 512; canvas2.height = 256;
+    const ctx2 = canvas2.getContext('2d');
+    // Dark background
+    ctx2.fillStyle = '#0a1628';
+    ctx2.fillRect(0, 0, 512, 256);
+    // Grid lines (lat/long)
+    ctx2.strokeStyle = 'rgba(40,60,100,0.5)';
+    ctx2.lineWidth = 0.5;
+    for (let i = 0; i < 256; i += 16) {
+      ctx2.beginPath(); ctx2.moveTo(0, i); ctx2.lineTo(512, i); ctx2.stroke();
+    }
+    for (let i = 0; i < 512; i += 16) {
+      ctx2.beginPath(); ctx2.moveTo(i, 0); ctx2.lineTo(i, 256); ctx2.stroke();
+    }
+    // Scatter "landmass" dots
+    const landmasses = [
+      [100,60,80,40],[200,70,60,30],[120,130,40,50],[300,50,90,35],
+      [250,120,70,40],[350,100,60,30],[180,160,50,25],[400,140,40,30],
+      [150,50,25,15],[320,160,30,20],[80,100,20,25],[420,80,35,25]
+    ];
+    landmasses.forEach(([x,y,w,h]) => {
+      ctx2.fillStyle = 'rgba(20,40,80,0.7)';
+      ctx2.beginPath(); ctx2.ellipse(x, y, w/2, h/2, 0, 0, Math.PI*2); ctx2.fill();
+    });
+    // Red dots (news hotspots)
+    const hotspots = [[260,70],[200,90],[300,100],[150,120],[350,140],[280,150]];
+    hotspots.forEach(([x,y]) => {
+      const g = ctx2.createRadialGradient(x, y, 0, x, y, 8);
+      g.addColorStop(0, '#B80000');
+      g.addColorStop(1, 'transparent');
+      ctx2.fillStyle = g;
+      ctx2.beginPath(); ctx2.arc(x, y, 8, 0, Math.PI*2); ctx2.fill();
+    });
+
+    const tex = new THREE.CanvasTexture(canvas2);
+    const mat = new THREE.MeshPhongMaterial({
+      map: tex,
+      specular: 0x111122,
+      shininess: 15,
+    });
+    const globe = new THREE.Mesh(geo, mat);
+    scene.add(globe);
+
+    // Atmosphere ring
+    const ringGeo = new THREE.TorusGeometry(1.22, 0.015, 32, 100);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x334466, transparent: true, opacity: 0.4 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    scene.add(ring);
+
+    // Lighting
+    const light1 = new THREE.DirectionalLight(0x8899cc, 1.2);
+    light1.position.set(2, 1, 3);
+    scene.add(light1);
+    const light2 = new THREE.AmbientLight(0x223344, 0.6);
+    scene.add(light2);
+
+    // Particles around globe
+    const dotsGeo = new THREE.BufferGeometry();
+    const dotsCount = 200;
+    const dotsPos = new Float32Array(dotsCount * 3);
+    for (let i = 0; i < dotsCount; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const r = 1.35 + Math.random() * 0.5;
+      dotsPos[i*3] = r * Math.sin(phi) * Math.cos(theta);
+      dotsPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+      dotsPos[i*3+2] = r * Math.cos(phi);
+    }
+    dotsGeo.setAttribute('position', new THREE.BufferAttribute(dotsPos, 3));
+    const dotsMat = new THREE.PointsMaterial({
+      color: 0x445577, size: 0.015, transparent: true, opacity: 0.6
+    });
+    const dots = new THREE.Points(dotsGeo, dotsMat);
+    scene.add(dots);
+
+    // Interaction
+    let isDragging = false, prevX = 0, prevY = 0;
+    let rotY = 0, rotX = 0, targetRotY = 0, targetRotX = 0;
+
+    renderer.domElement.addEventListener('mousedown', (e) => {
+      isDragging = true; prevX = e.clientX; prevY = e.clientY;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      targetRotY += (e.clientX - prevX) * 0.005;
+      targetRotX += (e.clientY - prevY) * 0.005;
+      targetRotX = Math.max(-1, Math.min(1, targetRotX));
+      prevX = e.clientX; prevY = e.clientY;
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    renderer.domElement.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      camera.position.z += e.deltaY * 0.005;
+      camera.position.z = Math.max(2, Math.min(6, camera.position.z));
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isDragging) targetRotY += 0.003; // auto-rotate
+      rotY += (targetRotY - rotY) * 0.08;
+      rotX += (targetRotX - rotX) * 0.08;
+      globe.rotation.y = rotY;
+      globe.rotation.x = rotX;
+      ring.rotation.z = rotY * 0.5;
+      dots.rotation.y = rotY * 0.3;
+      dots.rotation.x = rotX * 0.3;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      const w = container.offsetWidth;
+      const h = container.offsetHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+  }
+})();
+
+// ====== DEMO 5: Combined Tilt + Glow ======
+(function() {
+  document.querySelectorAll('.combined-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rx = ((y - cy) / cy) * -6;
+      const ry = ((x - cx) / cx) * 6;
+      card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      card.style.setProperty('--mx', ((x / rect.width) * 100) + '%');
+      card.style.setProperty('--my', ((y / rect.height) * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      card.style.transition = 'transform 0.3s ease';
+    });
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'transform 0.1s ease';
+    });
+  });
+})();
+</script>
+</body>
+</html>
