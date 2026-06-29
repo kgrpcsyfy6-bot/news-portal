@@ -2,7 +2,11 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Privacy Policy — News Online">
+    <meta property="og:title" content="Privacy Policy — News Online">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>Privacy Policy — News Online</title>
 <style>
@@ -357,13 +361,13 @@ ul, ol { list-style: none; }
   'use strict';
   var h = document.getElementById('hamburger');
   var n = document.getElementById('nav-list');
-  h.addEventListener('click', function(){
+  if (h) h.addEventListener('click', function(){
     var open = h.getAttribute('aria-expanded') === 'true';
     h.setAttribute('aria-expanded', !open);
     n.classList.toggle('nav--open');
     document.body.style.overflow = open ? '' : 'hidden';
   });
-  n.querySelectorAll('a').forEach(function(l){
+  if (n) n.querySelectorAll('a').forEach(function(l){
     l.addEventListener('click', function(){
       h.setAttribute('aria-expanded', 'false');
       n.classList.remove('nav--open');
@@ -372,10 +376,17 @@ ul, ol { list-style: none; }
   });
 })();
 
+  // Safe localStorage wrapper (privacy-mode / quota safe)
+  function _ls(key, val) {
+    try {
+      if (val === undefined) return localStorage.getItem(key);
+      localStorage.setItem(key, val);
+    } catch (e) { /* privacy mode or quota exceeded */ }
+  }
   // Theme toggle
   (function(){
     var html = document.documentElement;
-    var saved = localStorage.getItem('xu-theme');
+    var saved = _ls('xu-theme');
     if (saved === 'dark') {
       html.setAttribute('data-theme', 'dark');
     }
@@ -384,7 +395,7 @@ ul, ol { list-style: none; }
       toggle.addEventListener('click', function(){
         var isDark = html.getAttribute('data-theme') === 'dark';
         html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        localStorage.setItem('xu-theme', isDark ? 'light' : 'dark');
+        _ls('xu-theme', isDark ? 'light' : 'dark');
       });
     }
     // Default is always light — only respect explicit user choice

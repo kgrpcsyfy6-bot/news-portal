@@ -2,7 +2,12 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="News Online — independent student journalism covering World, Politics, Business, Tech, Climate, Health, Sports &amp; Culture. Real-time weather, sports scores, and in-depth reporting.">
+    <meta property="og:title" content="News Online">
+    <meta property="og:description" content="Independent student journalism with real-time weather, sports scores, and in-depth reporting.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>News Online — Home</title>
 <style>
@@ -662,7 +667,8 @@ a:hover .hero__headline { color: var(--c-red); }
 .hero__meta span { color: var(--c-text-soft); font-weight: 500; }
 
 /* Secondary hero */
-.hero__side { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hero__side { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; overflow: hidden; }
+.hero__side > * { min-width: 0; }
 .hero__side .hero__img { aspect-ratio: 16/9; }
 .hero__side .hero__img svg { width: 24px; height: 24px; }
 .hero__subheadline {
@@ -864,7 +870,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
 	  white-space: nowrap; flex-shrink: 0; margin-left: 6px;
 	  display: none;
 	}
-	.poll-voted-tag--visible { display: inline-block !important; }
+	.poll-voted-tag--visible { display: inline-block; }
 .poll-res-meta {
   font-size: 11px; color: var(--c-text-soft); margin-bottom: 12px;
   display: flex; align-items: center; gap: 8px;
@@ -2483,7 +2489,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
         <div class="story-item__meta"><span>By Sarah Chen</span> &middot; <time>11 Jun 2026</time> &middot; <span class="reads">556K reads</span></div>
       </a>
       <!-- Story 8 — Culture -->
-      <a href="article-business.html" class="story-item" id="section-culture">
+      <a href="article-culture.html" class="story-item" id="section-culture">
         <div class="story-item__img"><img src="images/news/photo-1569783721854-33a99b4c0bae.jpg" alt="Visitors at contemporary art exhibition" loading="lazy"></div>
         <span class="story-item__kicker">Culture</span>
         <h3 class="story-item__title">Venice Biennale 2026: African Pavilions Break Attendance Records as Contemporary Art Goes Global</h3>
@@ -2662,22 +2668,22 @@ a:hover .hero__subheadline { color: var(--c-red); }
     <a href="article-politics.html" class="cat-section__more">More World →</a>
   </div>
   <div class="cat-grid">
-    <a href="#" class="cat-feature">
+    <a href="article-world.html" class="cat-feature">
       <div class="cat-feature__img"><img src="images/news/photo-1520452112805-c6692c840af0.jpg" alt="Diplomatic meeting at UN headquarters" loading="lazy"></div>
       <span class="cat-feature__kicker">World</span>
       <h3 class="cat-feature__headline">Iran Peace Deal Takes Hold: Ceasefire Monitors Deploy Along Front Lines as Troops Begin Withdrawal</h3>
       <div class="cat-feature__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">892K reads</span></div>
     </a>
     <div class="cat-headlines">
-      <a href="#" class="cat-headline">
+      <a href="article-world.html" class="cat-headline">
         <h4 class="cat-headline__title">G7 Leaders Draft Framework for Global Minimum Corporate Tax, Final Vote Expected Friday</h4>
         <div class="cat-headline__meta"><span>By Mark Ellis</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">312K reads</span></div>
       </a>
-      <a href="#" class="cat-headline">
+      <a href="article-world.html" class="cat-headline">
         <h4 class="cat-headline__title">Myanmar Peace Talks Resume in Bangkok as Junta Signals Willingness to Release Political Prisoners</h4>
         <div class="cat-headline__meta"><span>By Aye Mon</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">287K reads</span></div>
       </a>
-      <a href="#" class="cat-headline">
+      <a href="article-world.html" class="cat-headline">
         <h4 class="cat-headline__title">UN Security Council Reform Proposal Gains Traction: African Union Demands Permanent Seats</h4>
         <div class="cat-headline__meta"><span>By Anna Lindstr&ouml;m</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">245K reads</span></div>
       </a>
@@ -2865,22 +2871,22 @@ a:hover .hero__subheadline { color: var(--c-red); }
     <a href="article-culture.html" class="cat-section__more">More Culture →</a>
   </div>
   <div class="cat-grid">
-    <a href="#" class="cat-feature">
+    <a href="article-culture.html" class="cat-feature">
       <div class="cat-feature__img"><img src="images/news/photo-1569783721854-33a99b4c0bae.jpg" alt="Visitors at a contemporary art gallery" loading="lazy"></div>
       <span class="cat-feature__kicker">Culture</span>
       <h3 class="cat-feature__headline">‘The Cartographer’s Dream’ Wins 2026 Booker Prize — Kenyan Author, 24, Becomes Youngest Winner in History</h3>
       <div class="cat-feature__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">156K reads</span></div>
     </a>
     <div class="cat-headlines">
-      <a href="#" class="cat-headline">
+      <a href="article-culture.html" class="cat-headline">
         <h4 class="cat-headline__title">Cannes Film Festival 2026: First Palestinian Film in Competition Wins Palme d’Or to Standing Ovation</h4>
         <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>15 Jun 2026</time> &middot; <span class="reads">98K reads</span></div>
       </a>
-      <a href="#" class="cat-headline">
+      <a href="article-culture.html" class="cat-headline">
         <h4 class="cat-headline__title">Music Streaming 2026: Indie Labels Now Command 38% of Global Streams as Algorithm Fatigue Drives Discovery</h4>
         <div class="cat-headline__meta"><span>By Leo Fischer</span> &middot; <time>14 Jun 2026</time> &middot; <span class="reads">87K reads</span></div>
       </a>
-      <a href="#" class="cat-headline">
+      <a href="article-culture.html" class="cat-headline">
         <h4 class="cat-headline__title">British Museum Returns 93 Benin Bronzes to Nigeria in Landmark Repatriation Agreement After 127 Years</h4>
         <div class="cat-headline__meta"><span>By Amara Osei</span> &middot; <time>13 Jun 2026</time> &middot; <span class="reads">73K reads</span></div>
       </a>
@@ -3028,8 +3034,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
     else { openSearch(); }
   });
 
-  searchClose.addEventListener('click', closeSearch);
-  searchBackdrop.addEventListener('click', closeSearch);
+  if (searchClose) searchClose.addEventListener('click', closeSearch);
+  if (searchBackdrop) searchBackdrop.addEventListener('click', closeSearch);
 
   // --- Search index: all 9 articles ---
   var searchIndex = [
@@ -3105,14 +3111,14 @@ a:hover .hero__subheadline { color: var(--c-red); }
   }
 
   var searchTimeout = null;
-  searchInput.addEventListener('input', function() {
+  if (searchInput) searchInput.addEventListener('input', function() {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(function() {
       doSearch(searchInput.value);
     }, 200);
   });
 
-  searchForm.addEventListener('submit', function(e){
+  if (searchForm) searchForm.addEventListener('submit', function(e){
     e.preventDefault();
     doSearch(searchInput.value);
   });
@@ -3141,17 +3147,17 @@ a:hover .hero__subheadline { color: var(--c-red); }
     document.body.style.overflow = '';
   }
 
-  signinBtn.addEventListener('click', function(e){
+  if (signinBtn) signinBtn.addEventListener('click', function(e){
     e.stopPropagation();
     openSignin();
   });
 
-  signinClose.addEventListener('click', closeSignin);
-  signinOverlay.addEventListener('click', function(e){
+  if (signinClose) signinClose.addEventListener('click', closeSignin);
+  if (signinOverlay) signinOverlay.addEventListener('click', function(e){
     if (e.target === signinOverlay) closeSignin();
   });
 
-  signinSubmit.addEventListener('click', function(e){
+  if (signinSubmit) signinSubmit.addEventListener('click', function(e){
     e.preventDefault();
     var email = signinEmail.value.trim();
     if (!email) { toast('Please enter your email address'); signinEmail.focus(); return; }
@@ -3168,12 +3174,12 @@ a:hover .hero__subheadline { color: var(--c-red); }
     }, 800);
   });
 
-  signinForgot.addEventListener('click', function(e){
+  if (signinForgot) signinForgot.addEventListener('click', function(e){
     e.preventDefault();
     toast('Password reset link sent to your email');
   });
 
-  signinCreate.addEventListener('click', function(e){
+  if (signinCreate) signinCreate.addEventListener('click', function(e){
     e.preventDefault();
     toast('Account creation coming soon');
   });
@@ -3227,13 +3233,13 @@ a:hover .hero__subheadline { color: var(--c-red); }
   // Mobile nav
   var hamburger = document.getElementById('hamburger');
   var navList = document.getElementById('nav-list');
-  hamburger.addEventListener('click', function(){
+  if (hamburger) hamburger.addEventListener('click', function(){
     var open = hamburger.getAttribute('aria-expanded') === 'true';
     hamburger.setAttribute('aria-expanded', !open);
     navList.classList.toggle('nav--open');
     document.body.style.overflow = open ? '' : 'hidden';
   });
-  navList.querySelectorAll('a').forEach(function(l){
+  if (navList) navList.querySelectorAll('a').forEach(function(l){
     l.addEventListener('click', function(){
       hamburger.setAttribute('aria-expanded', 'false');
       navList.classList.remove('nav--open');
@@ -3312,8 +3318,8 @@ a:hover .hero__subheadline { color: var(--c-red); }
   function formatNum(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
   // voted before?
-  if (localStorage.getItem('jrn209_poll_key')) {
-    pollUserVote = localStorage.getItem('jrn209_poll_key');
+  if (_ls('jrn209_poll_key')) {
+    pollUserVote = _ls('jrn209_poll_key');
     showResults(true);
   }
 
@@ -3455,7 +3461,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     });
   }
 
-  pollSubmit.addEventListener('click', function(e){
+  if (pollSubmit) pollSubmit.addEventListener('click', function(e){
     e.preventDefault();
     pollError.style.display = 'none';
     var sel = pollForm.querySelector('input[name="poll"]:checked');
@@ -3467,7 +3473,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     setTimeout(function(){
       pollBase[sel.value]++; // user's vote added to base
       pollUserVote = sel.value;
-      localStorage.setItem('jrn209_poll_key', sel.value);
+      _ls('jrn209_poll_key', sel.value);
       showResults(false);
     }, 400);
   });
@@ -3971,10 +3977,17 @@ function wxApplyTheme(code) {
 	  });
 	})();
 
+  // Safe localStorage wrapper (privacy-mode / quota safe)
+  function _ls(key, val) {
+    try {
+      if (val === undefined) return localStorage.getItem(key);
+      localStorage.setItem(key, val);
+    } catch (e) { /* privacy mode or quota exceeded */ }
+  }
   // Theme toggle
   (function(){
     var html = document.documentElement;
-    var saved = localStorage.getItem('xu-theme');
+    var saved = _ls('xu-theme');
     if (saved === 'dark') {
       html.setAttribute('data-theme', 'dark');
     }
@@ -3983,7 +3996,7 @@ function wxApplyTheme(code) {
       toggle.addEventListener('click', function(){
         var isDark = html.getAttribute('data-theme') === 'dark';
         html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        localStorage.setItem('xu-theme', isDark ? 'light' : 'dark');
+        _ls('xu-theme', isDark ? 'light' : 'dark');
       });
     }
     // Default is always light — only respect explicit user choice

@@ -2,7 +2,11 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="News article — News Online">
+    <meta property="og:title" content="News article — News Online">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>Central Banks Signal Coordinated Rate Cuts as Global Economy Slows — News Online</title>
 <style>
@@ -708,13 +712,13 @@ body { overflow-x: hidden;
   'use strict';
   var hamburger = document.getElementById('hamburger');
   var navList = document.getElementById('nav-list');
-  hamburger.addEventListener('click', function(){
+  if (hamburger) hamburger.addEventListener('click', function(){
     var open = hamburger.getAttribute('aria-expanded') === 'true';
     hamburger.setAttribute('aria-expanded', !open);
     navList.classList.toggle('nav--open');
     document.body.style.overflow = open ? '' : 'hidden';
   });
-  navList.querySelectorAll('a').forEach(function(l){
+  if (navList) navList.querySelectorAll('a').forEach(function(l){
     l.addEventListener('click', function(){
       hamburger.setAttribute('aria-expanded', 'false');
       navList.classList.remove('nav--open');
@@ -756,7 +760,7 @@ body { overflow-x: hidden;
   }
   renderSavedComments();
 
-  commentsList.addEventListener('click', function(e) {
+  if (commentsList) commentsList.addEventListener('click', function(e) {
     var del = e.target.closest('.comment__delete');
     if (!del) return;
     var cid = parseInt(del.getAttribute('data-cid'), 10);
@@ -766,7 +770,7 @@ body { overflow-x: hidden;
     del.closest('.comment').remove();
   });
 
-  commentForm.addEventListener('submit', function(e){
+  if (commentForm) commentForm.addEventListener('submit', function(e){
     e.preventDefault();
     commentError.style.display = 'none';
     var text = commentTextarea.value.trim();
@@ -791,7 +795,7 @@ body { overflow-x: hidden;
     commentTextarea.value = '';
     setTimeout(function(){ art.classList.remove('comment--new'); }, 350);
   });
-  commentTextarea.addEventListener('input', function(){ if (commentTextarea.value.trim()) commentError.style.display = 'none'; });
+  if (commentTextarea) commentTextarea.addEventListener('input', function(){ if (commentTextarea.value.trim()) commentError.style.display = 'none'; });
 
   document.querySelectorAll('[data-share]').forEach(function(btn){
     btn.addEventListener('click', function(e){
@@ -852,10 +856,17 @@ body { overflow-x: hidden;
 })();
 
 
+  // Safe localStorage wrapper (privacy-mode / quota safe)
+  function _ls(key, val) {
+    try {
+      if (val === undefined) return localStorage.getItem(key);
+      localStorage.setItem(key, val);
+    } catch (e) { /* privacy mode or quota exceeded */ }
+  }
   // Theme toggle
   (function(){
     var html = document.documentElement;
-    var saved = localStorage.getItem('xu-theme');
+    var saved = _ls('xu-theme');
     if (saved === 'dark') {
       html.setAttribute('data-theme', 'dark');
     }
@@ -864,7 +875,7 @@ body { overflow-x: hidden;
       toggle.addEventListener('click', function(){
         var isDark = html.getAttribute('data-theme') === 'dark';
         html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        localStorage.setItem('xu-theme', isDark ? 'light' : 'dark');
+        _ls('xu-theme', isDark ? 'light' : 'dark');
       });
     }
     // Default is always light — only respect explicit user choice
