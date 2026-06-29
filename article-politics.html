@@ -24,6 +24,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 ul, ol { list-style: none; }
 input, textarea { font: inherit; }
 
+/* Focus ring — accessible keyboard navigation */
+:focus-visible { outline: 2px solid var(--c-red); outline-offset: 2px; border-radius: 2px; }
+:focus:not(:focus-visible) { outline: none; }
+
 :root {
   --c-red:        #B80000;
   --c-red-dark:   #8B0000;
