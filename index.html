@@ -2062,6 +2062,45 @@ a:hover .hero__subheadline { color: var(--c-red); }
   #wpWallpaper { display: none; }
 }
 
+/* ===== 3D Interaction Effects ===== */
+
+/* Perspective container for Top Stories tilt */
+.stories-grid { perspective: 1000px; }
+
+/* Effect 5 — Top Stories cards: tilt + glow */
+.story-item {
+  position: relative; overflow: hidden;
+  transform-style: preserve-3d; will-change: transform;
+}
+.story-item::after {
+  content: ''; position: absolute; inset: -1px;
+  opacity: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(
+    500px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(184, 0, 0, 0.05), transparent 40%
+  );
+  transition: opacity .25s;
+}
+.story-item:hover::after { opacity: 1; }
+.story-item > * { position: relative; z-index: 1; }
+
+/* Effect 3 — Category + sidebar cards: glow only */
+.cat-feature, .cat-headline, .sidebar-card, .most-read__item {
+  position: relative; overflow: hidden;
+}
+.cat-feature::before, .cat-headline::before,
+.sidebar-card::before, .most-read__item::before {
+  content: ''; position: absolute; inset: -1px;
+  opacity: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(184, 0, 0, 0.06), transparent 40%
+  );
+  transition: opacity .3s;
+}
+.cat-feature:hover::before, .cat-headline:hover::before,
+.sidebar-card:hover::before, .most-read__item:hover::before { opacity: 1; }
+
 </style>
 </head>
 <body id="top">
@@ -3674,6 +3713,42 @@ function wxApplyTheme(code) {
     });
   }
 	})();
+</script>
+<script>
+/* ===== 3D Interaction Effects ===== */
+(function() {
+  document.querySelectorAll('.story-item').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var cx = rect.width / 2;
+      var cy = rect.height / 2;
+      var rx = ((y - cy) / cy) * -5;
+      var ry = ((x - cx) / cx) * 5;
+      card.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+      card.style.setProperty('--mx', (x / rect.width * 100) + '%');
+      card.style.setProperty('--my', (y / rect.height * 100) + '%');
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      card.style.transition = 'transform 0.3s ease';
+    });
+    card.addEventListener('mouseenter', function() {
+      card.style.transition = 'transform 0.1s ease';
+    });
+  });
+  var glowCards = document.querySelectorAll('.cat-feature, .cat-headline, .sidebar-card, .most-read__item');
+  glowCards.forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width) * 100;
+      var y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
+    });
+  });
+})();
 </script>
 
 </body>
