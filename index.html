@@ -2099,41 +2099,43 @@ a:hover .hero__subheadline { color: var(--c-red); }
 }
 .wp-ad__close {
   position: absolute;
-  top: clamp(4px, 0.5vw, 6px);
-  right: clamp(4px, 0.5vw, 6px);
+  top: clamp(3px, 0.4vw, 5px);
+  right: clamp(3px, 0.4vw, 5px);
   width: clamp(18px, 2vw, 22px);
   height: clamp(18px, 2vw, 22px);
   border-radius: 50%;
   border: none;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.55);
   color: #fff;
   font-size: clamp(11px, 1.2vw, 14px);
   line-height: 1;
   cursor: pointer;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .15s;
+  transition: background .15s, transform .15s;
 }
-.wp-ad__close:hover { background: rgba(0,0,0,0.65); }
+.wp-ad__close:hover { background: rgba(0,0,0,0.85); transform: scale(1.1); }
 .wp-ad__label {
   position: absolute;
-  top: clamp(8px, 0.9vw, 10px);
-  left: 0; right: 0;
-  margin: 0 auto;
-  width: fit-content;
-  font-size: clamp(9px, 0.9vw, 10px);
+  top: clamp(3px, 0.4vw, 5px);
+  left: clamp(3px, 0.4vw, 5px);
+  max-width: calc(100% - 30px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(7px, 0.7vw, 9px);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
   color: var(--c-text-light);
   background: var(--c-surface);
   border: 1px solid var(--c-border);
-  padding: 3px 8px;
+  padding: 3px 6px;
   border-radius: 3px;
   z-index: 2;
   text-transform: uppercase;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .wp-ad__img {
   width: 100%;
@@ -2247,7 +2249,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     <div class="wp-ad wp-ad--left" id="adWallLeft">
       <div class="wp-ad__card">
         <button class="wp-ad__close" data-close-ad="left">&times;</button>
-        <span class="wp-ad__label">ADVERTISEMENT</span>
+        <span class="wp-ad__label">AD</span>
         <img class="wp-ad__img" src="images/news/photo-1507003211169-0a1dd7228f2d.jpg" alt="Financial Times newspaper on desk" loading="lazy">
         <div class="wp-ad__body">
           <div class="wp-ad__brand">Financial Times</div>
@@ -2260,7 +2262,7 @@ a:hover .hero__subheadline { color: var(--c-red); }
     <div class="wp-ad wp-ad--right" id="adWallRight">
       <div class="wp-ad__card">
         <button class="wp-ad__close" data-close-ad="right">&times;</button>
-        <span class="wp-ad__label">ADVERTISEMENT</span>
+        <span class="wp-ad__label">AD</span>
         <img class="wp-ad__img" src="images/news/photo-1495020689067-958852a7765e.jpg" alt="The Economist magazine covers" loading="lazy">
         <div class="wp-ad__body">
           <div class="wp-ad__brand">The Economist</div>
